@@ -95,6 +95,42 @@ def _run_coro(coro):
     return asyncio.run_coroutine_threadsafe(coro, _background_loop()).result()
 
 
+def _precheck(agent) -> str:
+    """'' if the agent can run, else the participant-facing reason."""
+    if not _state.get("setup_ok"):
+        return SETUP_NOT_PASSED
+    if agent is None:
+        return NOT_BUILT
+    instruction = getattr(agent, "instruction", "")
+    return has_blank(getattr(agent, "name", ""), instruction if isinstance(instruction, str) else "x") or ""
+
+
+async def arun(agent, message: str, plugins: list | None = None) -> RunResult:
+    """Async core of run(): no display. Tries the agent's model, then the backup models if Gemini is busy."""
+    problem = _precheck(agent)
+    if problem:
+        return RunResult("", [], [], problem)
+    get_api_key()
+    primary = getattr(getattr(agent, "model", None), "model", None)
+    candidates = [None] + [m for m in BACKUP_MODELS if m != primary]   # None = the agent as built
+    last_kind = ""
+    for backup in candidates:
+        current = agent if backup is None else agent.model_copy(update={"model": make_model(backup)})
+        runner = InMemoryRunner(agent=current, app_name="lab", plugins=plugins)
+        try:
+            events = await runner.run_debug(message, quiet=True)
+        except Exception as exc:
+            kind = _error_kind(exc)
+            if kind not in ("busy", "quota"):
+                raise
+            last_kind = kind
+            continue
+        text, calls = summarize(events)
+        note = f"The model {primary} was busy, so this answer comes from the backup model {backup}." if backup else ""
+        return RunResult(text, list(events), calls, note=note)
+    return RunResult("", [], [], QUOTA_MESSAGE if last_kind == "quota" else BUSY_MESSAGE)
+
+
 def run(agent, message: str, *, plugins: list | None = None, show: bool = True) -> RunResult:
     """Send one message to an agent, show what it did as trace cards, return the result.
 
@@ -103,50 +139,26 @@ def run(agent, message: str, *, plugins: list | None = None, show: bool = True) 
     """
     from IPython.display import HTML, display
 
-    def stop(note: str) -> RunResult:
+    problem = _precheck(agent)
+    if problem:
         if show:
-            display(error_line(note))
-        return RunResult("", [], [], note)
-
-    if not _state.get("setup_ok"):
-        return stop(SETUP_NOT_PASSED)
-    if agent is None:
-        return stop(NOT_BUILT)
-    instruction = getattr(agent, "instruction", "")
-    blank = has_blank(getattr(agent, "name", ""), instruction if isinstance(instruction, str) else "x")
-    if blank:
-        return stop(blank)
-    get_api_key()
+            display(error_line(problem))
+        return RunResult("", [], [], problem)
     handle = display(HTML("<i style='font-family:sans-serif;color:#5F6B7A'>Asking Gemini…</i>"), display_id=True) if show else None
-    primary = getattr(getattr(agent, "model", None), "model", None)
-    candidates = [None] + [m for m in BACKUP_MODELS if m != primary]   # None = the agent as built
-    last_kind, note, events = "", "", None
-    for backup in candidates:
-        current = agent if backup is None else agent.model_copy(update={"model": make_model(backup)})
-        runner = InMemoryRunner(agent=current, app_name="lab", plugins=plugins)
-        try:
-            with _quiet_adk_logs():
-                events = _run_coro(runner.run_debug(message, quiet=True))
-            if backup:
-                note = f"The model {primary} was busy, so this answer comes from the backup model {backup}."
-            break
-        except Exception as exc:
-            kind = _error_kind(exc)
-            if kind not in ("busy", "quota"):
-                if handle:
-                    handle.update(HTML(""))
-                raise
-            last_kind = kind
-    if handle:
-        handle.update(HTML(""))
-    if events is None:
-        return stop(QUOTA_MESSAGE if last_kind == "quota" else BUSY_MESSAGE)
-    text, calls = summarize(events)
+    try:
+        with _quiet_adk_logs():
+            result = _run_coro(arun(agent, message, plugins))
+    finally:
+        if handle:
+            handle.update(HTML(""))
     if show:
-        if note:
-            display(HTML(f"<div style='font-family:sans-serif;font-size:13px;color:#5F6B7A'>Note: {note}</div>"))
-        display(trace_cards(events))
-    return RunResult(text, list(events), calls, note=note)
+        if result.message:
+            display(error_line(result.message))
+        else:
+            if result.note:
+                display(HTML(f"<div style='font-family:sans-serif;font-size:13px;color:#5F6B7A'>Note: {result.note}</div>"))
+            display(trace_cards(result.events))
+    return result
 
 
 def _error_kind(exc: Exception) -> str:
