@@ -47,3 +47,15 @@ def test_run_live_tool_call(live_key):
     res = agents.run(a, "What happens on day 2?", show=False)
     assert "get_course_day" in res.tool_calls
     assert res.text.strip()
+
+
+
+def test_summarize_joins_split_text_parts():
+    from google.adk.events import Event
+    from google.genai import types
+    ev = Event(author="a", content=types.Content(role="model", parts=[types.Part(text="Hello "), types.Part(text="world")]))
+    assert agents.summarize([ev])[0] == "Hello world"
+
+
+def test_deterministic_config_is_temperature_zero():
+    assert agents.DETERMINISTIC.temperature == 0

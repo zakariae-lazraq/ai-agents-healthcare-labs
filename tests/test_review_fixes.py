@@ -185,3 +185,9 @@ def test_setup_ping_client_has_retries(monkeypatch):
     monkeypatch.setattr(genai_mod, "Client", FakeClient)
     setup._make_client("k")
     assert seen["http_options"] is not None and seen["http_options"].retry_options is not None
+
+
+def test_network_hiccups_count_as_busy():
+    for text in ("ReadTimeout: timed out", "Server disconnected without sending a response.",
+                 "RemoteProtocolError: peer closed connection", "ConnectError: connection reset"):
+        assert agents._error_kind(Exception(text)) == "busy", text

@@ -24,6 +24,8 @@ RETRY = types.HttpRetryOptions(attempts=3, initial_delay=1, exp_base=3,
 # Tried in order when the agent's model is busy (503 high demand) or out of free quota (429).
 BACKUP_MODELS = ["gemini-3.6-flash", "gemini-flash-lite-latest"]
 QUOTA_MESSAGE = "Free quota reached — wait one minute and run this cell again."
+# Course rule (outline 3.1): temperature 0 for reproducible answers. Pass as generate_content_config=DETERMINISTIC.
+DETERMINISTIC = types.GenerateContentConfig(temperature=0)
 BUSY_MESSAGE = "Gemini is very busy right now (a Google-side spike, not your fault). Wait 30 seconds and run this cell again."
 NOT_BUILT = "Your agent is not built yet — fix the red lines in the CHECK cell above, run it, then this cell."
 
@@ -59,12 +61,15 @@ def summarize(events) -> tuple[str, list[str]]:
     text, calls = "", []
     for ev in events:
         content = getattr(ev, "content", None)
+        buf = []
         for part in (getattr(content, "parts", None) or []):
             if getattr(part, "function_call", None):
                 calls.append(part.function_call.name)
             elif getattr(part, "text", None) and not getattr(part, "thought", False) \
                     and getattr(content, "role", "model") == "model":
-                text = part.text.strip()
+                buf.append(part.text)   # Gemini may split one answer across parts: join them
+        if "".join(buf).strip():
+            text = "".join(buf).strip()
     return text, calls
 
 
@@ -149,6 +154,7 @@ def _error_kind(exc: Exception) -> str:
     if "429" in msg or "resource_exhausted" in msg or "quota" in msg:
         return "quota"
     if any(s in msg for s in ("503", "unavailable", "high demand", "overloaded",
-                              "500", "internal", "504", "deadline_exceeded")):
+                              "500", "internal", "504", "deadline_exceeded",
+                              "timeout", "timed out", "disconnected", "connection", "remoteprotocol")):
         return "busy"   # transient Google-side errors: try the backup model
     return "other"

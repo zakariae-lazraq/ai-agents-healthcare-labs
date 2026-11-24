@@ -43,3 +43,19 @@ def test_answer_markdown_is_rendered():
     assert "<b>Lab 8</b>" in html and "**" not in html
     assert "<li>Lab 6</li>" in html
     assert "&lt;b&gt;" in html  # model text is still escaped
+
+
+
+def test_split_answer_parts_are_joined():
+    ev = Event(author="agent", content=types.Content(role="model", parts=[
+        types.Part(text="For **25-OH vitamin D**, use"), types.Part(text=" a gold-top tube.")]))
+    html = trace_html([ev])
+    assert html.count("ANSWER") == 1 and "MODEL" not in html
+    assert "<b>25-OH vitamin D</b>" in html and "a gold-top tube." in html
+
+
+def test_tool_result_shown_in_full_as_table():
+    long = {"test": "X", "notes": "y" * 600}
+    ev = _ev(types.Part(function_response=types.FunctionResponse(name="get_test_info", response=long)), role="user")
+    html = trace_html([ev])
+    assert "y" * 600 in html and "<table" in html and " …" not in html

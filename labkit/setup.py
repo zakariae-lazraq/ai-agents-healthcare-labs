@@ -72,10 +72,10 @@ def _scrub(text: str, secret: str | None) -> str:
 
 
 FIX_MODEL_MISSING = ("This model is not available for your key. Tell the trainer; meanwhile set "
-                     "MODEL = \"gemini-flash-lite-latest\" in the Setup cell and run it again.")
+                     "type gemini-flash-lite-latest in the MODEL box of the Setup cell and run it again.")
 FIX_LOCATION = "Google does not offer the Gemini API from your location or network. Tell the trainer."
 FIX_NO_FREE_QUOTA = ("This model has no free quota for your key (limit 0). Tell the trainer; meanwhile set "
-                     "MODEL = \"gemini-flash-lite-latest\" in the Setup cell and run it again.")
+                     "type gemini-flash-lite-latest in the MODEL box of the Setup cell and run it again.")
 
 
 def _classify_model_error(exc: Exception) -> str:

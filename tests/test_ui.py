@@ -69,3 +69,20 @@ def test_labkit_outputs_have_no_emoji():
              agents.QUOTA_MESSAGE, agents.NOT_BUILT, ui.SETUP_NOT_PASSED]
     for t in texts:
         assert not emoji.search(t), t[:120]
+
+
+
+def test_status_card_title_and_items():
+    html = ui.done_card("Lab 0 — status", ["a"], complete=False).data
+    assert "Lab 0 — status" in html and "not complete" in html.lower()
+    html2 = ui.done_card("Lab 0 — status", ["a"], complete=True).data
+    assert "complete" in html2.lower() and "not complete" not in html2.lower()
+
+
+def test_ready_reports_blank_and_wrong_tools():
+    def tool():
+        pass
+    assert ui.ready("name", "rules", [tool]) is True
+    assert ui.ready("___", "rules", [tool]) is False
+    assert ui.ready("name", "rules", ["___"]) is False
+    assert ui.ready("name", "rules", ["get_test_info"]) is False  # quoted name instead of the function

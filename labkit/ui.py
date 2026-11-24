@@ -62,6 +62,21 @@ def has_blank(*values) -> str | None:
     return None
 
 
+def ready(name: str, instruction: str, tools: list) -> bool:
+    """True if an agent can be built from these values; otherwise shows one 'Action needed' line."""
+    from IPython.display import display
+
+    problem = has_blank(name, instruction)
+    if problem is None and (not isinstance(tools, list) or not tools
+                            or not all(callable(t) for t in tools)):
+        problem = ("TOOLS must contain the tool function itself, e.g. TOOLS = [get_test_info] "
+                   "— no quotation marks, no ().")
+    if problem:
+        display(error_line(problem + " Then run this cell again."))
+        return False
+    return True
+
+
 SETUP_NOT_PASSED = ("Setup has not passed yet: scroll up to the Setup cell, fix the red lines, "
                     "run it again — then run this cell.")
 
@@ -91,14 +106,23 @@ def copy_box(text: str, title: str = "Copy this"):
         f"<pre style='white-space:pre-wrap;margin:6px 0 0'>{safe}</pre></div>")
 
 
-def done_card(lab: str, items: list[str]):
+def done_card(lab: str, items: list[str], complete: bool | None = None):
+    """Completion/status card. With complete=None the title is '<lab> complete' (legacy);
+    with complete=True/False the title is <lab> and a coloured verdict line is added."""
     from IPython.display import HTML
 
     lis = "".join(f"<li style='margin:2px 0'>{html.escape(i)}</li>" for i in items)
+    if complete is None:
+        title, verdict, top = f"{lab} complete", "", TEAL
+    else:
+        title = lab
+        top = TEAL if complete else RED
+        verdict = (f"<div style='font-weight:700;color:{GREEN if complete else RED};margin-top:4px'>"
+                   f"{'Complete — ready for Day 1' if complete else 'Not complete yet — fix the lines marked FIX'}</div>")
     return HTML(
-        f"<div style='{FONT};border:1px solid #C9D2DC;border-top:6px solid {TEAL};border-radius:6px;"
+        f"<div style='{FONT};border:1px solid #C9D2DC;border-top:6px solid {top};border-radius:6px;"
         "padding:14px 20px;max-width:620px;background:#FFFFFF;color:#1B2430'>"
-        f"<div style='font-size:19px;font-weight:700;color:{NAVY}'>{html.escape(lab)} complete</div>"
+        f"<div style='font-size:19px;font-weight:700;color:{NAVY}'>{html.escape(title)}</div>{verdict}"
         f"<ul style='margin:10px 0 10px 18px;padding:0'>{lis}</ul>"
         f"<div style='color:{GREY};font-size:13px'>Take a screenshot of this card and post it in the course chat.</div>"
         "</div>")
