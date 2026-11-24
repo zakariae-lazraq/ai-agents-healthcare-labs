@@ -39,14 +39,18 @@ class CheckResult:
 
 def get_api_key() -> str | None:
     """Return the Gemini API key from Colab Secrets, else the environment. Never prints it."""
-    key = None
+    key, source = None, ""
     try:
         from google.colab import userdata  # type: ignore
 
         key = userdata.get(KEY_NAME)
+        source = "Colab Secrets" if key else ""
     except Exception:
         key = None
-    key = (key or os.environ.get(KEY_NAME) or "").strip() or None
+    if not key and os.environ.get(KEY_NAME, "").strip():
+        key, source = os.environ[KEY_NAME], "environment variable"
+    key = (key or "").strip() or None
+    labkit._state["key_source"] = source if key else ""
     if key:
         os.environ[KEY_NAME] = key
     return key
@@ -65,10 +69,23 @@ def _scrub(text: str, secret: str | None) -> str:
     return text[:200]
 
 
+FIX_MODEL_MISSING = ("This model is not available for your key. Tell the trainer; meanwhile set "
+                     "MODEL = \"gemini-flash-lite-latest\" in the Setup cell and run it again.")
+FIX_LOCATION = "Google does not offer the Gemini API from your location or network. Tell the trainer."
+FIX_NO_FREE_QUOTA = ("This model has no free quota for your key (limit 0). Tell the trainer; meanwhile set "
+                     "MODEL = \"gemini-flash-lite-latest\" in the Setup cell and run it again.")
+
+
 def _classify_model_error(exc: Exception) -> str:
     msg = str(exc).lower()
+    if "location is not supported" in msg or "user location" in msg:
+        return FIX_LOCATION
+    if "limit: 0" in msg:
+        return FIX_NO_FREE_QUOTA
     if "429" in msg or "resource_exhausted" in msg or "quota" in msg:
         return FIX_QUOTA
+    if "404" in msg or "not_found" in msg or "is not found" in msg:
+        return FIX_MODEL_MISSING
     if any(s in msg for s in ("api key not valid", "api_key_invalid", "401", "403", "400", "permission")):
         return FIX_KEY_REJECTED
     return "Gemini did not answer. Wait a moment and run this cell again; if it repeats, tell the trainer."
@@ -89,7 +106,7 @@ def check_environment(model: str = DEFAULT_MODEL, *, ping_model: bool = True,
         results.append(CheckResult("Google ADK installed", False, type(exc).__name__, FIX_ADK))
 
     key = get_api_key()
-    results.append(CheckResult("API key found", bool(key), "found in Secrets" if key else "not found",
+    results.append(CheckResult("API key found", bool(key), f"found in {labkit._state.get('key_source') or 'Secrets'}" if key else "not found",
                                "" if key else FIX_KEY_MISSING))
 
     if not key:

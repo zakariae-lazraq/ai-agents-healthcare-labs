@@ -9,23 +9,28 @@ import labkit
 BLANK = "___"
 
 
-def check_html(items) -> str:
+def check_html(items, optional: bool = False) -> str:
     rows = []
     for ok, what, fix in items:
         line = f"✅ {html.escape(what)}" if ok else (
             f"❌ {html.escape(what)} — <span style='color:#b3261e'>👉 {html.escape(fix)}</span>")
         rows.append(f"<div style='margin:3px 0'>{line}</div>")
     all_ok = all(ok for ok, _, _ in items)
-    footer = "🎉 All good — continue." if all_ok else "Fix the ❌ lines and run this cell again."
+    if all_ok:
+        footer = "🎉 All good — continue."
+    elif optional:
+        footer = "ℹ️ The ❌ items are optional — tell the trainer, and continue: you can still do every lab."
+    else:
+        footer = "Fix the ❌ lines and run this cell again."
     return (f"<div style='font-family:sans-serif;font-size:14px'>{''.join(rows)}"
             f"<p><b>{footer}</b></p></div>")
 
 
-def check(items) -> bool:
+def check(items, optional: bool = False) -> bool:
     """items: list of (ok, what_is_checked, how_to_fix_if_wrong). Shows ✅/❌ lines; returns all ok."""
     from IPython.display import HTML, display
 
-    display(HTML(check_html(items)))
+    display(HTML(check_html(items, optional)))
     return all(ok for ok, _, _ in items)
 
 
@@ -39,9 +44,19 @@ def has_blank(*values) -> str | None:
     return None
 
 
+SETUP_NOT_PASSED = "Setup hasn't passed yet: scroll up to ▶ Setup, fix the ❌ lines, run it again — then this cell."
+
+
 def require_setup() -> None:
     if not labkit._state.get("setup_ok"):
-        raise RuntimeError("Run the Setup cell (step 1) first, then this cell again.")
+        raise RuntimeError(SETUP_NOT_PASSED)
+
+
+def error_line(message: str):
+    """A red ❌ line for participant-facing problems (instead of a traceback)."""
+    from IPython.display import HTML
+
+    return HTML(f"<div style='font-family:sans-serif;color:#b3261e;font-weight:bold'>❌ {html.escape(message)}</div>")
 
 
 def copy_box(text: str, title: str = "Copy this"):

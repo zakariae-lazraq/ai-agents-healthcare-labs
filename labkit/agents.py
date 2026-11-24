@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import asyncio
 import concurrent.futures
+import contextlib
+import logging
 from dataclasses import dataclass, field
 
 from google.adk.models.google_llm import Gemini
@@ -13,11 +15,25 @@ from google.genai import types
 from labkit import DEFAULT_MODEL
 from labkit.setup import get_api_key
 from labkit.trace import trace_cards
-from labkit.ui import has_blank, require_setup
+from labkit import _state
+from labkit.ui import SETUP_NOT_PASSED, error_line, has_blank
 
 RETRY = types.HttpRetryOptions(attempts=5, initial_delay=2, exp_base=4,
                                http_status_codes=[429, 500, 503, 504])
 QUOTA_MESSAGE = "⏳ Free quota reached — wait one minute and run this cell again."
+NOT_BUILT = "Your agent isn't built yet — fix the ❌ lines in the CHECK cell above, run it, then this cell."
+
+
+@contextlib.contextmanager
+def _quiet_adk_logs():
+    """ADK logs a full traceback on model errors; hide it so participants see our one-line message."""
+    log = logging.getLogger("google_adk")
+    old = log.level
+    log.setLevel(logging.CRITICAL)
+    try:
+        yield
+    finally:
+        log.setLevel(old)
 
 
 def make_model(name: str = DEFAULT_MODEL) -> Gemini:
@@ -58,25 +74,42 @@ def _run_coro(coro):
 
 
 def run(agent, message: str, *, plugins: list | None = None, show: bool = True) -> RunResult:
-    """Send one message to an agent, show what it did as trace cards, return the result."""
-    require_setup()
-    blank = has_blank(getattr(agent, "name", ""), getattr(agent, "instruction", "") if isinstance(getattr(agent, "instruction", ""), str) else "x")
+    """Send one message to an agent, show what it did as trace cards, return the result.
+
+    Participant mistakes (setup not passed, agent not built, blanks left, quota) never raise:
+    they show one red line and return a RunResult whose .message explains what to do.
+    """
+    from IPython.display import HTML, display
+
+    def stop(note: str) -> RunResult:
+        if show:
+            display(error_line(note))
+        return RunResult("", [], [], note)
+
+    if not _state.get("setup_ok"):
+        return stop(SETUP_NOT_PASSED)
+    if agent is None:
+        return stop(NOT_BUILT)
+    instruction = getattr(agent, "instruction", "")
+    blank = has_blank(getattr(agent, "name", ""), instruction if isinstance(instruction, str) else "x")
     if blank:
-        raise ValueError(blank)
+        return stop(blank)
     get_api_key()
     runner = InMemoryRunner(agent=agent, app_name="lab", plugins=plugins)
+    handle = display(HTML("<i style='font-family:sans-serif'>⏳ Asking Gemini…</i>"), display_id=True) if show else None
     try:
-        events = _run_coro(runner.run_debug(message, quiet=True))
+        with _quiet_adk_logs():
+            events = _run_coro(runner.run_debug(message, quiet=True))
     except Exception as exc:
         msg = str(exc).lower()
+        if handle:
+            handle.update(HTML(""))
         if "429" in msg or "resource_exhausted" in msg or "quota" in msg:
-            if show:
-                from IPython.display import HTML, display
-                display(HTML(f"<b style='font-family:sans-serif'>{QUOTA_MESSAGE}</b>"))
-            return RunResult("", [], [], QUOTA_MESSAGE)
+            return stop(QUOTA_MESSAGE)
         raise
+    if handle:
+        handle.update(HTML(""))
     text, calls = summarize(events)
     if show:
-        from IPython.display import display
         display(trace_cards(events))
     return RunResult(text, list(events), calls)

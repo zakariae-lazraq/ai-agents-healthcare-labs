@@ -25,7 +25,7 @@ def test_has_blank_detects_placeholder():
 
 def test_require_setup_before_and_after():
     labkit._state["setup_ok"] = False
-    with pytest.raises(RuntimeError, match="Run the Setup cell"):
+    with pytest.raises(RuntimeError, match="Setup hasn't passed yet"):
         ui.require_setup()
     labkit._state["setup_ok"] = True
     ui.require_setup()
@@ -46,8 +46,7 @@ def test_run_refuses_blank_instruction():
     from labkit import agents
     labkit._state["setup_ok"] = True
     a = Agent(name="helper", model=agents.make_model(), instruction="Use ___ for schedule questions.")
-    with pytest.raises(ValueError, match="___"):
-        agents.run(a, "hi", show=False)
+    assert "___" in agents.run(a, "hi", show=False).message
 
 
 def test_run_requires_setup():
@@ -55,5 +54,4 @@ def test_run_requires_setup():
     from labkit import agents
     labkit._state["setup_ok"] = False
     a = Agent(name="helper", model=agents.make_model(), instruction="ok")
-    with pytest.raises(RuntimeError, match="Setup cell"):
-        agents.run(a, "hi", show=False)
+    assert "Setup hasn't passed yet" in agents.run(a, "hi", show=False).message

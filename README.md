@@ -36,6 +36,6 @@ Each lab is one Google Colab notebook: open it, follow the guide inside every st
 
 - `notebooks/` — one notebook per lab
 - `labkit/` — small helpers (API key check, running an agent, trace cards, task checks)
-- `data/` — synthetic course data
+- `data/` — synthetic course data (added with the labs that use it)
 
 Code: Apache-2.0. Built with [Google ADK](https://github.com/google/adk-python) and the Gemini API.
