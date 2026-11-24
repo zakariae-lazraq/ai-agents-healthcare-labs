@@ -13,6 +13,7 @@ from google.genai import types
 from labkit import DEFAULT_MODEL
 from labkit.setup import get_api_key
 from labkit.trace import trace_cards
+from labkit.ui import has_blank, require_setup
 
 RETRY = types.HttpRetryOptions(attempts=5, initial_delay=2, exp_base=4,
                                http_status_codes=[429, 500, 503, 504])
@@ -58,6 +59,10 @@ def _run_coro(coro):
 
 def run(agent, message: str, *, plugins: list | None = None, show: bool = True) -> RunResult:
     """Send one message to an agent, show what it did as trace cards, return the result."""
+    require_setup()
+    blank = has_blank(getattr(agent, "name", ""), getattr(agent, "instruction", "") if isinstance(getattr(agent, "instruction", ""), str) else "x")
+    if blank:
+        raise ValueError(blank)
     get_api_key()
     runner = InMemoryRunner(agent=agent, app_name="lab", plugins=plugins)
     try:
