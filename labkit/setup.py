@@ -113,7 +113,8 @@ def check_environment(model: str = DEFAULT_MODEL, *, ping_model: bool = True,
         results.append(CheckResult("API key works", False, "skipped", "Fix the line above first."))
     elif ping_model:
         try:
-            _make_client(key).models.generate_content(model=model, contents="Reply with OK")
+            client = _make_client(key)  # keep a reference: a temporary client is closed before the call runs
+            client.models.generate_content(model=model, contents="Reply with OK")
             results.append(CheckResult("API key works", True, f"{model} answered"))
         except Exception as exc:
             results.append(CheckResult("API key works", False, _scrub(exc, key), _classify_model_error(exc)))

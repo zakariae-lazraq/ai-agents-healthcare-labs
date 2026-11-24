@@ -91,3 +91,50 @@ def test_key_source_label_env(monkeypatch):
     monkeypatch.setattr(setup, "_make_client", lambda k: type("C", (), {"models": type("M", (), {"generate_content": lambda self, model, contents: None})()})())
     r = {x.name: x for x in setup.check_environment(ping_pubmed=False)}["API key found"]
     assert "Secrets" not in r.detail
+
+
+# Live-run finding — a temporary genai client is closed (garbage-collected) before the request runs
+def test_ping_keeps_client_alive(monkeypatch):
+    class Models:
+        closed = False
+
+        def generate_content(self, model, contents):
+            if self.closed:
+                raise RuntimeError("Cannot send a request, as the client has been closed.")
+            return None
+
+    class ClosingClient:
+        def __init__(self):
+            self.models = Models()
+
+        def __del__(self):
+            self.models.closed = True
+
+    monkeypatch.setenv("GOOGLE_API_KEY", "k")
+    monkeypatch.setattr(setup, "_make_client", lambda k: ClosingClient())
+    r = {x.name: x for x in setup.check_environment(ping_pubmed=False)}["API key works"]
+    assert r.ok, r.detail
+
+
+# Live-run finding — each run used a new event loop, so ADK/genai clients cached per loop were
+# cleaned up in a closed loop ("Event loop is closed" noise). One persistent loop fixes it.
+def test_runs_share_one_persistent_loop():
+    import asyncio
+
+    async def which_loop():
+        return asyncio.get_running_loop()
+
+    first = agents._run_coro(which_loop())
+    second = agents._run_coro(which_loop())
+    assert first is second and not first.is_closed()
+
+
+def test_run_coro_works_inside_running_loop():
+    import asyncio
+
+    async def outer():
+        async def inner():
+            return 42
+        return agents._run_coro(inner())
+
+    assert asyncio.run(outer()) == 42

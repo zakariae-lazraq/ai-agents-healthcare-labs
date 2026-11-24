@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-import concurrent.futures
+import threading
 import contextlib
 import logging
 from dataclasses import dataclass, field
@@ -63,14 +63,26 @@ def summarize(events) -> tuple[str, list[str]]:
     return text, calls
 
 
+_LOOP: asyncio.AbstractEventLoop | None = None
+
+
+def _background_loop() -> asyncio.AbstractEventLoop:
+    """One event loop, alive for the whole session, in a daemon thread.
+
+    ADK/genai cache their HTTP clients per event loop; reusing one loop keeps them valid
+    (a new loop per run left clients to be cleaned up in a closed loop → noisy errors).
+    It also works the same inside Colab/Jupyter (which already run a loop) and in scripts.
+    """
+    global _LOOP
+    if _LOOP is None or _LOOP.is_closed():
+        _LOOP = asyncio.new_event_loop()
+        threading.Thread(target=_LOOP.run_forever, name="labkit-loop", daemon=True).start()
+    return _LOOP
+
+
 def _run_coro(coro):
-    """Run a coroutine whether or not an event loop is already running (Colab/Jupyter)."""
-    try:
-        asyncio.get_running_loop()
-    except RuntimeError:
-        return asyncio.run(coro)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-        return pool.submit(asyncio.run, coro).result()
+    """Run a coroutine on the session's background loop and wait for its result."""
+    return asyncio.run_coroutine_threadsafe(coro, _background_loop()).result()
 
 
 def run(agent, message: str, *, plugins: list | None = None, show: bool = True) -> RunResult:
