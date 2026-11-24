@@ -18,10 +18,14 @@ from labkit.trace import trace_cards
 from labkit import _state
 from labkit.ui import SETUP_NOT_PASSED, error_line, has_blank
 
-RETRY = types.HttpRetryOptions(attempts=5, initial_delay=2, exp_base=4,
+# Short retries: if Gemini stays busy, switching to a backup model is faster than waiting.
+RETRY = types.HttpRetryOptions(attempts=3, initial_delay=1, exp_base=3,
                                http_status_codes=[429, 500, 503, 504])
-QUOTA_MESSAGE = "⏳ Free quota reached — wait one minute and run this cell again."
-NOT_BUILT = "Your agent isn't built yet — fix the ❌ lines in the CHECK cell above, run it, then this cell."
+# Tried in order when the agent's model is busy (503 high demand) or out of free quota (429).
+BACKUP_MODELS = ["gemini-3.6-flash", "gemini-flash-lite-latest"]
+QUOTA_MESSAGE = "Free quota reached — wait one minute and run this cell again."
+BUSY_MESSAGE = "Gemini is very busy right now (a Google-side spike, not your fault). Wait 30 seconds and run this cell again."
+NOT_BUILT = "Your agent is not built yet — fix the red lines in the CHECK cell above, run it, then this cell."
 
 
 @contextlib.contextmanager
@@ -46,7 +50,8 @@ class RunResult:
     text: str
     events: list = field(default_factory=list)
     tool_calls: list[str] = field(default_factory=list)
-    message: str = ""
+    message: str = ""   # set when the run stopped (setup, blanks, quota…): what the participant must do
+    note: str = ""      # informational, e.g. a backup model answered
 
 
 def summarize(events) -> tuple[str, list[str]]:
@@ -107,21 +112,43 @@ def run(agent, message: str, *, plugins: list | None = None, show: bool = True) 
     if blank:
         return stop(blank)
     get_api_key()
-    runner = InMemoryRunner(agent=agent, app_name="lab", plugins=plugins)
-    handle = display(HTML("<i style='font-family:sans-serif'>⏳ Asking Gemini…</i>"), display_id=True) if show else None
-    try:
-        with _quiet_adk_logs():
-            events = _run_coro(runner.run_debug(message, quiet=True))
-    except Exception as exc:
-        msg = str(exc).lower()
-        if handle:
-            handle.update(HTML(""))
-        if "429" in msg or "resource_exhausted" in msg or "quota" in msg:
-            return stop(QUOTA_MESSAGE)
-        raise
+    handle = display(HTML("<i style='font-family:sans-serif;color:#5F6B7A'>Asking Gemini…</i>"), display_id=True) if show else None
+    primary = getattr(getattr(agent, "model", None), "model", None)
+    candidates = [None] + [m for m in BACKUP_MODELS if m != primary]   # None = the agent as built
+    last_kind, note, events = "", "", None
+    for backup in candidates:
+        current = agent if backup is None else agent.model_copy(update={"model": make_model(backup)})
+        runner = InMemoryRunner(agent=current, app_name="lab", plugins=plugins)
+        try:
+            with _quiet_adk_logs():
+                events = _run_coro(runner.run_debug(message, quiet=True))
+            if backup:
+                note = f"The model {primary} was busy, so this answer comes from the backup model {backup}."
+            break
+        except Exception as exc:
+            kind = _error_kind(exc)
+            if kind not in ("busy", "quota"):
+                if handle:
+                    handle.update(HTML(""))
+                raise
+            last_kind = kind
     if handle:
         handle.update(HTML(""))
+    if events is None:
+        return stop(QUOTA_MESSAGE if last_kind == "quota" else BUSY_MESSAGE)
     text, calls = summarize(events)
     if show:
+        if note:
+            display(HTML(f"<div style='font-family:sans-serif;font-size:13px;color:#5F6B7A'>Note: {note}</div>"))
         display(trace_cards(events))
-    return RunResult(text, list(events), calls)
+    return RunResult(text, list(events), calls, note=note)
+
+
+def _error_kind(exc: Exception) -> str:
+    msg = str(exc).lower()
+    if "429" in msg or "resource_exhausted" in msg or "quota" in msg:
+        return "quota"
+    if any(s in msg for s in ("503", "unavailable", "high demand", "overloaded",
+                              "500", "internal", "504", "deadline_exceeded")):
+        return "busy"   # transient Google-side errors: try the backup model
+    return "other"

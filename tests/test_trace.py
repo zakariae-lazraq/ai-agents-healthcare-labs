@@ -19,7 +19,7 @@ def sample_events(result_text="Day 2: compliance"):
 
 def test_trace_cards_order():
     html = trace_html(sample_events())
-    i_call, i_res, i_final = html.index("🔧"), html.index("📄"), html.index("✅")
+    i_call, i_res, i_final = html.index("TOOL CALL"), html.index("TOOL RESULT"), html.index("ANSWER")
     assert i_call < i_res < i_final
     assert "get_course_day" in html
     assert "On day 2 we cover compliance." in html
@@ -34,3 +34,12 @@ def test_trace_escapes_html():
 def test_trace_cards_returns_display_object():
     from IPython.display import HTML
     assert isinstance(trace_cards(sample_events()), HTML)
+
+
+
+def test_answer_markdown_is_rendered():
+    events = [_ev(types.Part(text="The longest is **Lab 8**.\n* Lab 6\n* Lab 7 <b>"))]
+    html = trace_html(events)
+    assert "<b>Lab 8</b>" in html and "**" not in html
+    assert "<li>Lab 6</li>" in html
+    assert "&lt;b&gt;" in html  # model text is still escaped

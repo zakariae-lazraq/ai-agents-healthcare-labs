@@ -76,3 +76,9 @@ def test_key_never_in_output(monkeypatch):
         assert "SECRET123" not in r.detail and "SECRET123" not in r.fix
     html = setup.checks_html(results)
     assert "SECRET123" not in html
+
+
+
+def test_checks_table_is_left_aligned():
+    html = setup.checks_html([setup.CheckResult("PubMed reachable", True, "ok")])
+    assert "text-align:left" in html

@@ -7,7 +7,7 @@ from labkit import agents
 def test_make_model_defaults():
     m = agents.make_model()
     assert m.model == "gemini-3.5-flash-lite"
-    assert m.retry_options.attempts == 5
+    assert m.retry_options.attempts == 3
     assert 429 in m.retry_options.http_status_codes
 
 

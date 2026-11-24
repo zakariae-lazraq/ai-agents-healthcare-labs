@@ -46,7 +46,7 @@ def test_run_quota_does_not_emit_adk_error_logs(monkeypatch, caplog):
 def test_run_with_no_agent_gives_message():
     labkit._state["setup_ok"] = True
     res = agents.run(None, "hello", show=False)
-    assert res.text == "" and "isn't built yet" in res.message
+    assert res.text == "" and "is not built yet" in res.message
 
 
 def test_run_with_blank_gives_message_not_exception():
@@ -61,7 +61,7 @@ def test_run_with_blank_gives_message_not_exception():
 def test_setup_not_passed_message():
     labkit._state["setup_ok"] = False
     res = agents.run(None, "hello", show=False)
-    assert "Setup hasn't passed yet" in res.message and "▶ Setup" in res.message
+    assert "Setup has not passed yet" in res.message and "Setup cell" in res.message
 
 
 # Important 6 — real-world model errors get the right fix
@@ -83,7 +83,7 @@ def test_zero_free_quota_fix(monkeypatch):
 # Re-graded minors that confuse participants
 def test_optional_check_footer():
     html = ui.check_html([(False, "Canvas", "Tell the trainer")], optional=True)
-    assert "Fix the ❌ lines" not in html and "optional" in html.lower()
+    assert "Fix the red lines" not in html and "optional" in html.lower()
 
 
 def test_key_source_label_env(monkeypatch):
@@ -138,3 +138,50 @@ def test_run_coro_works_inside_running_loop():
         return agents._run_coro(inner())
 
     assert asyncio.run(outer()) == 42
+
+
+# Live finding — Google 503 "high demand": switch to a backup model instead of waiting minutes
+def test_run_falls_back_when_model_busy(monkeypatch):
+    labkit._state["setup_ok"] = True
+    used = []
+
+    async def fake_run_debug(self, message, **k):
+        model = self.agent.model.model if hasattr(self, "agent") else self._agent.model.model
+        used.append(model)
+        if model == agents.DEFAULT_MODEL:
+            raise Exception("503 UNAVAILABLE. This model is currently experiencing high demand.")
+        from google.adk.events import Event
+        from google.genai import types
+        return [Event(author="a", content=types.Content(role="model", parts=[types.Part(text="ok from backup")]))]
+
+    monkeypatch.setattr("google.adk.runners.InMemoryRunner.run_debug", fake_run_debug)
+    from google.adk.agents import Agent
+    a = Agent(name="t", model=agents.make_model(), instruction="hi")
+    res = agents.run(a, "hello", show=False)
+    assert res.text == "ok from backup"
+    assert used[0] == agents.DEFAULT_MODEL and used[1] in agents.BACKUP_MODELS
+    assert "backup" in res.note.lower()
+
+
+def test_busy_model_setup_message(monkeypatch):
+    r = _works(monkeypatch, Exception("503 UNAVAILABLE. This model is currently experiencing high demand."))
+    assert "busy" in r.fix.lower() and "trainer" not in r.fix.lower()
+
+
+def test_transient_server_errors_count_as_busy():
+    for text in ("500 INTERNAL. An internal error has occurred.", "504 DEADLINE_EXCEEDED", "503 UNAVAILABLE"):
+        assert agents._error_kind(Exception(text)) == "busy"
+    assert agents._error_kind(Exception("400 INVALID_ARGUMENT bad request")) == "other"
+
+
+def test_setup_ping_client_has_retries(monkeypatch):
+    seen = {}
+    import google.genai as genai_mod
+
+    class FakeClient:
+        def __init__(self, api_key=None, http_options=None):
+            seen["http_options"] = http_options
+
+    monkeypatch.setattr(genai_mod, "Client", FakeClient)
+    setup._make_client("k")
+    assert seen["http_options"] is not None and seen["http_options"].retry_options is not None

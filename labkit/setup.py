@@ -14,7 +14,7 @@ from labkit import DEFAULT_MODEL
 KEY_NAME = "GOOGLE_API_KEY"
 
 FIX_KEY_MISSING = (
-    "Open the 🔑 Secrets panel (left sidebar) → add a secret named GOOGLE_API_KEY → "
+    "Open Secrets (the key icon in the left sidebar) → Add new secret → name it GOOGLE_API_KEY → "
     "paste your key → switch ON 'Notebook access' → run this cell again."
 )
 FIX_KEY_REJECTED = (
@@ -58,8 +58,10 @@ def get_api_key() -> str | None:
 
 def _make_client(api_key: str):
     from google import genai
+    from google.genai import types
 
-    return genai.Client(api_key=api_key)
+    retry = types.HttpRetryOptions(attempts=3, initial_delay=1, exp_base=3, http_status_codes=[429, 500, 503, 504])
+    return genai.Client(api_key=api_key, http_options=types.HttpOptions(retry_options=retry))
 
 
 def _scrub(text: str, secret: str | None) -> str:
@@ -86,6 +88,9 @@ def _classify_model_error(exc: Exception) -> str:
         return FIX_QUOTA
     if "404" in msg or "not_found" in msg or "is not found" in msg:
         return FIX_MODEL_MISSING
+    if "503" in msg or "unavailable" in msg or "high demand" in msg or "overloaded" in msg:
+        return ("Google's Gemini servers are busy right now (not a problem with your key). "
+                "Wait 30 seconds and run this cell again.")
     if any(s in msg for s in ("api key not valid", "api_key_invalid", "401", "403", "400", "permission")):
         return FIX_KEY_REJECTED
     return "Gemini did not answer. Wait a moment and run this cell again; if it repeats, tell the trainer."
@@ -133,19 +138,22 @@ def check_environment(model: str = DEFAULT_MODEL, *, ping_model: bool = True,
 def checks_html(results: list[CheckResult]) -> str:
     rows = []
     for r in results:
-        icon = "✅" if r.ok else "❌"
-        fix = (f"<div style='color:#b3261e;margin-top:2px'>👉 {html.escape(r.fix)}</div>"
+        from labkit.ui import GREEN, RED, badge
+
+        tag = badge("OK", GREEN) if r.ok else badge("FIX", RED)
+        fix = (f"<div style='color:{RED};margin-top:2px'>How to fix: {html.escape(r.fix)}</div>"
                if (not r.ok and r.fix) else "")
         rows.append(
-            f"<tr><td style='padding:4px 10px;font-size:18px'>{icon}</td>"
-            f"<td style='padding:4px 10px'><b>{html.escape(r.name)}</b>"
-            f"<span style='opacity:.7'> — {html.escape(r.detail)}</span>{fix}</td></tr>"
+            f"<tr><td style='padding:5px 4px;vertical-align:top;text-align:left'>{tag}</td>"
+            f"<td style='padding:5px 8px;text-align:left'><b>{html.escape(r.name)}</b>"
+            f"<span style='color:#5F6B7A'> — {html.escape(r.detail)}</span>{fix}</td></tr>"
         )
     all_ok = all(r.ok for r in results)
-    footer = ("🎉 Everything is ready — continue to the next step." if all_ok
-              else "Fix the ❌ lines (follow the 👉 instructions), then run this cell again.")
-    return (f"<table style='border-collapse:collapse;font-family:sans-serif'>{''.join(rows)}</table>"
-            f"<p style='font-family:sans-serif;font-weight:bold'>{footer}</p>")
+    footer, color = (("Everything is ready — continue to the next step.", "#1E7A3C") if all_ok else
+                     ("Fix the red lines (follow each 'How to fix'), then run this cell again.", "#B3261E"))
+    font = "font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px"
+    return (f"<table style='border-collapse:collapse;{font}'>{''.join(rows)}</table>"
+            f"<div style='{font};font-weight:600;margin-top:8px;color:{color}'>{footer}</div>")
 
 
 def show_checks(results: list[CheckResult]) -> bool:

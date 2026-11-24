@@ -5,14 +5,39 @@ from __future__ import annotations
 import html
 import json
 
-_STYLE = ("border-radius:8px;padding:8px 12px;margin:6px 0;font-family:sans-serif;"
-          "font-size:14px;line-height:1.45;border:1px solid {b};background:{bg};color:#1f1f1f")
-_KINDS = {
-    "call": ("🔧", "Calls tool", "#8ab4f8", "#e8f0fe"),
-    "result": ("📄", "Tool result", "#a8c7a0", "#eef6ec"),
-    "think": ("🧠", "Model says", "#d3d3d3", "#f6f6f6"),
-    "final": ("✅", "Final answer", "#81c995", "#e6f4ea"),
+_STYLE = ("padding:7px 12px;margin:6px 0;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;"
+          "font-size:14px;line-height:1.45;border-left:4px solid {b};background:{bg};color:#1B2430")
+_KINDS = {  # label, border colour, background — same palette as the course figures
+    "call": ("TOOL CALL", "#1F3A5F", "#F2F5F9"),
+    "result": ("TOOL RESULT", "#2A7F7F", "#F0F7F7"),
+    "think": ("MODEL", "#8A96A3", "#F7F8FA"),
+    "final": ("ANSWER", "#1F3A5F", "#FFFFFF"),
 }
+
+
+def _markdown_lite(text: str) -> str:
+    """Render the little markdown models use (**bold**, *italic*, bullet lists) safely: escape first."""
+    import re
+
+    out, in_list = [], False
+    for line in html.escape(text).splitlines():
+        m = re.match(r"^\s*[*-]\s+(.*)$", line)
+        if m:
+            if not in_list:
+                out.append("<ul style='margin:4px 0 4px 18px;padding:0'>")
+                in_list = True
+            out.append(f"<li>{m.group(1)}</li>")
+            continue
+        if in_list:
+            out.append("</ul>")
+            in_list = False
+        out.append(line + "<br>")
+    if in_list:
+        out.append("</ul>")
+    body = "".join(out)
+    body = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", body)
+    body = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<i>\1</i>", body)
+    return body.removesuffix("<br>")
 
 
 def _short(value, limit: int = 300) -> str:
@@ -21,9 +46,10 @@ def _short(value, limit: int = 300) -> str:
 
 
 def _card(kind: str, body: str) -> str:
-    icon, label, border, bg = _KINDS[kind]
-    return (f"<div style='{_STYLE.format(b=border, bg=bg)}'><b>{icon} {label}</b>"
-            f"<div style='white-space:pre-wrap;margin-top:4px'>{body}</div></div>")
+    label, border, bg = _KINDS[kind]
+    return (f"<div style='{_STYLE.format(b=border, bg=bg)}'>"
+            f"<span style='font-size:11px;font-weight:700;letter-spacing:.06em;color:{border}'>{label}</span>"
+            f"<div style='margin-top:4px'>{body}</div></div>")
 
 
 def trace_html(events) -> str:
@@ -39,7 +65,7 @@ def trace_html(events) -> str:
                 fr = part.function_response
                 items.append(("result", f"<code>{html.escape(fr.name)}</code> → {html.escape(_short(fr.response))}"))
             elif getattr(part, "text", None) and not getattr(part, "thought", False):
-                items.append(("think", html.escape(part.text.strip())))
+                items.append(("think", _markdown_lite(part.text.strip())))
     for i in range(len(items) - 1, -1, -1):
         if items[i][0] == "think":
             items[i] = ("final", items[i][1])
