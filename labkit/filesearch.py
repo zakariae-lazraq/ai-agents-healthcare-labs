@@ -1,0 +1,106 @@
+"""Lab 1 challenge: ask a question with Gemini File Search (Google-managed retrieval).
+
+Creates a temporary File Search store, uploads the SOPs, asks once, and always deletes the store.
+Problems come back as a plain message (never a traceback): the challenge is optional.
+"""
+
+from __future__ import annotations
+
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+
+from labkit.agents import BUSY_MESSAGE, _error_kind
+
+QUOTA_FS = ("File Search reached a free-tier quota (it embeds your documents and your question). Wait one minute "
+            "and run the cell again. This challenge is optional — you can skip it.")
+UPLOAD_ATTEMPTS = 3
+QUOTA_WAIT = 20  # seconds
+
+
+@dataclass
+class FileSearchResult:
+    text: str = ""
+    sources: list[str] = field(default_factory=list)
+    message: str | None = None
+
+
+def _sources(resp) -> list[str]:
+    titles = set()
+    for cand in getattr(resp, "candidates", None) or []:
+        meta = getattr(cand, "grounding_metadata", None)
+        for ch in getattr(meta, "grounding_chunks", None) or []:
+            title = getattr(getattr(ch, "retrieved_context", None), "title", None)
+            if title:
+                titles.add(title)
+    return sorted(titles)
+
+
+def ask_with_file_search(folder, question: str, model: str, client=None, sleep=time.sleep,
+                         timeout: float = 120) -> FileSearchResult:
+    from google.genai import types
+
+    if client is None:
+        from google import genai
+        client = genai.Client()
+    store = None
+    try:
+        store = client.file_search_stores.create(config={"display_name": "northbridge-sops"})
+        for f in sorted(Path(folder).glob("*.md")):
+            for attempt in range(UPLOAD_ATTEMPTS):  # indexing has a tight per-minute quota: wait and retry
+                try:
+                    op = client.file_search_stores.upload_to_file_search_store(
+                        file=str(f), file_search_store_name=store.name,
+                        config={"display_name": f.stem, "mime_type": "text/plain"})
+                    break
+                except Exception as exc:
+                    if _error_kind(exc) != "quota" or attempt == UPLOAD_ATTEMPTS - 1:
+                        raise
+                    sleep(QUOTA_WAIT)
+            waited = 0.0
+            while not op.done:
+                if waited >= timeout:
+                    return FileSearchResult(message="Indexing took too long. Run the cell again in a minute.")
+                sleep(2)
+                waited += 2
+                op = client.operations.get(op)
+        resp = client.models.generate_content(
+            model=model, contents=question + " Answer only from the documents and cite them.",
+            config=types.GenerateContentConfig(temperature=0, tools=[types.Tool(
+                file_search=types.FileSearch(file_search_store_names=[store.name]))]))
+        return FileSearchResult(text=resp.text or "", sources=_sources(resp))
+    except Exception as exc:  # participant-facing: plain message instead of a traceback
+        kind = _error_kind(exc)
+        if kind == "quota":
+            return FileSearchResult(message=QUOTA_FS)
+        if kind == "busy":
+            return FileSearchResult(message=BUSY_MESSAGE)
+        return FileSearchResult(message=f"File Search failed: {str(exc)[:200]}. This challenge is optional.")
+    finally:
+        if store is not None:
+            try:
+                client.file_search_stores.delete(name=store.name, config={"force": True})
+            except Exception:
+                pass  # temporary store; never block the participant on cleanup
+
+
+def ask_long_context(folder, question: str, model: str, client=None) -> FileSearchResult:
+    """The no-retrieval alternative: put every SOP in the prompt (fine for 3 short SOPs, not for 300)."""
+    from google.genai import types
+
+    if client is None:
+        from google import genai
+        client = genai.Client()
+    files = sorted(Path(folder).glob("*.md"))
+    docs = "\n\n".join(f.read_text(encoding="utf-8") for f in files)
+    prompt = (f"Documents:\n\n{docs}\n\nQuestion: {question}\n"
+              "Answer only from the documents above and cite the SOP number and section.")
+    try:
+        resp = client.models.generate_content(model=model, contents=prompt,
+                                              config=types.GenerateContentConfig(temperature=0))
+        return FileSearchResult(text=resp.text or "", sources=[f.stem for f in files])
+    except Exception as exc:
+        kind = _error_kind(exc)
+        msg = {"quota": "Free quota reached — wait one minute and run this cell again.",
+               "busy": BUSY_MESSAGE}.get(kind, f"The request failed: {str(exc)[:200]}.")
+        return FileSearchResult(message=msg + " This challenge is optional.")

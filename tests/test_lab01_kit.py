@@ -123,3 +123,10 @@ def test_not_in_sop_on_a_list_question_is_incomplete(questions):
     ans = "Not in the SOP. (SOP-03 §2) specifies that only specific analytes are critical values; vitamin D is not listed."
     assert g(q, ans) == "incomplete"
     assert g(q, "Vitamin D is not on the critical value list (SOP-03 §2), so it has no critical value.") == "correct"
+
+
+def test_bare_not_in_sop_on_list_question_is_incomplete_not_invented(questions):
+    q = questions["Q08"]
+    gr = scoring.grade(q, "Not in the SOP.")
+    assert gr.label == "incomplete"
+    assert "invent" not in gr.reason

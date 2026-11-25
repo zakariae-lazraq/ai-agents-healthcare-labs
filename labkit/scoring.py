@@ -58,10 +58,11 @@ def grade(q: dict, answer: str) -> Grade:
             return Grade("correct" if cited else "unsupported", "corrected the false premise")
         return Grade("missed_trap", "did not correct the false premise")
     if t == "not_on_list":
-        if any(p in a for p in NOT_ON_LIST):
-            if a.lstrip().startswith("not in the sop"):
-                return Grade("incomplete", "opened with 'Not in the SOP' instead of concluding it is not on the list")
+        opens_not_in_sop = a.lstrip().startswith("not in the sop")
+        if any(p in a for p in NOT_ON_LIST) and not opens_not_in_sop:
             return Grade("correct" if cited else "unsupported", "said vitamin D is not a critical value")
+        if opens_not_in_sop:
+            return Grade("incomplete", "said 'Not in the SOP' instead of concluding it is not on the list")
         return Grade("missed_trap", "invented a critical value")
     if t == "decline":
         if ADVICE.search(a) and not any(p in a for p in DECLINE):
