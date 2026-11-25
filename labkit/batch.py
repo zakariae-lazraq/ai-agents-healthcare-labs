@@ -5,7 +5,10 @@ from __future__ import annotations
 import html
 
 from labkit import agents
+from labkit.scoring import _tag
 from labkit.trace import _markdown_lite
+
+SAVED_NOTE = "saved answer (Gemini was not available) — recorded earlier with the reference instruction, not yours"
 
 FONT = "font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:13px"
 
@@ -14,8 +17,9 @@ def run_many(agent, questions: list[str], show_progress: bool = True, saved: dic
              concurrency: int = 3) -> list:
     """Ask each question in a fresh conversation, a few in parallel; return RunResults in question order.
 
-    If Gemini cannot answer a question (busy, quota) and `saved` holds a recorded answer for it,
-    the recorded answer is used and labelled in `.note` — never silently.
+    Only when Gemini is busy or out of quota, and `saved` holds a recorded answer, the recorded answer is used and
+    labelled in `.note` (tables and scoreboards show it). Participant problems (agent not built, setup) are never
+    hidden behind a saved answer. An unexpected error on one question is reported on that question only.
     """
     import asyncio
 
@@ -28,7 +32,10 @@ def run_many(agent, questions: list[str], show_progress: bool = True, saved: dic
 
     async def one(q, sem):
         async with sem:
-            r = await agents.arun(agent, q)
+            try:
+                r = await agents.arun(agent, q)
+            except Exception as exc:   # one bad question must not lose the whole batch
+                r = agents.RunResult("", [], [], f"This question failed: {str(exc)[:160]}")
         done[0] += 1
         if handle:
             handle.update(HTML(f"<i style='{FONT};color:#5F6B7A'>{done[0]} of {len(questions)} answered…</i>"))
@@ -42,8 +49,8 @@ def run_many(agent, questions: list[str], show_progress: bool = True, saved: dic
         results = list(agents._run_coro(all_()))
     used_saved = 0
     for i, (q, r) in enumerate(zip(questions, results)):
-        if r.message and saved and q in saved:
-            results[i] = agents.RunResult(saved[q], [], [], "", note="saved answer (Gemini was not available)")
+        if r.message in (agents.BUSY_MESSAGE, agents.QUOTA_MESSAGE) and saved and q in saved:
+            results[i] = agents.RunResult(saved[q], [], [], "", note=SAVED_NOTE)
             used_saved += 1
     if handle:
         extra = f" — {used_saved} from saved answers" if used_saved else ""
@@ -78,7 +85,7 @@ def side_by_side(questions: list[dict], results: dict[str, list]) -> str:
             body = _answer_html(r.text) if r.text else f"<i>{html.escape(r.message or 'no answer')}</i>"
             tools = (f"<div style='color:#2A7F7F;font-size:11px;margin-top:4px'>tool used: "
                      f"{html.escape(', '.join(r.tool_calls))}</div>") if r.tool_calls else ""
-            cells += f"<td style='padding:6px 10px;text-align:left;vertical-align:top'>{body}{tools}</td>"
+            cells += f"<td style='padding:6px 10px;text-align:left;vertical-align:top'>{body}{tools}{_tag(r.note)}</td>"
         rows.append(f"<tr style='border-top:1px solid #C9D2DC'><td style='padding:6px 10px;text-align:left;"
                     f"vertical-align:top'><b>{q['id']}</b><br>{html.escape(q['question'])}</td>{cells}</tr>")
     return (f"<table style='border-collapse:collapse;{FONT};width:100%'><tr><th style='padding:6px 10px;"

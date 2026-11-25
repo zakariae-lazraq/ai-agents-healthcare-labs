@@ -83,7 +83,7 @@ def test_run_many_parallel_keeps_order_and_uses_saved_fallback(monkeypatch):
     async def fake_arun(agent, message, plugins=None):
         await asyncio.sleep(0.05 if message == "a" else 0.0)
         if message == "c":
-            return agents.RunResult("", [], [], "Gemini is very busy right now")
+            return agents.RunResult("", [], [], agents.BUSY_MESSAGE)
         return agents.RunResult(message.upper(), [], ["search_sop"])
 
     monkeypatch.setattr(agents, "arun", fake_arun)
@@ -101,3 +101,50 @@ def test_side_by_side_folds_long_answers():
                         {"Naive": [RunResult(long)], "Grounded": [RunResult("Short (SOP-01 §5).")]})
     assert html.count("<details") == 1 and "Show full answer" in html
     assert "Short (SOP-01 §5)." in html
+
+def test_saved_answers_only_replace_busy_or_quota(monkeypatch):
+    from labkit import agents, batch
+    labkit._state["setup_ok"] = True
+
+    async def fake(agent, message, plugins=None):
+        return agents.RunResult("", [], [], agents.NOT_BUILT if message == "a" else agents.QUOTA_MESSAGE)
+
+    monkeypatch.setattr(agents, "arun", fake)
+    res = batch.run_many("agent", ["a", "b"], show_progress=False, saved={"a": "SA", "b": "SB"})
+    assert res[0].text == "" and res[0].message == agents.NOT_BUILT
+    assert res[1].text == "SB" and "saved" in res[1].note
+
+
+def test_one_failing_question_does_not_lose_the_batch(monkeypatch):
+    from labkit import agents, batch
+    labkit._state["setup_ok"] = True
+
+    async def fake(agent, message, plugins=None):
+        if message == "bad":
+            raise ValueError("400 INVALID_ARGUMENT tool not found")
+        return agents.RunResult(message.upper())
+
+    monkeypatch.setattr(agents, "arun", fake)
+    res = batch.run_many("agent", ["ok", "bad"], show_progress=False)
+    assert res[0].text == "OK" and res[1].text == "" and "400" in res[1].message
+
+
+def test_side_by_side_tags_saved_and_backup_answers():
+    from labkit.agents import RunResult
+    from labkit.batch import side_by_side
+    html = side_by_side([{"id": "Q01", "question": "q?"}, {"id": "Q02", "question": "q2?"}],
+                        {"A": [RunResult("x", note="saved answer (Gemini was not available)"),
+                               RunResult("y", note="The model m was busy, so this answer comes from the backup model b.")]})
+    assert "SAVED ANSWER" in html and "backup model" in html
+
+
+def test_run_turns_unexpected_error_into_message(monkeypatch):
+    from labkit import agents
+    labkit._state["setup_ok"] = True
+
+    async def boom(agent, message, plugins=None):
+        raise ValueError("400 INVALID_ARGUMENT")
+
+    monkeypatch.setattr(agents, "arun", boom)
+    r = agents.run(object(), "q", show=False)
+    assert r.text == "" and "400" in r.message
