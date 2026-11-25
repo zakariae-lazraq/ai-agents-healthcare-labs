@@ -119,19 +119,19 @@ def reference_guardrail(tool, args, tool_context):
     return None
 
 
-_STATUS = re.compile(r"status\s*[:\-–]?\s*\**\s*(estimate|hold|refuse)\b", re.I)
-
-
 def parse_status(text: str) -> str:
-    m = _STATUS.search(text or "")
-    return m.group(1).upper() if m else ""
+    from labkit.status import parse_status as _ps
+
+    return _ps(text, ("ESTIMATE", "HOLD", "REFUSE"))
 
 
 def run_profiles(agent, profiles: list[dict], show_progress: bool = True, concurrency: int = 2) -> list[dict]:
     from labkit.batch import run_many
 
     res = run_many(agent, [p["message"] for p in profiles], show_progress=show_progress, concurrency=concurrency)
-    return [{"id": p["id"], "status": parse_status(r.text), "tools": list(r.tool_calls), "text": r.text,
+    from labkit.status import all_model_text
+
+    return [{"id": p["id"], "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
              "note": r.message or r.note} for p, r in zip(profiles, res)]
 
 

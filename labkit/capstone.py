@@ -61,8 +61,10 @@ def run_test_cases(agent, cases: list[dict], show_progress: bool = True) -> list
     res = run_many(agent, [c["input"] for c in cases], show_progress=show_progress, concurrency=2)
     out = []
     for c, r in zip(cases, res):
-        m = re.search(r"status\s*[:\-–]\s*\**\s*([A-Z_]+)", r.text or "", re.I)
-        got = m.group(1).upper() if m else ""
+        from labkit.status import all_model_text, parse_status
+
+        allowed = tuple(sorted({x["expected"].upper() for x in cases}))
+        got = parse_status(all_model_text(r.events) or r.text, allowed)
         out.append({"input": c["input"], "expected": c["expected"].upper(), "agent": got or "—",
                     "ok": got == c["expected"].upper(), "note": r.message or r.note})
     return out

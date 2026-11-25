@@ -200,17 +200,24 @@ def make_qc_tools(data: QCData) -> dict:
                                     draft_deviation)}
 
 
-_STATUS = re.compile(r"status\s*[:\-–]?\s*\**\s*(pass|hold|escalate)\b", re.I)
-_HOLD = re.compile(r"samples? on hold\s*[:\-–]\s*(.+)", re.I)
-
-
 def parse_status(text: str) -> tuple[str, list[str]]:
-    """Read 'STATUS: …' and 'SAMPLES ON HOLD: …' from the agent's report."""
-    m = _STATUS.search(text or "")
-    status = m.group(1).upper() if m else ""
-    h = _HOLD.search(text or "")
-    samples = re.findall(r"B\d{2}-S\d{2}", h.group(1)) if h else []
-    return status, samples
+    """Read the LAST 'STATUS: …' line and the 'SAMPLES ON HOLD: …' list (bullets and ranges accepted)."""
+    from labkit.status import parse_samples, parse_status as _ps
+
+    return _ps(text, ("PASS", "HOLD", "ESCALATE")), parse_samples(text, r"B\d{2}-S\d{2}")
+
+
+def _deviation_args(events) -> tuple[str, list[str]]:
+    """Fallback: the status and samples the agent passed to draft_deviation (structured, no parsing of prose)."""
+    for ev in reversed(list(events or [])):
+        for part in getattr(getattr(ev, "content", None), "parts", None) or []:
+            fc = getattr(part, "function_call", None)
+            if fc is not None and getattr(fc, "name", "") == "draft_deviation":
+                a = dict(getattr(fc, "args", {}) or {})
+                st = str(a.get("status", "")).upper().strip()
+                return (st if st in ("PASS", "HOLD", "ESCALATE") else "",
+                        re.findall(r"B\d{2}-S\d{2}", str(a.get("samples_on_hold", ""))))
+    return "", []
 
 
 # ---------------------------------------------------------------- notebook helpers
@@ -253,8 +260,12 @@ def run_batches(agent, batch_ids: list[str], log, show_progress: bool = True, co
     results = run_many(agent, [f"Review batch {b}." for b in batch_ids], show_progress=show_progress,
                        concurrency=concurrency)
     out = []
+    from labkit.status import all_model_text
+
     for b, r in zip(batch_ids, results):
-        status, samples = parse_status(r.text)
+        status, samples = parse_status(all_model_text(r.events) or r.text)
+        if not status:
+            status, samples = _deviation_args(r.events)
         if r.text:
             log.decision(b, status, samples, r.text)
         out.append({"batch_id": b, "status": status, "samples": samples, "tools": list(r.tool_calls),

@@ -213,12 +213,10 @@ def reference_guardian(data: GuardianData, case: dict) -> tuple[str, list[str]]:
     return ("HOLD", issues) if issues else ("RELEASE", [])
 
 
-_VERDICT = re.compile(r"verdict\s*[:\-–]?\s*\**\s*(release|hold|escalate)\b", re.I)
-
-
 def parse_verdict(text: str) -> str:
-    m = _VERDICT.search(text or "")
-    return m.group(1).upper() if m else ""
+    from labkit.status import parse_status
+
+    return parse_status(text, VERDICTS, word="verdict")
 
 
 def case_message(case: dict) -> str:
@@ -231,7 +229,9 @@ def run_guardian(agent, cases: list[dict], show_progress: bool = True, concurren
     from labkit.batch import run_many
 
     res = run_many(agent, [case_message(c) for c in cases], show_progress=show_progress, concurrency=concurrency)
-    return {c["id"]: {"verdict": parse_verdict(r.text), "text": r.text, "note": r.message or r.note}
+    from labkit.status import all_model_text
+
+    return {c["id"]: {"verdict": parse_verdict(all_model_text(r.events) or r.text), "text": r.text, "note": r.message or r.note}
             for c, r in zip(cases, res)}
 
 

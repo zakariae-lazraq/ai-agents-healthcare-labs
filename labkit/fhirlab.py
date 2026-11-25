@@ -222,12 +222,10 @@ def make_fhir_tools(lab: FhirLab) -> dict:
                                     check_duplicates, draft_diagnostic_report, notify_human)}
 
 
-_STATUS = re.compile(r"status\s*[:\-–]?\s*\**\s*(pass|hold|escalate)\b", re.I)
-
-
 def parse_status(text: str) -> str:
-    m = _STATUS.search(text or "")
-    return m.group(1).upper() if m else ""
+    from labkit.status import parse_status as _ps
+
+    return _ps(text, ("PASS", "HOLD", "ESCALATE"))
 
 
 def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 2) -> list[dict]:
@@ -235,7 +233,9 @@ def run_patients(agent, patient_ids: list[str], show_progress: bool = True, conc
 
     res = run_many(agent, [f"Review the laboratory results of patient {p}." for p in patient_ids],
                    show_progress=show_progress, concurrency=concurrency)
-    return [{"patient_id": p, "status": parse_status(r.text), "tools": list(r.tool_calls), "text": r.text,
+    from labkit.status import all_model_text
+
+    return [{"patient_id": p, "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
              "note": r.message or r.note} for p, r in zip(patient_ids, res)]
 
 

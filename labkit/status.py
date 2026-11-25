@@ -25,7 +25,7 @@ def all_model_text(events) -> str:
 
 def parse_status(text: str, allowed: tuple[str, ...], word: str = "status") -> str:
     """The last line of the form '<word>: X' with X in allowed (case-insensitive, markdown tolerated)."""
-    alts = "|".join(re.escape(a.lower()) for a in allowed)
+    alts = "|".join(re.escape(a.lower()) for a in allowed) if allowed else r"[a-z_]+"
     rx = re.compile(rf"(?im)^[\W_]*{word}[\W_]*({alts})\b")
     found = rx.findall(text or "")
     return found[-1].upper() if found else ""
