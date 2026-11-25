@@ -116,3 +116,10 @@ def test_run_many_parallel_keeps_order_and_uses_saved_fallback(monkeypatch):
     res = batch.run_many("agent", ["a", "b", "c"], show_progress=False, saved=saved, concurrency=3)
     assert [r.text for r in res] == ["A", "B", "saved answer for c"]
     assert "saved" in res[2].note.lower() and res[0].note == ""
+
+
+def test_not_in_sop_on_a_list_question_is_incomplete(questions):
+    q = questions["Q08"]
+    ans = "Not in the SOP. (SOP-03 §2) specifies that only specific analytes are critical values; vitamin D is not listed."
+    assert g(q, ans) == "incomplete"
+    assert g(q, "Vitamin D is not on the critical value list (SOP-03 §2), so it has no critical value.") == "correct"
