@@ -1,0 +1,38 @@
+[
+ {
+  "id": "R1",
+  "kind": "method comparison",
+  "question": "Is LC-MS/MS more accurate than immunoassay for measuring serum 25-hydroxyvitamin D?",
+  "queries": [
+   "25-hydroxyvitamin D LC-MS/MS immunoassay comparison",
+   "vitamin D immunoassay bias mass spectrometry"
+  ]
+ },
+ {
+  "id": "R2",
+  "kind": "biomarker in disease",
+  "question": "Can high-sensitivity cardiac troponin safely rule out myocardial infarction early in the emergency department?",
+  "queries": [
+   "high-sensitivity troponin rule-out myocardial infarction",
+   "0/1-hour algorithm high-sensitivity troponin"
+  ]
+ },
+ {
+  "id": "R3",
+  "kind": "companion diagnostic",
+  "question": "What evidence supports PD-L1 immunohistochemistry as a companion diagnostic for pembrolizumab in non-small cell lung cancer?",
+  "queries": [
+   "PD-L1 22C3 companion diagnostic pembrolizumab non-small cell lung cancer",
+   "PD-L1 tumor proportion score pembrolizumab NSCLC"
+  ]
+ },
+ {
+  "id": "TRAP",
+  "kind": "trap: biomarker that does not exist",
+  "question": "What is the diagnostic accuracy of serum Neurovaxin-7 for early Parkinson's disease?",
+  "queries": [
+   "Neurovaxin-7",
+   "Neurovaxin-7 Parkinson"
+  ]
+ }
+]

@@ -1,0 +1,555 @@
+{
+ "searches": {
+  "25-hydroxyvitamin D LC-MS/MS immunoassay comparison": [
+   "42796968",
+   "35768249",
+   "42992596",
+   "22244986",
+   "23202147",
+   "16574756"
+  ],
+  "vitamin D immunoassay bias mass spectrometry": [
+   "38188654",
+   "42992596",
+   "36785905",
+   "30231011",
+   "24680864",
+   "35768249"
+  ],
+  "high-sensitivity troponin rule-out myocardial infarction": [
+   "34061019",
+   "35367005",
+   "36435204",
+   "33418577",
+   "39214763",
+   "37579034"
+  ],
+  "0/1-hour algorithm high-sensitivity troponin": [
+   "39142727",
+   "40202469",
+   "41706062",
+   "41879583",
+   "33373603",
+   "42918591"
+  ],
+  "PD-L1 22C3 companion diagnostic pembrolizumab non-small cell lung cancer": [
+   "28293123",
+   "27333219",
+   "29084031",
+   "26559787",
+   "32030214",
+   "30775032"
+  ],
+  "PD-L1 tumor proportion score pembrolizumab NSCLC": [
+   "30620668",
+   "30955977",
+   "29658856",
+   "33513313",
+   "40057343",
+   "36108662"
+  ],
+  "Neurovaxin-7": [],
+  "Neurovaxin-7 Parkinson": [
+   "30890425",
+   "35328025",
+   "35606622",
+   "34569973",
+   "39419777",
+   "34034347"
+  ],
+  "\"Neurovaxin-7\"[Title/Abstract]": []
+ },
+ "records": {
+  "42796968": {
+   "pmid": "42796968",
+   "title": "Comprehensive Comparison of Three Automated 25-Hydroxyvitamin D Immunoassays with a VDSCP Traceable LC-MS/MS Method Across Clinically Relevant Decision Thresholds.",
+   "abstract": "Accurate measurement of serum 25-hydroxyvitamin D (25OHD) is essential for the diagnosis and management of vitamin D deficiency. Although automated immunoassays are widely used in routine clinical practice, analytical variability between platforms may lead to inconsistent patient classification around clinically relevant decision thresholds. This study comprehensively compared three automated immunoassays (DiaSorin Liaison XL, Beckman Coulter DxI 9000, and Roche cobas e602) with a Vitamin D Standardization Certification Program (VDSCP)-traceable liquid chromatography-tandem mass spectrometry (LC-MS/MS) reference method. A total of 400 anonymized adult outpatient serum samples were prospectively collected and equally distributed across four predefined vitamin D concentration categories (<25, 25-49, 50-74, and ≥75 nmol/L). Samples were stored at -70 °C before simultaneous analysis on the three automated immunoassays and the reference LC-MS/MS platform. Method comparison included Deming regression, Bland-Altman analysis, and evaluation of diagnostic performance at clinically relevant thresholds (<25, <50, and <75 nmol/L). The effects of sample storage, vitamin D metabolites (C3-epi-25OHD3 and 24,25-dihydroxyvitamin D3), and external quality assessment (DEQAS) performance were also investigated. Significant analytical differences were observed between all immunoassays and LC-MS/MS. Roche cobas e602 consistently overestimated 25OHD concentrations, resulting in reduced sensitivity but excellent specificity and positive predictive value across all clinical thresholds. Beckman Coulter demonstrated the highest sensitivity for detecting vitamin D deficiency but generated more false-positive classifications, particularly at the <75 nmol/L threshold. DiaSorin Liaison XL achieved the best overall balance between sensitivity, specificity, accuracy, and agreement with LC-MS/MS, with Cohen's κ values ranging from 0.818 to 0.895 across decision thresholds. Higher concentrations of C3-epi-25OHD3 and 24,25-dihydroxyvitamin D3 were associated with greater positive bias in Roche measurements, while Beckman Coulter showed no significant metabolite-related interference, although the present correlation analyses could not establish independent analytical interference. DEQAS performance did not consistently reflect agreement with LC-MS/MS in patient samples. Despite ongoing international standardization efforts, clinically important differences remain among automated 25OHD immunoassays. Assay-specific analytical characteristics significantly influence patient classification around established decision thresholds. DiaSorin Liaison XL demonstrated the closest overall agreement with the reference LC-MS/MS method, whereas Beckman Coulter prioritized sensitivity and Roche specificity. These findings highlight the importance of method-aware interpretation of vitamin D results and support continued assay harmonization to improve comparability in routine clinical practice.",
+   "year": "2026",
+   "journal": "Nutrients",
+   "first_author": "Racz S",
+   "pubtypes": [
+    "Journal Article",
+    "Comparative Study"
+   ]
+  },
+  "35768249": {
+   "pmid": "35768249",
+   "title": "Comparison of the Serum Total 25-Hydroxyvitamin D Concentrations Using Chemiluminescent Immunoassay and Liquid Chromatography-Tandem Mass Spectrometry in Children.",
+   "abstract": "We aimed to assess the difference and agreement between the CL-series Vitamin D Total assay (Mindray), which was a kind of chemiluminescent immunoassay (CLIA) and liquid chromatography-tandem mass spectrometry (LC-MS/MS) in the measurement of serum 25-hydroxyvitamin D [25(OH)D] concentrations in children. We compared the 25(OH)D concentrations of 92 children using the CLIA and LC-MS/MS. Paired samples t-test was used to compare the two groups. Linear regression was used to show the correlation between CLIA and LC-MS/MS. The difference and bias between 2 methods were revealed in Bland-Altman plot. Agreement in classification of deficiency between CLIA and LC-MS/MS was assessed using Cohen's Kappa. p value<0.05 was considered statistically significant. Using Shapiro-Wilk Test to assess whether the data follows a normal distribution. Using 95% children's serum 25(OH)D concentrations by LC-MS/MS as the reference interval. The regression equation was CLIA=1.185×LC-MS/MS-3.328. The fitness adjusted r2 was 0.589. The CLIA showed positive bias compared to LC-MS/MS, p<0.05, bias=(1.94±16.56) ng/mL. Cohen's Kappa=0.53, p<0.001. The agreement of 2 methods in diagnosing \"deficiency\" was good. According to Shapiro-Wilk Test, the data followed a normal distribution (W=0.99). The reference interval of children's serum 25(OH)D concentrations by LC-MS/MS was 11.35-44.57 ng/mL. In measuring 25(OH)D concentration of children, CLIA represented higher levels than LC-MS/MS. The two methods were consistent in diagnosing vitamin D deficiency. The reference interval of children's serum 25(OH)D concentrations by LC-MS/MS was 11.35-44.57 ng/mL in our area in summer.",
+   "year": "2022",
+   "journal": "Journal of nutritional science and vitaminology",
+   "first_author": "Wang J",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "42992596": {
+   "pmid": "42992596",
+   "title": "Is a low-cost latex immunoturbidimetric assay suitable for routine 25(OH)D screening? Analytical comparison with chemiluminescent immunoassay and LC-MS/MS.",
+   "abstract": "Low-cost latex immunoturbidimetric 25-hydroxyvitamin D [25(OH)D] assays for clinical chemistry analysers have recently been introduced, but their agreement with reference methods at clinical decision limits is undocumented. We compared one such assay with a chemiluminescent immunoassay (CLIA) and liquid chromatography-tandem mass spectrometry (LC-MS/MS). Serum from 42 osteoporosis-clinic outpatients was analysed in parallel by the latex assay (Beckman Coulter AU5800), the Access 25(OH) Vitamin D Total CLIA (DxI 800) and LC-MS/MS. Imprecision was verified according to CLSI EP15-A3; agreement was assessed by Passing-Bablok regression, Bland-Altman analysis, a ± 25% total-error criterion, and diagnostic accuracy and kappa at the 50 and 75 nmol/L decision limits, with LC-MS/MS as reference. Within-laboratory CVs of the latex assay were 5.17% and 1.84% at 70 and 116 nmol/L. Against LC-MS/MS the Passing-Bablok slope was 0.79 (95% CI 0.71 to 0.90), mean bias -7.4 nmol/L (-9.1%), limits of agreement -33.6 to 18.8 nmol/L; 81.0% of results were within ±25% of LC-MS/MS (CLIA 71.4%). For deficiency (<50 nmol/L) sensitivity was 100.0% and specificity 86.7%; three-category agreement was 66.7% (kappa 0.51), all discordant results falling into a lower category. The assay is precise and detected every LC-MS/MS-defined deficient sample, but a negative proportional bias of 12-15% at the decision limits makes it over-call insufficiency. It may serve as a rule-out screening test if results near the decision limits are confirmed by LC-MS/MS, but it is not interchangeable with LC-MS/MS and its calibration requires standardisation before routine use.",
+   "year": "2026",
+   "journal": "Scandinavian journal of clinical and laboratory investigation",
+   "first_author": "Gören Y",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "22244986": {
+   "pmid": "22244986",
+   "title": "Comparison of four current 25-hydroxyvitamin D assays.",
+   "abstract": "The performance of recently developed vitamin D total assays (ADVIA Centaur and Elecsys) was compared to that of liquid chromatography-tandem mass spectrometry (LC-MS/MS) and LIASON 25-OH Vitamin D total assays. A total of 157 clinical samples and standard reference material (SRM) 972 were analyzed. The correlations of LC-MS/MS with the three immunoassays were acceptable. However, compared to LC-MS/MS, LIAISON and ADVIA Centaur showed negative bias, and Elecsys showed positive bias. There was a lack of agreement among the four methods with only LC-MS/MS results close to the certified values of SRM 972. The prevalence of vitamin D insufficiency (<50 nmol/L) was higher with ADVIA Centaur (51.6%) and LIAISON (52.2%) and lower with Elecsys (37.6%), compared with that of LC-MS/MS (44.6%). The new, automated total vitamin D assays show acceptable correlation with LC-MS/MS, and could be used in routine laboratories. However, standardization of vitamin D assays and consideration of assay-specific decision limits should be addressed.",
+   "year": "2012",
+   "journal": "Clinical biochemistry",
+   "first_author": "Moon HW",
+   "pubtypes": [
+    "Comparative Study",
+    "Evaluation Study",
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "23202147": {
+   "pmid": "23202147",
+   "title": "Evaluation of two automated immunoassays for 25-OH vitamin D: comparison against LC-MS/MS.",
+   "abstract": "A total of 95 human serum specimens, and a 12 specimen precision panel, were measured by 2 automated immunoassays (investigation use only DiaSorin LIAISON(®) 25 OH Vitamin D TOTAL Assay [LSN], and Siemens ADVIA Centaur(®) Vitamin D Total (VitD) assay [Centaur]) and the results compared against LC-MS/MS [LCMS] used as the reference method (Esoterix Inc.). For functional sensitivity and precision, 12 serum specimens [range 1.2-148ng/mL] were run in six replicates [N=30] or four replicates [N=20], respectively, for 5 consecutive days. Passing-Bablok fit and Difference plot analysis [N=92] showed that although both immunoassays had comparable correlation coefficient [r] values to LCMS (0.936 and 0.933), the LSN assay results were statistically equivalent to those given by LCMS (slope 0.93, intercept -2.5), whereas the results of the Centaur assay showed overall significant assay bias compared to LCMS (slope 1.30, intercept -15.8) and this bias was more significant for doses <30ng/mL by LCMS [bias -30.4%; 95% limits of agreement -72.4% to 11.7%]. For specificity, based on 25-OHD2 and 25-OHD3 levels assessed by LCMS, we divided the specimens into 2 groups, one with detectable 25-OHD2 [Group 1, N=41] and the other with no detectible 25OHD2 [Group 2, N=51]. The 2 groups showed comparable correlation coefficient [r] values between the methods, but showed significant differences in slope: Centaur [1.48 with group 1 and 1.18 with group 2] compared to LSN [0.91 with Group 1 and 0.96 with Group 2]. LSN demonstrated better precision [total CV range 5.5-10.0%] compared to Centaur [total CV range 11.0-16.3%]. Functional sensitivity was calculated per EP-17A: 2.15ng/mL by LSN and 4.57ng/mL by Centaur. Though there was good overall correlation, substantial bias was present in Centaur. Although LSN had a slope and intercept that was not significantly different than LCMS, Centaur had a significantly higher slope in specimens containing measurable 25-OHD2 levels, a large negative intercept and a significant negative dose bias for doses <30ng/mL by LCMS, suggesting the Centaur assay would report a higher frequency of patients with apparent vitamin D insufficiency/deficiency at the low end and apparent vitamin D toxicity at the high end compared against LCMS. This article is part of a Special Issue entitled 'Vitamin D Workshop'.",
+   "year": "2013",
+   "journal": "The Journal of steroid biochemistry and molecular biology",
+   "first_author": "Hsu SA",
+   "pubtypes": [
+    "Comparative Study",
+    "Evaluation Study",
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Review"
+   ]
+  },
+  "16574756": {
+   "pmid": "16574756",
+   "title": "HPLC method for 25-hydroxyvitamin D measurement: comparison with contemporary assays.",
+   "abstract": "The concentration of 25-hydroxyvitamin D [25(OH)D] in serum has been designated the functional indicator of vitamin D (VitD) nutritional status. Unfortunately, variability among 25(OH)D assays limits clinician ability to monitor VitD status, supplementation, and toxicity. We developed an HPLC method that selectively measures 25-hydroxyvitamin D2 [25(OH)D2] and D3 [25(OH)D3] and compared this assay with a liquid chromatography-tandem mass spectrometry (LC-MS/MS) method, a competitive protein-binding assay (CPBA) on the Nichols Advantage platform, and an RIA from Diasorin. For the new HPLC assay, between-run CVs were 2.6%-4.9% for 25(OH)D3 and 3.2%-13% for 25(OH)D2; recoveries were 95%-102%; and the assay was linear from 5 microg/L to at least 200 microg/L. Comparison data were as follows: for HPLC vs LC-MS/MS, y = 1.01x - 4.82 microg/L (Sy/x = 4.93 microg/L; r = 0.996) for 25(OH)D3, and y = 0.902x - 0.566 microg/L (Sy/x = 2.56 microg/L; r = 0.9965 for 25(OH)D2; for HPLC vs Diasorin RIA, y = 0.709x - 5.86 microg/L (Sy/x = 7.35 microg/L; r = 0.7509); and for HPLC vs Nichols Advantage CPBA, y = 1.00x - 3.60 microg/L (Sy/x = 32.7 microg/L; r = 0.6823). The new HPLC method is reliable, robust, and has advantages compared with the Nichols Advantage CPBA and the Diasorin RIA. The Nichols Advantage CPBA overestimated or underestimated 25(OH)D concentrations predicated on the prevailing metabolite present in patients' sera.",
+   "year": "2006",
+   "journal": "Clinical chemistry",
+   "first_author": "Lensmeyer GL",
+   "pubtypes": [
+    "Comparative Study",
+    "Journal Article"
+   ]
+  },
+  "38188654": {
+   "pmid": "38188654",
+   "title": "Multicenter comparison of analytical interferences of 25-OH vitamin D immunoassay and mass spectrometry methods by endogenous interferents and cross-reactivity with 3-epi-25-OH-vitamin D3.",
+   "abstract": "Vitamin D (vit-D) deficiency is highly prevalent in the Korean population, highlighting the need for accurate measurements. In this study, the interferences by endogenous and cross-reactive substances were compared between routine vit-D immunoassays and mass spectrometry (MS) methods. Two MS methods and 4 immunoassays from different manufacturers (Abbott, Beckman Coulter, Roche, Siemens) were compared. Residual samples that were icteric, lipemic, hemolyzed, high in rheumatoid factor, from myeloma patients, or patients undergoing hemodialysis were collected. Also, 4 levels of National Institute of Standards and Technology (NIST) Standard Reference Material 972a, and 12 samples serially spiked with 3-epi-25-OH-D3 were prepared. Significant interferences were observed in hemolytic (Roche), icteric (Beckman and Siemens) and lipemic samples (all 4 immunoassays). Level 4 NIST material and 3-epi-25-OH-D3-spiked samples induced significant cross-reactivity, yielding higher total vit-D measurements in non-epimer-separating MS methods, and both the Beckman and Roche immunoassays. Most observed interferences were consistent with manufacturers' claims, but overall improvement of immunoassay bias limits is required. Awareness of potential interference is important to increase the accuracy of vit-D measurements. Moreover, care is due when interpreting vit-D results of newborns, infants and less commonly, pregnant women, who are known to have physiologically high levels of the highly cross-reactive 3-epi-25-OH-D3.",
+   "year": "2024",
+   "journal": "Practical laboratory medicine",
+   "first_author": "Lee JH",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "36785905": {
+   "pmid": "36785905",
+   "title": "Evaluation of four automated clinical analyzers for the determination of total 25(OH)D in comparison to a certified LC-MS/MS.",
+   "abstract": "The aim of this study was to compare the results of five methods for the determination of total 25(OH)D. For that purpose, two mass spectrometry and three immunoassay methods were used. A total of 124 serum samples were analyzed on five different methods (i.e., a reference LC-MS/MS, Cascadion, Lumipulse, Roche Elecsys II and Roche Elecsys III). Analytical performance against LC-MS/MS was evaluated and compared to the Milan models 1 (analytical performance based on the clinical outcome using thresholds of 12, 20 and 30 ng/mL) and 2 (analytical performance based on biological variation). Additionally, imprecision studies and accuracy using NIST SRM972a samples were carried out. Compared to the reference LC-MS/MS method, the Lumipulse and the Roche Elecsys III assays reached the optimal criterion for bias, while the Cascadion met the desirable one. The Roche Elecsys II was not able to reach the minimal criteria. The proportion of correctly classified patients was higher using the Cascadion (95.2%) compared to the three immunoassays. In addition to its better precision, the Cascadion was not impacted by a high concentration of 3-epi-25(OH)D3 compared to the three immunoassays. Compared to the LC-MS/MS reference method, the Cascadion presented the highest level of concordance at medical decision cut-offs for total 25(OH)D and reached the desirable specification for bias. Moreover, the presence of 3-epi-25(OH)D3 in enriched samples was only problematic in immunoassay methods, and especially considering Roche Elecsys methods. The release of performant fully automated mass spectrometry assays with high throughput might therefore facilitate the wide scale adoption of LC-MS/MS, even in non-specialized clinical laboratories.",
+   "year": "2023",
+   "journal": "Clinical chemistry and laboratory medicine",
+   "first_author": "Favresse J",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "30231011": {
+   "pmid": "30231011",
+   "title": "Comparison of serum 25-hydroxyvitamin D levels between radioimmunoassay and liquid chromatography-tandem mass spectrometry in infants and postpartum women.",
+   "abstract": "Background Liquid chromatography-tandem mass spectrometry (LC-MS/MS) has become the gold standard for the measurement of serum 25-hydroxyvitamin D (25(OH)D) levels instead of the conventional method, radioimmunoassay (RIA). However, there was no study that compared RIA and LC-MS/MS for measuring serum 25(OH)D levels in infants and their mothers. The aim of this study was to assess the agreement of RIA and LC-MS/MS for measuring the serum levels in infants and postpartum women. Methods This study enrolled 70 preterm infants, 113 term infants (134 samples), and 120 postpartum women. Serum concentration of 25(OH)D was measured by RIA and LC-MS/MS. We evaluated the correlation between RIA and LC-MS/MS. Also, we evaluated the bias between RIA and LC-MS/MS using Bland-Altman analysis. Results Sixty percent of preterm infants had serum 25(OH)D levels below the lower limit of quantification (LOQ) (4 ng/mL) and 90% of them were classified as vitamin D deficient. The serum 25(OH)D levels measured by RIA were significantly correlated with those measured by LC-MS/MS in all groups. According to the Bland-Altman plot, the serum 25(OH)D levels of infants measured by RIA had constant positive bias (mean±standard deviation [SD] [95% confidence interval, CI], preterm: +4.8± 2.4 ng/mL [4.2-5.4], term: +5.8±4.0 [5.1-6.5]) and proportional bias (preterm: r=0.44, p<0.01, term: r=0.50, p<0.01) compared with LC-MS/MS. The serum 25(OH)D levels of postpartum women measured by RIA had constant positive bias compared with LC-MS/MS, but no proportional bias was found. Conclusions RIA demonstrated falsely high 25(OH)D levels when used for infants and postpartum women.",
+   "year": "2018",
+   "journal": "Journal of pediatric endocrinology & metabolism : JPEM",
+   "first_author": "Hara K",
+   "pubtypes": [
+    "Comparative Study",
+    "Journal Article"
+   ]
+  },
+  "24680864": {
+   "pmid": "24680864",
+   "title": "25-Hydroxyvitamin D: analysis and clinical application.",
+   "abstract": "25-Hydroxyvitamin D (25-OHD) is one of the most popular tests requested by clinicians nowadays because in addition to bone diseases, many non-skeletal disorders have been suggested to be linked to vitamin D deficiency or insufficiency. Methodologies used in clinical laboratories include competitive vitamin D protein binding assays (CPBA), immunoassays, high performance liquid chromatography (HPLC), and liquid chromatography-tandem mass spectrometry (LC-MS/MS). In this review article, we introduce the basic metabolism and physiology of vitamin D, key issues in the methods for 25-OHD measurement currently used in most clinical laboratories, and clinical applications of 25-OHD testing. We conclude that although the methodologies for 25-OHD testing have improved significantly, considerable bias between different methods and laboratories still exists. Therefore, standardization of the method is critical. The optimal 25-OHD levels should be determined based on the standardized method. Also, more studies are needed to further determine the relationship between vitamin D deficiency or insufficiency and non-skeletal diseases as well as daily vitamin D dose requirement for reducing the risk of non-skeletal diseases.",
+   "year": "2014",
+   "journal": "Clinica chimica acta; international journal of clinical chemistry",
+   "first_author": "Su Z",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "34061019": {
+   "pmid": "34061019",
+   "title": "High-sensitivity troponin assays for early rule-out of acute myocardial infarction in people with acute chest pain: a systematic review and economic evaluation.",
+   "abstract": "Early diagnosis of acute myocardial infarction is important, but only 20% of emergency admissions for chest pain will actually have an acute myocardial infarction. High-sensitivity cardiac troponin assays may allow rapid rule out of myocardial infarction and avoid unnecessary hospital admissions. To assess the clinical effectiveness and cost-effectiveness of high-sensitivity cardiac troponin assays for the management of adults presenting with acute chest pain, in particular for the early rule-out of acute myocardial infarction. Sixteen databases were searched up to September 2019. Review methods followed published guidelines. Studies were assessed for quality using appropriate risk-of-bias tools. The bivariate model was used to estimate summary sensitivity and specificity for meta-analyses involving four or more studies; otherwise, random-effects logistic regression was used. The health economic analysis considered the long-term costs and quality-adjusted life-years associated with different troponin testing methods. The de novo model consisted of a decision tree and a state-transition cohort model. A lifetime time horizon (of 60 years) was used. Thirty-seven studies (123 publications) were included in the review. The high-sensitivity cardiac troponin test strategies evaluated are defined by the combination of four factors (i.e. assay, number and timing of tests, and threshold concentration), resulting in a large number of possible combinations. Clinical opinion indicated a minimum clinically acceptable sensitivity of 97%. When considering single test strategies, only those using a threshold at or near to the limit of detection for the assay, in a sample taken at presentation, met the minimum clinically acceptable sensitivity criterion. The majority of the multiple test strategies that met this criterion comprised an initial rule-out step, based on high-sensitivity cardiac troponin levels in a sample taken on presentation and a minimum symptom duration, and a second stage for patients not meeting the initial rule-out criteria, based on presentation levels of high-sensitivity cardiac troponin and absolute change after 1, 2 or 3 hours. Two large cluster randomised controlled trials found that implementation of an early rule-out pathway for myocardial infarction reduced length of stay and rate of hospital admission without increasing cardiac events. In the base-case analysis, standard troponin testing was both the most effective and the most costly. Other testing strategies with a sensitivity of 100% (subject to uncertainty) were almost equally effective, resulting in the same life-year and quality-adjusted life-year gain at up to four decimal places. Comparisons based on the next best alternative showed that for willingness-to-pay values below £8455 per quality-adjusted life-year, the Access High Sensitivity Troponin I (Beckman Coulter, Brea, CA, USA) [(symptoms > 3 hours AND < 4 ng/l at 0 hours) OR (< 5 ng/l AND Δ < 5 ng/l at 0 to 2 hours)] would be cost-effective. For thresholds between £8455 and £20,190 per quality-adjusted life-year, the Elecsys® Troponin-T high sensitive (Roche, Basel, Switzerland) (< 12 ng/l at 0 hours AND Δ < 3 ng/l at 0 to 1 hours) would be cost-effective. For a threshold > £20,190 per quality-adjusted life-year, the Dimension Vista® High-Sensitivity Troponin I (Siemens Healthcare, Erlangen, Germany) (< 5 ng/l at 0 hours AND Δ < 2 ng/l at 0 to 1 hours) would be cost-effective. High-sensitivity cardiac troponin testing may be cost-effective compared with standard troponin testing. This study is registered as PROSPERO CRD42019154716. This project was funded by the National Institute for Health Research (NIHR) Evidence Synthesis programme and will be published in full in Health Technology Assessment; Vol. 25, No. 33. See the NIHR Journals Library website for further project information. Heart disease is a leading cause of death in the UK, with myocardial infarction (heart attack) accounting for approximately 4% of all deaths recorded in 2018. Many people attend hospital with chest pain and suspected myocardial infarction, and chest pain has been reported as the most common cause of hospital admissions in the UK, accounting for approximately 5% of all emergency admissions in 2017–18. It is important to diagnose people who are suspected of having a myocardial infarction as early as possible to ensure quick and effective treatment. However, only around 20% of emergency admissions for chest pain will actually have an myocardial infarction and there are many other possible causes of chest pain (e.g. gastro-oesophageal disorders, muscle pain, anxiety or stable ischaemic heart disease). Current practice for ruling out myocardial infarction includes blood tests taken when the patient is first seen in the emergency department and repeated after 3–6 hours or 10–12 hours, depending on the test used. Tests that can quickly tell which patients do not have myocardial infarction could therefore avoid unnecessary hospital admissions and anxiety for many people. We aimed to assess the clinical effectiveness and cost-effectiveness of high-sensitivity troponin tests, used as single tests or repeated over a short time, for the early rule out of myocardial infarction in people who present to hospital with chest pain. We found that high-sensitivity troponin tests can safely rule out myocardial infarction within the 4-hour NHS emergency department target. Health economic analyses indicated that high-sensitivity tests may be considered value for money compared with standard troponin tests, which require repeat testing at 10–12 hours.",
+   "year": "2021",
+   "journal": "Health technology assessment (Winchester, England)",
+   "first_author": "Westwood M",
+   "pubtypes": [
+    "Research Support, Non-U.S. Gov't",
+    "Systematic Review",
+    "Journal Article"
+   ]
+  },
+  "35367005": {
+   "pmid": "35367005",
+   "title": "Acute coronary syndromes.",
+   "abstract": "Although substantial progress has been made in the diagnosis and treatment of acute coronary syndromes, cardiovascular disease remains the leading cause of death globally, with nearly half of these deaths due to ischaemic heart disease. The broadening availability of high-sensitivity troponin assays has allowed for rapid rule-out algorithms in patients with suspected non-ST-segment elevated myocardial infarction (NSTEMI). Dual antiplatelet therapy is recommended for 12 months following an acute coronary syndrome in most patients, and additional secondary prevention measures including intensive lipid-lowering therapy (LDL-C <1·4 mmol/L), neurohormonal agents, and lifestyle modification, are crucial. The scientific evidence for diagnosis and management of acute coronary syndromes continues to evolve rapidly, including adapting to the COVID-19 pandemic, which has impacted all aspects of care. This Seminar provides a clinically relevant overview of the pathobiology, diagnosis, and management of acute coronary syndromes, and describes key scientific advances.",
+   "year": "2022",
+   "journal": "Lancet (London, England)",
+   "first_author": "Bergmark BA",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "36435204": {
+   "pmid": "36435204",
+   "title": "Copeptin with high-sensitivity cardiac troponin to rule out non-ST-elevation myocardial infarction early on: A systematic review and meta-analysis.",
+   "abstract": "High-sensitivity cardiac troponin (hs-cTn) with copeptin in rapidly ruling out non-ST-elevation myocardial infarction (NSTEMI) remains controversial. We aimed to evaluate the diagnostic accuracy of this combination compared to hs-cTn alone. A literature search of electronic databases was performed from inception to 26 March 2022. Primary studies that evaluated the diagnostic accuracy of hs-cTn with and without copeptin in patients with NSTEMI were eligible. The reference standard consisted of all available medical results, including a significant rise or fall of cTn with at least one value above the 99th percentile of the reference population. The QUality Assessment of Diagnostic Accuracy Studies (QUADAS-2) was used to assess the quality of the included studies. Thirteen studies involving 8,966 patients, 1,405 of whom were diagnosed with NSTEMI (prevalence, 15.67 %), were included. Combining copeptin with hs-cTn (99th percentile of the healthy population as the threshold) at admission improved the sensitivity from 0.89 to 0.96 (95 % confidence interval [CI] 0.84-0.93 vs 0.93-0.98); the specificity reduced from 0.79 to 0.56 (95 % CI 0.71-0.86 vs 0.51-0.60). In five studies with 6,073 participants (900 NSTEMI), the hs-cTn alone (with 'very low' or limit of detection [LoD] threshold) had higher diagnostic sensitivity than the dual-marker strategy (0.98 vs 0.96). Combining copeptin with hs-cTn (99th percentile of the population as the threshold) at admission improved sensitivity in NSTEMI identification at the expense of specificity. However, with the LoD threshold for hs-cTn, copeptin had no additional value, deterring the widespread use of copeptin if the hs-cTn assay is clinically available.",
+   "year": "2023",
+   "journal": "Clinical biochemistry",
+   "first_author": "Mu D",
+   "pubtypes": [
+    "Meta-Analysis",
+    "Systematic Review",
+    "Journal Article"
+   ]
+  },
+  "33418577": {
+   "pmid": "33418577",
+   "title": "Optimizing the Use of High-Sensitivity Troponin Assays for the Early Rule-out of Myocardial Infarction in Patients Presenting with Chest Pain: A Systematic Review.",
+   "abstract": "We assessed the accuracy and clinical effectiveness of high-sensitivity cardiac troponin (hs-cTn) assays for early rule-out of non-ST-segment elevation myocardial infarction (NSTEMI) in adults presenting with acute chest pain. Sixteen databases were searched to September 2019. Review methods followed published guidelines. The bivariate model was used to estimate summary sensitivity and specificity with 95% confidence intervals for meta-analyses involving 4 or more studies, otherwise random-effects logistic regression was used. Thirty-seven studies (124 publications) were included in the review. The hs-cTn test strategies evaluated in the included studies were defined by the combination of 4 factors (assay, number of tests, timing of tests, and threshold concentration or change in concentration between tests). Clinical opinion indicated a minimum acceptable sensitivity of 97%. A single test at presentation using a threshold at or near the assay limit of detection could reliably rule-out NSTEMI for a range of hs-cTn assays. Serial testing strategies, which include an immediate rule-out step, increased the proportion ruled out without loss of sensitivity. Finally, serial testing strategies without an immediate rule-out step had excellent sensitivity and specificity, but at the expense of the option for immediate patient discharge. Test strategies that comprise an initial rule-out step, based on low hs-cTn concentrations at presentation and a minimum symptom duration, and a second step for those not ruled-out that incorporates a small absolute change in hs-cTn at 1, 2, or 3 hours, produce the highest rule-out rates with a very low risk of missed NSTEMI. CRD42019154716.",
+   "year": "2021",
+   "journal": "Clinical chemistry",
+   "first_author": "Westwood ME",
+   "pubtypes": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Systematic Review"
+   ]
+  },
+  "39214763": {
+   "pmid": "39214763",
+   "title": "Diagnostic accuracy of a machine learning algorithm using point-of-care high-sensitivity cardiac troponin I for rapid rule-out of myocardial infarction: a retrospective study.",
+   "abstract": "Point-of-care (POC) high-sensitivity cardiac troponin (hs-cTn) assays have been shown to provide similar analytical precision despite substantially shorter turnaround times compared with laboratory-based hs-cTn assays. We applied the previously developed machine learning based personalised Artificial Intelligence in Suspected Myocardial Infarction Study (ARTEMIS) algorithm, which can predict the individual probability of myocardial infarction, with a single POC hs-cTn measurement, and compared its diagnostic performance with standard-of-care pathways for rapid rule-out of myocardial infarction. We retrospectively analysed pooled data from consecutive patients of two prospective observational cohorts in geographically distinct regions (the Safe Emergency Department Discharge Rate cohort from the USA and the Suspected Acute Myocardial Infarction in Emergency cohort from Australia) who presented to the emergency department with suspected myocardial infarction. Patients with ST-segment elevation myocardial infarction were excluded. Safety and efficacy of direct rule-out of myocardial infarction by the ARTEMIS algorithm (at a pre-specified probability threshold of <0·5%) were compared with the European Society of Cardiology (ESC)-recommended and the American College of Cardiology (ACC)-recommended 0 h pathways using a single POC high-sensitivity cardiac troponin I (hs-cTnI) measurement (Siemens Atellica VTLi as investigational assay). The primary diagnostic outcome was an adjudicated index diagnosis of type 1 or type 2 myocardial infarction according to the Fourth Universal Definition of Myocardial Infarction. The safety outcome was a composite of incident myocardial infarction and cardiovascular death (follow-up events) at 30 days. Additional analyses were performed for type I myocardial infarction only (secondary diagnostic outcome), and for each cohort separately. Subgroup analyses were performed for age (<65 years vs ≥65 years), sex, symptom onset (≤3 h vs >3 h), estimated glomerular filtration rate (<60 mL/min per 1·73 m2vs ≥60 mL/min per 1·73 m2), and absence or presence of arterial hypertension, diabetes, a history of coronary artery disease, myocardial infarction, or heart failure, smoking, and ischaemic electrocardiogram signs. Among 2560 patients (1075 [42%] women, median age 58 years [IQR 48·0-69·0]), prevalence of myocardial infarction was 6·5% (166/2560). The ARTEMIS-POC algorithm classified 899 patients (35·1%) as suitable for rapid rule-out with a negative predictive value of 99·96% (95% CI 99·64-99·96) and a sensitivity of 99·68% (97·21-99·70). For type I myocardial infarction only, negative predictive value and sensitivity were both 100%. Proportions of missed index myocardial infarction (0·05% [0·04-0·42]) and follow-up events at 30 days (0·07% [95% CI 0·06-0·59]) were low. While maintaining high safety, the ARTEMIS-POC algorithm identified more than twice as many patients as eligible for direct rule-out compared with guideline-recommended ESC 0 h (15·2%) and ACC 0 h (13·8%) pathways. Superior efficacy persisted across all clinically relevant subgroups. The patient-tailored, medical decision support ARTEMIS-POC algorithm applied with a single POC hs-cTnI measurement allows for very rapid, safe, and more efficient direct rule-out of myocardial infarction than guideline-recommended pathways. It has the potential to expedite the safe discharge of low-risk patients from the emergency department including early presenters with symptom onset less than 3 h at the time of admission and might open new opportunities for the triage of patients with suspected myocardial infarction even in ambulatory, preclinical, or geographically isolated care settings. The German Center for Cardiovascular Research (DZHK).",
+   "year": "2024",
+   "journal": "The Lancet. Digital health",
+   "first_author": "Toprak B",
+   "pubtypes": [
+    "Journal Article",
+    "Observational Study",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "39142727": {
+   "pmid": "39142727",
+   "title": "Clinical and Analytical Performance of a Novel Point-of-Care High-Sensitivity Cardiac Troponin I Assay.",
+   "abstract": "Point-of-care (POC) high-sensitivity cardiac troponin assays may further accelerate the diagnosis of myocardial infarction (MI). This study sought to assess the clinical and analytical performance of the novel high-sensitivity cardiac troponin I (hs-cTnI)-SPINCHIP POC test. Adult patients presenting with acute chest discomfort to the emergency department were enrolled in an international, diagnostic, multicenter study. The final diagnosis was centrally adjudicated by 2 independent cardiologists using all clinical information. We compared the discriminatory performance of hs-cTnI-SPINCHIP with current established central laboratory assays and derived an assay-specific hs-cTnI-SPINCHIP 0/1-hour algorithm. Secondary analyses included sample type comparisons (whole blood, fresh/frozen plasma, and capillary finger prick) and precision analysis. MI was the adjudicated final diagnosis in 214 (19%) of 1,102 patients. Area under the receiver-operating characteristic curve was 0.94 (95% CI: 0.92-0.95) for hs-cTnI-SPINCHIP vs 0.94 (95% CI: 0.92-0.95) for hs-cTnI-Architect (P = 0.907) and 0.93 (95% CI: 0.91-0.95) for high-sensitivity cardiac troponin T Elecsys (P = 0.305). A cutoff <7 ng/L at presentation (if chest pain onset was >3 hours) or <7 ng/L together with a 0/1-hour delta of <4 ng/L ruled out 51% with a sensitivity and negative predictive value of 100% (95% CI: 97.7%-100%) and 100% (95% CI: 99.0%-100%), respectively. A hs-cTnI-SPINCHIP concentration ≥36 ng/L or a 0/1-hour delta ≥11 ng/L ruled in 27% with a specificity and positive predictive value of 90.9% (95% CI: 88.3%-92.9%) and 72.9% (95% CI: 66.4%-78.6%), respectively. Bootstrap internal validation confirmed excellent diagnostic performance. High agreement was observed between different sample types. The SPINCHIP hs-cTnI POC test has very high diagnostic accuracy. Its assay-specific 0/1-hour algorithm achieved very high sensitivity/negative predictive value and specificity/positive predictive value for rule-out/in MI. (Advantageous Predictors of Acute Coronary Syndromes Evaluation [APACE] Study [APACE]; NCT00470587).",
+   "year": "2024",
+   "journal": "Journal of the American College of Cardiology",
+   "first_author": "Koechlin L",
+   "pubtypes": [
+    "Journal Article",
+    "Multicenter Study"
+   ]
+  },
+  "40202469": {
+   "pmid": "40202469",
+   "title": "Effectiveness of Point-of-Care High-Sensitivity Troponin Testing in the Emergency Department: A Randomized Controlled Trial.",
+   "abstract": "To compare the effectiveness of high-sensitivity cardiac troponin (hs-cTn) point-of-care testing to central laboratory hs-cTn measurements when investigating patients presenting to the emergency department (ED) with symptoms of acute coronary syndrome. The WESTCOR point-of-care study was a single-center prospective randomized controlled trial where we randomized patients presenting with possible acute coronary syndrome in a 1:1 fashion to receive either 0/1-hour centralized hs-cTnT measurements (control) or 0/1-hour point-of-care hs-cTnI testing (intervention). We defined length of stay (LOS) in the ED as the primary endpoint and the minimum clinically meaningful difference as 15 minutes. We included 1,494 patients in the final analysis, 728 in the point-of-care group, and 766 in the control group. The median (interquartile range) age was 61 (22) years, and 635 (42.5%) were women. Median LOS in the ED was 174 (95% confidence interval [CI] 167 to 181) and 180 (95% CI 175 to 189) minutes in the point-of-care and control group, respectively, resulting in a reduction in median LOS of 6 minutes (95% CI -4 to 17). Acute myocardial infarction, death, or acute revascularization occurred in 83/728 (11.4%) of point-of-care and 72/766 (9.4%) of control patients. We found that implementing point-of-care hs-cTnI testing in the ED with a 0/1-hour diagnostic algorithm did not lead to a clinically meaningful reduction in ED LOS. We observed no difference in the incidence of myocardial infarction, acute coronary revascularization, or death during 30 days follow-up.",
+   "year": "2025",
+   "journal": "Annals of emergency medicine",
+   "first_author": "Thulin VIL",
+   "pubtypes": [
+    "Journal Article",
+    "Randomized Controlled Trial"
+   ]
+  },
+  "41706062": {
+   "pmid": "41706062",
+   "title": "Comparison of the European Society of Cardiology 0/1-Hour and High-Sensitivity Troponin in the Evaluation of Patients With Suspected Acute Coronary Syndrome 0/2-or-0/3-Hour Algorithms for Rapid Myocardial Infarction Diagnosis: A Prospective Multicenter Study.",
+   "abstract": "The optimal approach for the early diagnosis of non-ST-segment elevation myocardial infarction (NSTEMI) remains uncertain, because no large trials have been performed. Accordingly, guideline recommendations differ and do not overall give a clear answer. The authors aimed to directly compare the European Society of Cardiology 0/1-hour algorithm (ESC 0/1h-algorithm) and the high-sensitivity troponin in the evaluation of patients with acute coronary syndrome 0/2-hour or 0/3-hour pathway (High-STEACS 0/2h-0/3h-pathway) in patients presenting with acute chest discomfort. This prospective, international, multicenter, diagnostic study enrolled patients presenting to the emergency department with acute chest discomfort. Final diagnoses were centrally adjudicated by 2 independent cardiologists. The primary diagnostic endpoint was NSTEMI type 1. Both algorithms were applied in parallel using 3 high-sensitivity cardiac troponin (hs-cTn) assays: hs-cTnI-Architect, hs-cTnI-Centaur/Atellica, and hs-cTnT-Elecsys. The findings were externally validated in an independent prospective diagnostic study. Among 4,663 eligible patients (median age: 61 years; 32% women), 663 (14.2%) had NSTEMI type 1. The ESC 0/1h-algorithm had higher sensitivity when using hs-cTnI-Architect (100% [95% CI: 99.4-100]) compared with the High-STEACS 0/2h-pathway (98.1% [95% CI: 96.7-99], P < 0.001), but the proportion of patients assigned to the rule-out group was lower (52% vs 72.5%, P < 0.001). Differences were similar but were less pronounced for hs-cTnI-Centaur/Atellica and absent for hs-cTnT-Elecsys. Specificity was consistently higher for the ESC 0/1h-algorithms vs the High-STEACS 0/2h-0/3h-pathways for all hs-cTnT/I-assays. These findings were confirmed when using High-STEACS 0/3h-pathways and in the external validation cohort (n = 2,485; median age: 64 years; 37% women). Overall, both algorithms exhibited comparable and excellent performance. When using hs-cTnI, the ESC-0/1h-algorithms showed higher sensitivity, whereas the High-STEACS 0/2h-0/3h-pathways demonstrated higher efficacy. Consistently, the ESC 0/1h-algorithms showed higher specificity for NSTEMI. These findings provide direct, validated evidence to guide hospitals in selecting an hs-cTn pathway aligned with their clinical and operational priorities. (Advantageous Predictors of Acute Coronary Syndromes Evaluation [APACE] Study [APACE], NCT00470587; Biomarkers in Acute Cardiac Care [BACC], NCT02355457).",
+   "year": "2026",
+   "journal": "Journal of the American College of Cardiology",
+   "first_author": "Glaeser J",
+   "pubtypes": [
+    "Journal Article",
+    "Multicenter Study",
+    "Comparative Study"
+   ]
+  },
+  "41879583": {
+   "pmid": "41879583",
+   "title": "High-Sensitivity Cardiac Troponin T-gen6 Assay in Suspected Myocardial Infarction: Diagnostic Accuracy, Cutoffs, and Clinical Implications.",
+   "abstract": "The new high-sensitivity cardiac troponin (hs-cTn) T-generation (gen) 6 assay has higher analytical sensitivity than the current hs-cTnT-gen5 assay, but its clinical performance is unknown. The authors aimed to assess the clinical performance and use-optimized cutoffs of the hs-cTnT-gen6 assay. In this secondary analysis of an international, prospective, diagnostic study with central adjudication, patients presenting with suspected myocardial infarction to the emergency department were enrolled. hs-cTnT-gen6 and hs-cTnT -gen5 were measured at the same time points. The analytical and diagnostic performance of hs-cTnT-gen6 were compared to hs-cTnT-gen5, and assay-specific cutoffs for the European Society of Cardiology 0/1- and 0/2-hour algorithms were derived and internally and externally validated. Among 3,346 patients, myocardial infarction was the final diagnosis in 616 (18.4%). The proportion of patients with concentrations above the upper reference limit and therefore having myocardial injury was lower for hs-cTnT-gen6 (35.9%) than for hs-cTnT-gen5 (43.5%; P < 0.001). Diagnostic accuracy at emergency department presentation, expressed as area under the curve, was 0.927 (95% CI: 0.918-0.937) for hs-cTnT-gen6 and 0.931 (95% CI: 0.921-0.94) for hs-cTnT-gen5. A gen6 cutoff of <6 ng/L ruled out non-ST-segment elevated myocardial infarction in 30.0% of patients with 100% sensitivity (95% CI: 99.4%-100%) irrespective of chest pain onset. An hs-cTnT-gen6 cutoff of <8 ng/L at presentation (if chest pain onset was >3 hours) or <18 ng/L together with a 0/1-hour delta of <2 ng/L ruled out 56.3% with a sensitivity of 99.7% (95% CI: 98.3%-99.9%). An hs-cTnT-gen6 concentration ≥112 ng/L or a 0/1-hour delta ≥10 ng/L ruled-in 20.0% with a specificity of 93.4% (95% CI: 92.0%-94.6%). An hs-cTnT-gen6 cutoff <8 ng/L at presentation (if chest pain onset was >3 hours) or <18 ng/L together with a 0/2-hour delta of <4 ng/L ruled out 51.1% with a sensitivity of 99.7% (95% CI: 98.1%-99.9%). An hs-cTnT-gen6 concentration ≥112 ng/L or a 0/2-hour delta ≥15 ng/L ruled-in 23.9% with a specificity 92.7% (95% CI: 90.8%-94.2%). Findings were consistent in sensitivity analyses as well as in the external validation cohort. The novel hs-cTnT-gen6 assay demonstrated excellent and comparable diagnostic performance to the established hs-cTnT-gen5 assay with fewer patients identified as having myocardial injury. Use-optimized, assay-specific cutoffs for the European Society of Cardiology 0/1- and 0/2-hour algorithms provided very high sensitivity and high specificity. (Advantageous Predictors of Acute Coronary Syndromes Evaluation Study [APACE]; NCT00470587).",
+   "year": "2026",
+   "journal": "Journal of the American College of Cardiology",
+   "first_author": "Koechlin L",
+   "pubtypes": [
+    "Journal Article",
+    "Multicenter Study",
+    "Observational Study"
+   ]
+  },
+  "33373603": {
+   "pmid": "33373603",
+   "title": "The role of cardiac testing with the 0/1-hour high-sensitivity cardiac troponin algorithm evaluating for acute myocardial infarction.",
+   "abstract": "The role of cardiac testing in the 3 zones (rule-out, observation, and rule-in) of the 0/1-hour algorithm to evaluate for acute myocardial infarction (AMI) has not been well studied. This study evaluated the 0/1-hour algorithm with a high-sensitivity cardiac troponin (hs-cTnI) assay and investigated cardiac testing in the 3 zones. Patients (n = 552) at a single urban center were enrolled if they were evaluated for AMI. Blood samples were obtained at presentation, 1 hour, and 3 hours for hs-cTnI. Follow-up at 30 to 45 days for death/AMI was done. The results of echocardiograms, stress testing, and coronary angiography were recorded. In total, 45 (8.2%) had AMI (27 Type 1 and 18 Type 2) during the index hospitalization while at follow-up death/AMI occurred in 11 (2.0%) of patients. The rule-out algorithm had a negative predictive value for AMI of 99.6% while the rule-in zone had a positive predictive value of 56.6%. The MACE rate at follow-up was 0.4% for those in the rule-out group. There were 6/95 (6.3%) abnormal stress tests in the rule-out zone and 4 of these were false positives. The 0/1-hour algorithm had high diagnostic sensitivity and negative predictive value for AMI, and adverse events were very low in patients in the rule-out zone. Noninvasive testing in rule-out zone patients had low diagnostic yield.",
+   "year": "2021",
+   "journal": "American heart journal",
+   "first_author": "McCord J",
+   "pubtypes": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Validation Study"
+   ]
+  },
+  "42918591": {
+   "pmid": "42918591",
+   "title": "Clinical triage concordance of a point-of-care high-sensitivity cardiac troponin I assay using the ESC 0/1-hour algorithm.",
+   "abstract": "Although point-of-care (POC) high-sensitivity cardiac troponin I (hs-cTnI) assays have demonstrated good analytical agreement with central laboratory (CL) testing, it remains uncertain whether they yield the same clinical triage decisions. We evaluated the clinical concordance of a POC hs-cTnI assay with a CL assay using the European Society of Cardiology (ESC) 0/1-h algorithm. This prospective diagnostic agreement study included 127 patients presenting to the emergency department with suspected acute coronary syndrome. The primary outcome was concordance of patient classification according to the 0/1-h algorithm, assessed using the quadratic weighted kappa (κ) statistic. Secondary outcomes included quantitative agreement assessed by the intraclass correlation coefficient (ICC) and Bland-Altman analysis, and analytical comparability between whole blood and plasma on the POC platform. Overall, 114/127 patients (89.8%) were assigned to the same triage category (κ = 0.921; 95% CI, 0.878-0.964). All 13 discordant classifications (10.2%) occurred between adjacent categories, with no CL rule-in patient classified as POC rule-out. Quantitative agreement between assays was good (ICC = 0.882; 95%CI 0.835-0.917), with a mean bias of -5.27 ng/L. Whole blood and plasma showed close agreement (ICC = 0.999; 95%CI 0.998-0.999), with a mean bias of 0.50 ng/L. The POC assay showed high clinical concordance with CL-based ESC 0/1-h triage classification, with all discordances confined to adjacent categories. These findings provide pre-implementation evidence supporting further prospective evaluation of POC hs-cTnI testing under routine bedside conditions.",
+   "year": "2026",
+   "journal": "Clinica chimica acta; international journal of clinical chemistry",
+   "first_author": "Kongruttanachok N",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "28293123": {
+   "pmid": "28293123",
+   "title": "Pembrolizumab in the treatment of metastatic non-small-cell lung cancer: patient selection and perspectives.",
+   "abstract": "Lung cancer is the leading killer of both men and women in the US, and the 5-year survival remains poor. However, the approval of checkpoint blockade immunotherapy has shifted the treatment paradigm and provides hope for improved survival. The ability of non-small-cell lung cancer (NSCLC) to evade the host immune system can be overcome by agents such as pembrolizumab (MK-3475/lambrolizumab), which is a monoclonal antibody targeting the programmed death 1 (PD-1) receptor. In early studies, treatment with pembrolizumab led to dramatic and durable responses in select patients (PD-L1+ tumors). This remarkable efficacy lead to approval of pembrolizumab in the second-line setting as response rates were almost doubled compared to standard of care (SOC) chemotherapy. Most recently, data in the first-line setting from the KEYNOTE-024 study have redefined the SOC therapy for a selected subset of patients. In patients with ≥50% PD-L1+ tumors, pembrolizumab had a clear progression-free survival and overall survival benefit. Toxicity was mostly immune related and similar to checkpoint blockade toxicities observed in previous studies. The initial approval and subsequent studies of pembrolizumab required and utilized a companion diagnostic test, Dako's IHC 22C3, to assess PD-L1 status of patients. The evaluation and scoring system of this assay has been used by other companies as a reference to develop their own assays, which may complicate selection of patients. Finally, the impact of pembrolizumab in NSCLC is growing as evidenced by the numerous, ongoing trials open for combinations with chemotherapy, chemoradiation, other immunotherapeutics, immunomodulators, tyrosine kinase inhibitors, PI3K inhibitors, MEK inhibitors, hypomethylating agents, and histone deacetylase inhibitors. Further studies are also evaluating pembrolizumab in small-cell lung cancer and malignant pleural mesothelioma. This explosion of studies truly conveys the lack of therapeutic answers for lung cancer patients and the promise of pembrolizumab.",
+   "year": "2017",
+   "journal": "Lung Cancer (Auckland, N.Z.)",
+   "first_author": "Somasundaram A",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "27333219": {
+   "pmid": "27333219",
+   "title": "Development of a Companion Diagnostic PD-L1 Immunohistochemistry Assay for Pembrolizumab Therapy in Non-Small-cell Lung Cancer.",
+   "abstract": "A companion diagnostic assay was codeveloped by Dako for pembrolizumab non-small-cell lung cancer clinical trials to detect PD-L1 expression by immunohistochemistry (IHC). This automated IHC assay has been analytically verified and validated using Dako's autostainer Link 48 and 22C3 mouse anti-PD-L1 monoclonal antibody to detect the PD-L1 expression in formalin-fixed paraffin-embedded human tumor tissue specimens. The PD-L1 22C3 IHC assay was optimized for high sensitivity and specificity. Repeatability and reproducibility studies were conducted at Dako and at 3 Clinical Laboratory Improvement Amendments certified laboratories during assay development. The studies included: intersite and intrasite, interobserver and intraobserver, interinstrument, interoperator, interday, and interlot, and intraday and intrarun. All precision studies performed at Dako and external laboratories achieved >85% point-estimate agreements for all 3 agreement types (negative, positive, and overall). A clinical cutoff (tumor proportion score ≥50%) of PD-L1 expression was determined and evaluated through a phase 1 clinical trial (KEYNOTE-001) for advanced non-small-cell lung cancer patients treated with pembrolizumab. The treatment effect of pembrolizumab in the 61 subjects who had a tumor PD-L1 of tumor proportion score ≥50% was substantial, with an overall response rate of 41% (95% confidence interval, 28.6-54.3) as compared with 20.6% (95% confidence interval, 15.5-26.5) observed in the 223 subjects irrespective of PD-L1 status. PD-L1 IHC 22C3 pharmDx is a sensitive, precise, and robust companion diagnostic assay, which will facilitate safe and effective use for pembrolizumab in cancer patients.",
+   "year": "2016",
+   "journal": "Applied immunohistochemistry & molecular morphology : AIMM",
+   "first_author": "Roach C",
+   "pubtypes": [
+    "Clinical Trial, Phase I",
+    "Journal Article",
+    "Multicenter Study",
+    "Validation Study"
+   ]
+  },
+  "29084031": {
+   "pmid": "29084031",
+   "title": "Companion and Complementary Diagnostics-Focus on PD-L1 Expression Assays for PD-1/PD-L1 Checkpoint Inhibitors in Non-Small Cell Lung Cancer.",
+   "abstract": "Over the last couple of decades, molecular diagnostics have played an increasing role in drug development. Especially within oncology, more and more drugs are being developed together with a predictive biomarker assay using the drug-diagnostic codevelopment model. Not only do these assays support the development process but also the use of the drugs after regulatory approval as an important treatment decision tool. When these predictive biomarker assays are linked to a specific drug, they are called companion diagnostics. Furthermore, these assays are also considered an important element in the realization of precision medicine. Today, 21 different drugs have obtained US FDA approval together with a companion diagnostic assay, and the requirement for testing is part of their regulatory labeling. More than half of these drugs are for treatment of non-small cell lung cancer (NSCLC). With the approval of the different programmed cell death 1 (PD-1)/programmed cell death ligand 1 (PD-L1) immune checkpoint inhibitors, for the treatment of advanced stage NSCLC, a new class of predictive biomarker assays-complementary diagnostics-has emerged. Until now, 3 immune checkpoint inhibitors have obtained regulatory approval for treatment of NSCLC, and they all have a biomarker assay linked to their use. However, only for pembrolizumab, the PD-L1 immunohistochemical (IHC) 22C3 pharmDx assay has status as a companion diagnostic. For nivolumab and atezolizumab, the assays PD-L1 IHC 22C3 pharmDx and Ventana PD-L1 (SP142) have status as complementary diagnostics, which means that there are no requirements for testing included in the labeling for these drugs. Here, the authors discuss the clinical performance of the different IHC PD-L1 expression assays including the selection of the clinical cutoff values.",
+   "year": "2018",
+   "journal": "Therapeutic drug monitoring",
+   "first_author": "Hersom M",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "26559787": {
+   "pmid": "26559787",
+   "title": "Companion diagnostic assays for PD-1/PD-L1 checkpoint inhibitors in NSCLC.",
+   "abstract": "The immune checkpoint inhibitors pembrolizumab and nivolumab together with their diagnostic assays have recently been granted market authorization for treatment of advanced non-small-cell lung cancer in the USA. The two assays, PD-L1 IHC 22C3 pharmDx and PD-L1 IHC 28-8 pharmDx (both by Dako, Glostrup, Denmark), are the first PD-L1 IHC assays to obtain regulatory approval through the Premarket Approval process. This approval is supported by recent clinical studies that have shown a positive correlation between PD-L1 expression and the outcome following treatment with different PD-1/PD-L1 checkpoint inhibitors. These diagnostic assays are able to identify the group of non-small-cell lung cancer patients who will benefit most from treatment with the immune checkpoint inhibitors. However, so far, it is only the PD-L1 IHC 22C3 pharmDx assay, which is linked to the use of pembrolizumab, that has obtained regulatory status as a companion diagnostic.",
+   "year": "2016",
+   "journal": "Expert review of molecular diagnostics",
+   "first_author": "Jørgensen JT",
+   "pubtypes": [
+    "Editorial"
+   ]
+  },
+  "32030214": {
+   "pmid": "32030214",
+   "title": "Inter-tumor heterogeneity of PD-L1 expression in non-small cell lung cancer.",
+   "abstract": "The Dako PD-L1 immunohistochemistry (IHC) 22C3 pharmDx and the Dako 28-8 IHC pharmDx assays were approved by the US Food and Drug Administration, as a companion diagnostic test for pembrolizumab (Keytruda, Merk, Kenilworth, NJ, USA) and a complementary diagnostic test for nivolumab (Opdivo, Bristol Meyer Squibb, New York, NY, USA) in non-small cell lung cancer (NSCLC), respectively. Increased PD-L1 expression levels can be associated with greater therapeutic efficacy of pembrolizumab relative to other anti-PD-1 agents. However, in treatment decision making, little is known about which tissue (primary or metastatic lesion) should be stained by 22C3 antibody. We investigated the relationship between PD-L1 expression in primary tumors and paired metastatic lymph nodes using the 22C3 assay, and evaluated the concordance between the 22C3 and 28-8 assays. PD-L1 expression was evaluated in cells from primary tumors and paired metastatic lymph nodes using the 22C3 and 28-8 IHC assays. Total 35 patients with primary tumor and paired metastatic lymph node were enrolled into this study, and all samples were surgically resected, formalin-fixed, and paraffin-embedded NSCLC tissues. Tumor cells exhibiting complete or partial membrane staining, were considered as PD-L1 positive. On the basis of tumor proportion score (TPS), all samples were classified as no expression (TPS: <1%), low expression (TPS: 1-49%), or high expression (TPS: ≥50%). TPS distribution was markedly different between primary tumors and paired metastatic lymph nodes. In 22C3 IHC assay, TPS similar to that of metastatic lymph nodes was demonstrated in 10 primary tumors, and concordance rate between them was 28.6%. Concurrently, in 28-8 IHC assay, 11 primary tumors had TPS similar to that of metastatic lymph nodes, with a concordance rate of 31.4%. TPS concordance rates (for both 22C3 and 28-8 antibodies) between primary tumors and paired lymph nodes were low. Inter-tumor heterogeneity of PD-L1 expression is an important issue for clinical oncologists during treatment planning.",
+   "year": "2019",
+   "journal": "Journal of thoracic disease",
+   "first_author": "Saito Y",
+   "pubtypes": [
+    "Journal Article"
+   ]
+  },
+  "30775032": {
+   "pmid": "30775032",
+   "title": "Programmed death ligand 1 immunohistochemistry in non-small cell lung carcinoma.",
+   "abstract": "Lung cancer is the leading cause of cancer death worldwide with low response rates to conventional chemotherapy. New promising therapies have emerged based on programmed cell death protein 1 (PD-1) immunity checkpoint inhibitors (ICI), including anti-PD-1, such as nivolumab and pembrolizumab, or programmed death ligand 1 (PD-L1) inhibitors, such as atezolizumab, durvalumab, and avelumab. The prescription of pembrolizumab has been approved by FDA and EMA for advanced stages non-small cell lung carcinoma (NSCLC), restricted for first-line setting to patients whose tumor presents ≥50% of PD-L1 positive tumor cells (TC), and ≥1% for second-line and beyond, leading to consider PD-L1 assay as a companion diagnostic tool for pembrolizumab. Very recently, the EMA has approved durvalumab for the treatment of patients with unresectable stage III NSCLC not progressing after chemoradiotherapy and whose tumors express PD-L1 on ≥1% of TC. Four standardized PD-L1 immunohistochemistry assays have been used in clinical trials; 22C3 and 28-8 PharmDx assays on Dako/Agilent platforms, and SP142 and SP263 assays on Ventana platforms, each test having been developed initially for a specific ICI. They differ in terms of primary monoclonal antibody, platform, detection system and scoring methods with different thresholds of positivity validated in clinical trials. Several studies have shown a close analytical performance of the 22C3, 28-8 and SP263 assays regarding TC staining in NSCLC, with poor concordance with SP142 assay and for immune cells. However, as dedicated platforms are not available in all pathology laboratories and because of the high cost of these assays, laboratory developed tests are widely used in many countries. Their validation must guarantee the same sensitivities and specificities as compared to standardized assays. Overall, PD-L1 test is of great help to select patients who could benefit for ICI and most pathologists have included this test in their daily practice for advanced stages NSCLC, besides ALK and ROS1 IHC.",
+   "year": "2019",
+   "journal": "Journal of thoracic disease",
+   "first_author": "Lantuejoul S",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "30620668": {
+   "pmid": "30620668",
+   "title": "Updated Analysis of KEYNOTE-024: Pembrolizumab Versus Platinum-Based Chemotherapy for Advanced Non-Small-Cell Lung Cancer With PD-L1 Tumor Proportion Score of 50% or Greater.",
+   "abstract": "In the randomized, open-label, phase III KEYNOTE-024 study, pembrolizumab significantly improved progression-free survival and overall survival (OS) compared with platinum-based chemotherapy in patients with previously untreated advanced non-small-cell lung cancer (NSCLC) with a programmed death ligand 1 tumor proportion score of 50% or greater and without EGFR/ALK aberrations. We report an updated OS and tolerability analysis, including analyses adjusting for potential bias introduced by crossover from chemotherapy to pembrolizumab. Patients were randomly assigned to pembrolizumab 200 mg every 3 weeks (for up to 2 years) or investigator's choice of platinum-based chemotherapy (four to six cycles). Patients assigned to chemotherapy could cross over to pembrolizumab upon meeting eligibility criteria. The primary end point was progression-free survival; OS was an important key secondary end point. Crossover adjustment analysis was done using the following three methods: simplified two-stage method, rank-preserving structural failure time, and inverse probability of censoring weighting. Three hundred five patients were randomly assigned (pembrolizumab, n = 154; chemotherapy, n = 151). At data cutoff (July 10, 2017; median follow-up, 25.2 months), 73 patients in the pembrolizumab arm and 96 in the chemotherapy arm had died. Median OS was 30.0 months (95% CI, 18.3 months to not reached) with pembrolizumab and 14.2 months (95% CI, 9.8 to 19.0 months) with chemotherapy (hazard ratio, 0.63; 95% CI, 0.47 to 0.86). Eighty-two patients assigned to chemotherapy crossed over on study to receive pembrolizumab. When adjusted for crossover using the two-stage method, the hazard ratio for OS for pembrolizumab versus chemotherapy was 0.49 (95% CI, 0.34 to 0.69); results using rank-preserving structural failure time and inverse probability of censoring weighting were similar. Treatment-related grade 3 to 5 adverse events were less frequent with pembrolizumab compared with chemotherapy (31.2% v 53.3%, respectively). With prolonged follow-up, first-line pembrolizumab monotherapy continues to demonstrate an OS benefit over chemotherapy in patients with previously untreated, advanced NSCLC without EGFR/ALK aberrations, despite crossover from the control arm to pembrolizumab as subsequent therapy.",
+   "year": "2019",
+   "journal": "Journal of clinical oncology : official journal of the American Society of Clinical Oncology",
+   "first_author": "Reck M",
+   "pubtypes": [
+    "Clinical Trial, Phase III",
+    "Comparative Study",
+    "Journal Article",
+    "Randomized Controlled Trial",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "30955977": {
+   "pmid": "30955977",
+   "title": "Pembrolizumab versus chemotherapy for previously untreated, PD-L1-expressing, locally advanced or metastatic non-small-cell lung cancer (KEYNOTE-042): a randomised, open-label, controlled, phase 3 trial.",
+   "abstract": "First-line pembrolizumab monotherapy improves overall and progression-free survival in patients with untreated metastatic non-small-cell lung cancer with a programmed death ligand 1 (PD-L1) tumour proportion score (TPS) of 50% or greater. We investigated overall survival after treatment with pembrolizumab monotherapy in patients with a PD-L1 TPS of 1% or greater. This randomised, open-label, phase 3 study was done in 213 medical centres in 32 countries. Eligible patients were adults (≥18 years) with previously untreated locally advanced or metastatic non-small-cell lung cancer without a sensitising EGFR mutation or ALK translocation and with an Eastern Cooperative Oncology Group (ECOG) performance status score of 0 or 1, life expectancy 3 months or longer, and a PD-L1 TPS of 1% or greater. Randomisation was computer generated, accessed via an interactive voice-response and integrated web-response system, and stratified by region of enrolment (east Asia vs rest of world), ECOG performance status score (0 vs 1), histology (squamous vs non-squamous), and PD-L1 TPS (≥50% vs 1-49%). Enrolled patients were randomly assigned 1:1 in blocks of four per stratum to receive pembrolizumab 200 mg every 3 weeks for up to 35 cycles or the investigator's choice of platinum-based chemotherapy for four to six cycles. Primary endpoints were overall survival in patients with a TPS of 50% or greater, 20% or greater, and 1% or greater (one-sided significance thresholds, p=0·0122, p=0·0120, and p=0·0124, respectively) in the intention-to-treat population, assessed sequentially if the previous findings were significant. This study is registered at ClinicalTrials.gov, number NCT02220894. From Dec 19, 2014, to March 6, 2017, 1274 patients (902 men, 372 women, median age 63 years [IQR 57-69]) with a PD-L1 TPS of 1% or greater were allocated to pembrolizumab (n=637) or chemotherapy (n=637) and included in the intention-to-treat population. 599 (47%) had a TPS of 50% or greater and 818 patients (64%) had a TPS of 20% or greater. As of Feb 26, 2018, median follow-up was 12·8 months. Overall survival was significantly longer in the pembrolizumab group than in the chemotherapy group in all three TPS populations (≥50% hazard ratio 0·69, 95% CI 0·56-0·85, p=0·0003; ≥20% 0·77, 0·64-0·92, p=0·0020, and ≥1% 0·81, 0·71-0·93, p=0·0018). The median surival values by TPS population were 20·0 months (95% CI 15·4-24·9) for pembrolizumab versus 12·2 months (10·4-14·2) for chemotherapy, 17·7 months (15·3-22·1) versus 13·0 months (11·6-15·3), and 16·7 months (13·9-19·7) versus 12·1 months (11·3-13·3), respectively. Treatment-related adverse events of grade 3 or worse occurred in 113 (18%) of 636 treated patients in the pembrolizumab group and in 252 (41%) of 615 in the chemotherapy group and led to death in 13 (2%) and 14 (2%) patients, respectively. The benefit-to-risk profile suggests that pembrolizumab monotherapy can be extended as first-line therapy to patients with locally advanced or metastatic non-small-cell lung cancer without sensitising EGFR or ALK alterations and with low PD-L1 TPS. Merck Sharp & Dohme.",
+   "year": "2019",
+   "journal": "Lancet (London, England)",
+   "first_author": "Mok TSK",
+   "pubtypes": [
+    "Clinical Trial, Phase III",
+    "Comparative Study",
+    "Journal Article",
+    "Randomized Controlled Trial"
+   ]
+  },
+  "29658856": {
+   "pmid": "29658856",
+   "title": "Pembrolizumab plus Chemotherapy in Metastatic Non-Small-Cell Lung Cancer.",
+   "abstract": "First-line therapy for advanced non-small-cell lung cancer (NSCLC) that lacks targetable mutations is platinum-based chemotherapy. Among patients with a tumor proportion score for programmed death ligand 1 (PD-L1) of 50% or greater, pembrolizumab has replaced cytotoxic chemotherapy as the first-line treatment of choice. The addition of pembrolizumab to chemotherapy resulted in significantly higher rates of response and longer progression-free survival than chemotherapy alone in a phase 2 trial. In this double-blind, phase 3 trial, we randomly assigned (in a 2:1 ratio) 616 patients with metastatic nonsquamous NSCLC without sensitizing EGFR or ALK mutations who had received no previous treatment for metastatic disease to receive pemetrexed and a platinum-based drug plus either 200 mg of pembrolizumab or placebo every 3 weeks for 4 cycles, followed by pembrolizumab or placebo for up to a total of 35 cycles plus pemetrexed maintenance therapy. Crossover to pembrolizumab monotherapy was permitted among the patients in the placebo-combination group who had verified disease progression. The primary end points were overall survival and progression-free survival, as assessed by blinded, independent central radiologic review. After a median follow-up of 10.5 months, the estimated rate of overall survival at 12 months was 69.2% (95% confidence interval [CI], 64.1 to 73.8) in the pembrolizumab-combination group versus 49.4% (95% CI, 42.1 to 56.2) in the placebo-combination group (hazard ratio for death, 0.49; 95% CI, 0.38 to 0.64; P<0.001). Improvement in overall survival was seen across all PD-L1 categories that were evaluated. Median progression-free survival was 8.8 months (95% CI, 7.6 to 9.2) in the pembrolizumab-combination group and 4.9 months (95% CI, 4.7 to 5.5) in the placebo-combination group (hazard ratio for disease progression or death, 0.52; 95% CI, 0.43 to 0.64; P<0.001). Adverse events of grade 3 or higher occurred in 67.2% of the patients in the pembrolizumab-combination group and in 65.8% of those in the placebo-combination group. In patients with previously untreated metastatic nonsquamous NSCLC without EGFR or ALK mutations, the addition of pembrolizumab to standard chemotherapy of pemetrexed and a platinum-based drug resulted in significantly longer overall survival and progression-free survival than chemotherapy alone. (Funded by Merck; KEYNOTE-189 ClinicalTrials.gov number, NCT02578680 .).",
+   "year": "2018",
+   "journal": "The New England journal of medicine",
+   "first_author": "Gandhi L",
+   "pubtypes": [
+    "Clinical Trial, Phase III",
+    "Journal Article",
+    "Multicenter Study",
+    "Randomized Controlled Trial",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "33513313": {
+   "pmid": "33513313",
+   "title": "Pembrolizumab Plus Ipilimumab or Placebo for Metastatic Non-Small-Cell Lung Cancer With PD-L1 Tumor Proportion Score ≥ 50%: Randomized, Double-Blind Phase III KEYNOTE-598 Study.",
+   "abstract": "Pembrolizumab monotherapy is standard first-line therapy for metastatic non-small-cell lung cancer (NSCLC) with programmed death ligand 1 (PD-L1) tumor proportion score (TPS) ≥ 50% without actionable driver mutations. It is not known whether adding ipilimumab to pembrolizumab improves efficacy over pembrolizumab alone in this population. In the randomized, double-blind, phase III KEYNOTE-598 trial (ClinicalTrials.gov identifier: NCT03302234), eligible patients with previously untreated metastatic NSCLC with PD-L1 TPS ≥ 50% and no sensitizing EGFR or ALK aberrations were randomly allocated 1:1 to ipilimumab 1 mg/kg or placebo every 6 weeks for up to 18 doses; all participants received pembrolizumab 200 mg every 3 weeks for up to 35 doses. Primary end points were overall survival and progression-free survival. Of the 568 participants, 284 were randomly allocated to each group. Median overall survival was 21.4 months for pembrolizumab-ipilimumab versus 21.9 months for pembrolizumab-placebo (hazard ratio, 1.08; 95% CI, 0.85 to 1.37; P = .74). Median progression-free survival was 8.2 months for pembrolizumab-ipilimumab versus 8.4 months for pembrolizumab-placebo (hazard ratio, 1.06; 95% CI, 0.86 to 1.30; P = .72). Grade 3-5 adverse events occurred in 62.4% of pembrolizumab-ipilimumab recipients versus 50.2% of pembrolizumab-placebo recipients and led to death in 13.1% versus 7.5%. The external data and safety monitoring committee recommended that the study be stopped for futility and that participants discontinue ipilimumab and placebo. Adding ipilimumab to pembrolizumab does not improve efficacy and is associated with greater toxicity than pembrolizumab monotherapy as first-line treatment for metastatic NSCLC with PD-L1 TPS ≥ 50% and no targetable EGFR or ALK aberrations. These data do not support use of pembrolizumab-ipilimumab in place of pembrolizumab monotherapy in this population.",
+   "year": "2021",
+   "journal": "Journal of clinical oncology : official journal of the American Society of Clinical Oncology",
+   "first_author": "Boyer M",
+   "pubtypes": [
+    "Journal Article",
+    "Multicenter Study",
+    "Randomized Controlled Trial",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "40057343": {
+   "pmid": "40057343",
+   "title": "Ivonescimab versus pembrolizumab for PD-L1-positive non-small cell lung cancer (HARMONi-2): a randomised, double-blind, phase 3 study in China.",
+   "abstract": "Ivonescimab is a bispecific antibody against programmed cell death protein 1 and vascular endothelial growth factor, yielding promising clinical outcomes for patients with advanced non-small cell lung cancer in early-phase studies. We compared the efficacy and safety of ivonescimab with pembrolizumab in patients with programmed cell death ligand-1 (PD-L1)-positive advanced non-small cell lung cancer. HARMONi-2 is a randomised, double-blind, phase 3 trial across 55 hospitals in China. Eligible patients were aged 18 years or older and had locally advanced or metastatic PD-L1-positive non-small cell lung cancer without sensitising epidermal growth factor receptor mutations or anaplastic lymphoma kinase translocations and an Eastern Cooperative Oncology Group performance-status of 0 or 1. Patients were randomly assigned (1:1) to receive 20 mg/kg ivonescimab or 200 mg pembrolizumab intravenously every 3 weeks. Randomisation was stratified by histology, clinical stage, and PD-L1 expression. The primary endpoint was progression-free survival (PFS) assessed by a masked independent radiographic review committee per RECIST v1.1 in the intention-to-treat population. This study is registered with ClinicalTrials.gov, NCT05499390; recruitment is complete, with the trial ongoing and final analysis to be reported later. Between Nov 9, 2022, and Aug 26, 2023, 398 (45%) of 879 screened patients were randomly assigned to receive ivonescimab (n=198) or pembrolizumab (n=200). At the preplanned interim analysis, median PFS was significantly longer with ivonescimab than with pembrolizumab (11·1 vs 5·8 months; stratified hazard ratio [HR] 0·51 [95% CI 0·38-0·69]; one-sided p<0·0001). The PFS benefit of ivonescimab over pembrolizumab was broadly consistent within prespecified subgroups, including patients with PD-L1 tumour proportion score (TPS) 1-49% (HR 0·54 [95% CI 0·37-0·78]) and PD-L1 TPS of 50% of higher (HR 0·48 [0·29-0·79]). Grade 3 or higher treatment-related adverse events occurred in 58 (29%) patients with ivonescimab and 31 (16%) patients with pembrolizumab. Immune-related adverse events of grade 3 or higher were observed in 14 (7%) of 197 patients on ivonescimab and 16 (8%) of 199 patients on pembrolizumab. Ivonescimab demonstrated a manageable safety profile in patients with both squamous and non-squamous non-small cell lung cancer. In patients with squamous cell carcinoma, grade 3 or higher treatment-related adverse events were comparable between the two groups. Ivonescimab significantly improved PFS compared with pembrolizumab in previously untreated patients with advanced PD-L1 positive non-small cell lung cancer. Therefore, ivonescimab might represent another treatment option in the first-line setting for PD-L1-positive advanced non-small cell lung cancer. Akeso Biopharma.",
+   "year": "2025",
+   "journal": "Lancet (London, England)",
+   "first_author": "Xiong A",
+   "pubtypes": [
+    "Journal Article",
+    "Randomized Controlled Trial",
+    "Clinical Trial, Phase III",
+    "Multicenter Study",
+    "Comparative Study",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "36108662": {
+   "pmid": "36108662",
+   "title": "Pembrolizumab versus placebo as adjuvant therapy for completely resected stage IB-IIIA non-small-cell lung cancer (PEARLS/KEYNOTE-091): an interim analysis of a randomised, triple-blind, phase 3 trial.",
+   "abstract": "Pembrolizumab is a standard-of-care for advanced non-small-cell lung cancer (NSCLC). We assessed pembrolizumab as adjuvant therapy for completely resected stage IB-IIIA NSCLC. In this randomised, triple-blind, phase 3 trial (PEARLS/KEYNOTE-091), patients were recruited from 196 medical centres in 29 countries. Eligible patients were aged 18 years or older, with completely resected, pathologically confirmed stage IB (tumours of ≥4 cm in diameter), II, or IIIA NSCLC per the American Joint Committee on Cancer staging system (7th edition) of any histology or PD-L1 expression level, and an Eastern Cooperative Oncology Group performance status of 0 or 1; adjuvant chemotherapy was to be considered for stage IB disease and was strongly recommended for stage II and IIIA disease, according to national and local guidelines. Using a central interactive voice-response system, eligible participants were randomly assigned (1:1), using a minimisation technique and stratified by disease stage, previous adjuvant chemotherapy, PD-L1 expression, and geographical region, to pembrolizumab 200 mg or placebo, both administered intravenously every 3 weeks for up to 18 cycles. Participants, investigators, and analysts were masked to treatment assignment. Dual primary endpoints were disease-free survival in the overall population and in the population with PD-L1 tumour proportion score (TPS) of 50% or greater. Efficacy was assessed in the intention-to-treat (ITT) population (ie, all participants randomly assigned to a treatment group). Safety was assessed in all participants randomly assigned to treatment who received at least one dose of study treatment. Here we report results of the second interim analysis, prespecified to occur when approximately 118 disease-free survival events had occurred in the PD-L1 TPS of 50% or greater population. This study is registered with ClinicalTrials.gov, NCT02504372, and is active but not recruiting. Between Jan 20, 2016, and May 6, 2020, 1177 (60%) of 1955 screened participants were randomly assigned to pembrolizumab (n=590, including n=168 with PD-L1 TPS of ≥50%) or placebo (n=587; including n=165 with PD-L1 TPS of ≥50%) and included in the ITT population. Median follow-up as of data cutoff (Sept 20, 2021) for this interim analysis was 35·6 months (IQR 27·1-45·5). In the overall population, median disease-free survival was 53·6 months (95% CI 39·2 to not reached) in the pembrolizumab group versus 42·0 months (31·3 to not reached) in the placebo group (HR 0·76 [95% CI 0·63-0·91], p=0·0014). In the PD-L1 TPS of 50% or greater population, median disease-free survival was not reached in either the pembrolizumab group (95% CI 44·3 to not reached) or the placebo group (95% CI 35·8 to not reached; HR 0·82 [95% CI 0·57-1·18]; p=0·14). Grade 3 or worse adverse events occurred in 198 (34%) of 580 participants who received pembrolizumab and 150 (26%) of 581 participants who received placebo. Grade 3 or worse events that occurred in at least ten participants in either treatment group were hypertension (35 [6%]) and pneumonia (12 [2%]) with pembrolizumab and hypertension (32 [6%]) with placebo. Serious adverse events occurred in 142 (24%) participants in the pembrolizumab group and 90 (15%) in the placebo group; serious adverse events that occurred in more than 1% of participants were pneumonia (13 [2%]), pneumonitis (12 [2%]), and diarrhoea (seven [1%]) with pembrolizumab and pneumonia (nine [2%]) with placebo. Treatment-related adverse events led to death in four (1%) participants treated with pembrolizumab (one due to both cardiogenic shock and myocarditis, one due to both septic shock and myocarditis, one due to pneumonia, and one due to sudden death) and in no participants treated with placebo. Pembrolizumab significantly improved disease-free survival compared with placebo and was not associated with new safety signals in completely resected, PD-L1-unselected, stage IB-IIIA NSCLC. Pembrolizumab is potentially a new treatment option for stage IB-IIIA NSCLC after complete resection and, when recommended, adjuvant chemotherapy, regardless of PD-L1 expression. Merck Sharp &amp; Dohme, a subsidiary of Merck &amp; Co.",
+   "year": "2022",
+   "journal": "The Lancet. Oncology",
+   "first_author": "O'Brien M",
+   "pubtypes": [
+    "Clinical Trial, Phase III",
+    "Journal Article",
+    "Randomized Controlled Trial",
+    "Research Support, Non-U.S. Gov't"
+   ]
+  },
+  "30890425": {
+   "pmid": "30890425",
+   "title": "Parkinson's Disease and Parkinsonism.",
+   "abstract": "Parkinson's disease is a progressive neurodegenerative disease characterized by tremor and bradykinesia and is a common neurologic ailment. Male sex and advancing age are independent risk factors and, as the population ages, is taking an increasing toll on productivity and medical resources. There are a number of other extrapyramidal conditions that can make the diagnosis challenging. Unlike other neurodegenerative diseases, idiopathic Parkinson's disease has effective treatments that mitigate symptoms. Medications can improve day-to-day function and, in cases where medication does not give a sustained benefit or has significant side effects, treatments like deep brain stimulation result in improved quality of life.",
+   "year": "2019",
+   "journal": "The American journal of medicine",
+   "first_author": "Hayes MT",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "35328025": {
+   "pmid": "35328025",
+   "title": "Monogenic Parkinson's Disease: Genotype, Phenotype, Pathophysiology, and Genetic Testing.",
+   "abstract": "Parkinson's disease may be caused by a single pathogenic variant (monogenic) in 5-10% of cases, but investigation of these disorders provides valuable pathophysiological insights. In this review, we discuss each genetic form with a focus on genotype, phenotype, pathophysiology, and the geographic and ethnic distribution. Well-established Parkinson's disease genes include autosomal dominant forms (SNCA, LRRK2, and VPS35) and autosomal recessive forms (PRKN, PINK1 and DJ1). Furthermore, mutations in the GBA gene are a key risk factor for Parkinson's disease, and there have been major developments for X-linked dystonia parkinsonism. Moreover, atypical or complex parkinsonism may be due to mutations in genes such as ATP13A2, DCTN1, DNAJC6, FBXO7, PLA2G6, and SYNJ1. Furthermore, numerous genes have recently been implicated in Parkinson's disease, such as CHCHD2, LRP10, TMEM230, UQCRC1, and VPS13C. Additionally, we discuss the role of heterozygous mutations in autosomal recessive genes, the effect of having mutations in two Parkinson's disease genes, the outcome of deep brain stimulation, and the role of genetic testing. We highlight that monogenic Parkinson's disease is influenced by ethnicity and geographical differences, reinforcing the need for global efforts to pool large numbers of patients and identify novel candidate genes.",
+   "year": "2022",
+   "journal": "Genes",
+   "first_author": "Jia F",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "35606622": {
+   "pmid": "35606622",
+   "title": "Life style and Parkinson's disease.",
+   "abstract": "The question whether life style may impair the advent or course of the disease in patients with Parkinsonism is of great importance for patients and physicians alike. We present here comprehensive information on the influence of the environment, diet (especially caffeine, nicotine, alcohol, chocolate and dairy products), physical activity and sleep on risk and course of Parkinson's disease.",
+   "year": "2022",
+   "journal": "Journal of neural transmission (Vienna, Austria : 1996)",
+   "first_author": "Reichmann H",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "34569973": {
+   "pmid": "34569973",
+   "title": "A Practical Approach to Early-Onset Parkinsonism.",
+   "abstract": "Early-onset parkinsonism (EO parkinsonism), defined as subjects with disease onset before the age of 40 or 50 years, can be the main clinical presentation of a variety of conditions that are important to differentiate. Although rarer than classical late-onset Parkinson's disease (PD) and not infrequently overlapping with forms of juvenile onset PD, a correct diagnosis of the specific cause of EO parkinsonism is critical for offering appropriate counseling to patients, for family and work planning, and to select the most appropriate symptomatic or etiopathogenic treatments. Clinical features, radiological and laboratory findings are crucial for guiding the differential diagnosis. Here we summarize the most important conditions associated with primary and secondary EO parkinsonism. We also proposed a practical approach based on the current literature and expert opinion to help movement disorders specialists and neurologists navigate this complex and challenging landscape.",
+   "year": "2022",
+   "journal": "Journal of Parkinson's disease",
+   "first_author": "Riboldi GM",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "39419777": {
+   "pmid": "39419777",
+   "title": "Drug-induced parkinsonism: diagnosis and treatment.",
+   "abstract": "Drug-induced parkinsonism (DIP) is one of the most common iatrogenic movement disorders. It is characterized by tremors, slowness of movement, and shuffling gait with postural instability, clinically indistinguishable from idiopathic Parkinson's disease. Prior exposure to antipsychotic medications or other dopamine receptor blocking agents (DRBAs) is required for the diagnosis. This article aims to review the epidemiology, pathophysiology, clinical features, ancillary testing, and treatment of DIP. A literature search was undertaken in PubMed from January 2013 to January 2024. A clinician's suspicion of DIP must always be present when a patient develops acute to subacute onset of parkinsonism while taking a DRBA. As DIP can be indistinguishable from idiopathic PD, ancillary testing, such as DaTscans and skin biopsy searching for alpha-synuclein deposits, are often required to make a definitive diagnosis. When DIP develops, steps should be taken to discontinue the offending agent or, in the case of antipsychotics, dose reduction or change to an agent with lower risk for DIP, such as quetiapine or clozapine. Prophylactic treatment with anticholinergics is not indicated.",
+   "year": "2024",
+   "journal": "Expert opinion on drug safety",
+   "first_author": "Conn H",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  },
+  "34034347": {
+   "pmid": "34034347",
+   "title": "MRI Signs of Parkinson's Disease and Atypical Parkinsonism.",
+   "abstract": "Diagnosis of Parkinson's disease and atypical parkinsonism is based on clinical evaluation of the patient's symptoms and on magnetic resonance imaging (MRI) of the brain, which can be supplemented by nuclear medicine techniques. MRI plays a leading role in the differentiation between Parkinson's disease and atypical parkinsonism. While atypical parkinsonism is characterized by relatively specific MRI signs, imaging of Parkinson's disease previously lacked such signs. However, high-field MRI and new optimized MRI sequences now make it possible to define specific MRI signs of Parkinson's disease and have significant potential regarding differentiated imaging, early diagnosis, and imaging of disease progression. PubMed was selectively searched for literature regarding the definition and discussion of specific MRI signs of Parkinson's disease, as well as the most common types of atypical parkinsonism with a leading motor component. No time frame was set, but the search was particularly focused on current literature. This review article discusses the different MRI signs of Parkinson's disease, multiple system atrophy, and progressive supranuclear palsy. The pathogenesis of the MRI signs is described, and imaging examples are given. The technical aspects of image acquisition are briefly defined, and the different signs are discussed and compared with regard to their diagnostic significance according to current literature. The MRI signs of Parkinson's disease, which can be defined with high-field MRI and new optimized MRI sequences, enable differentiated structural image interpretation and consecutive diagnostic workup. Despite the fact that the signs are in need of further validation by bigger studies, they have the potential to achieve significant diagnostic relevance regarding the imaging of Parkinson's disease and atypical parkinsonism. · High-field MRI and specialized sequences make it possible to define specific MRI signs for neurodegenerative disorders. · Cerebral alterations can be detected in prodromal stages of Parkinson's disease. · The combination of specific MRI signs makes it possible to differentiate between Parkinson's disease and atypical parkinsonism. · Aludin S, Schmill LA. MRI Signs of Parkinson's Disease and Atypical Parkinsonism. Fortschr Röntgenstr 2021; 193: 1403 - 1410. Die Diagnostik des idiopathischen Parkinson-Syndroms und der atypischen Parkinson-Syndrome basiert auf der klinischen Einschätzung der Patientensymptomatik und der gezielten Bildgebung mittels Magnetresonanztomografie, welche noch durch nuklearmedizinische Verfahren ergänzt werden kann. Die Bildgebung dient hierbei der Aufgabe der Differenzierung der verschiedenen Erkrankungen. Während atypische Parkinson-Syndrome recht spezifische MR-Zeichen aufweisen, ist das idiopathische Parkinson-Syndrom bildmorphologisch bisher eher als unspezifisch zu werten. Hohe Feldstärken und optimierte MR-Sequenzen ermöglichen jedoch neuerdings die Definition von spezifischen MR-Zeichen, welche Potenzial in der differenzierteren Bildgebung, der Frühdiagnostik und der Verlaufsdiagnostik des idiopathischen Parkinson-Syndroms hegen. Es erfolgte eine gezielte PubMed-Recherche mit Fokus auf Arbeiten zur Definition und Erörterung spezifischer MR-Zeichen des idiopathischen Parkinson-Syndroms sowie der häufigsten atypischen Parkinson-Syndrome mit führender motorischer Komponente. Es erfolgte keine Zeitraumbegrenzung bei besonderem Augenmerk auf aktuelle Literatur. Der vorliegende Übersichtsartikel erörtert die verschiedenen neuen MR-Zeichen des idiopathischen Parkinson-Syndroms sowie die bekannten Zeichen der Multisystematrophie und der progressiven supranukleären Blickparese. Die den Zeichen zugrunde liegende Pathologie wird jeweils definiert sowie bildmorphologische Beispiele gegeben. Es werden die technischen Aspekte der Untersuchungen kurz erörtert und die Zeichen anhand aktueller Literatur hinsichtlich der diagnostischen Wertigkeit zueinander verglichen. Die bei hohen Feldstärken und optimierten Sequenzen definierbaren MR-Zeichen des idiopathischen Parkinson-Syndroms ermöglichen eine differenziertere strukturelle Befundung und konsekutive Diagnostik. Die Zeichen müssen in größeren Studien weiter validiert werden, können jedoch künftig eine entscheidende diagnostische Relevanz in der Bildgebung der Erkrankungen aus dem Parkinson-Formenkreis bieten. · Hohe Feldstärken und spezielle Sequenzen ermöglichen die Definition spezifischer MRT-Zeichen neurodegenerativer Erkrankungen.. · Zerebrale Veränderungen lassen sich bereits in Prodromalphasen des idiopathischen Parkinson-Syndroms detektieren.. · Kombinationen spezifischer MRT-Zeichen ermöglichen eine Differenzierung eines idiopathischen Parkinson-Syndroms von atypischen Parkinson-Syndromen.. · Schlüsselwörter: idiopathisches Parkinson-Syndrom, atypische Parkinson-Syndrome, Magnetresonanztomografie. · Aludin S, Schmill LA. MRI Signs of Parkinson’s Disease and Atypical Parkinsonism. Fortschr Röntgenstr 2021; 193: 1403 – 1410.",
+   "year": "2021",
+   "journal": "RoFo : Fortschritte auf dem Gebiete der Rontgenstrahlen und der Nuklearmedizin",
+   "first_author": "Aludin S",
+   "pubtypes": [
+    "Journal Article",
+    "Review"
+   ]
+  }
+ }
+}
