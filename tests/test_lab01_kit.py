@@ -146,5 +146,6 @@ def test_run_turns_unexpected_error_into_message(monkeypatch):
         raise ValueError("400 INVALID_ARGUMENT")
 
     monkeypatch.setattr(agents, "arun", boom)
-    r = agents.run(object(), "q", show=False)
+    from types import SimpleNamespace
+    r = agents.run(SimpleNamespace(name="a", instruction="x"), "q", show=False)
     assert r.text == "" and "400" in r.message
