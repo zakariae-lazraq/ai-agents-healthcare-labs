@@ -1,0 +1,3693 @@
+[
+ {
+  "resourceType": "Patient",
+  "id": "pat-01",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482137"
+   }
+  ],
+  "name": [
+   {
+    "family": "Novak",
+    "given": [
+     "Jordan"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1951-02-11"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-01",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-01"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-01-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "718-7",
+     "display": "Hemoglobin [Mass/volume] in Blood"
+    }
+   ],
+   "text": "Hemoglobin"
+  },
+  "subject": {
+   "reference": "Patient/pat-01"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-01"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 139,
+   "unit": "g/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "g/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-01-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "777-3",
+     "display": "Platelets [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Platelets"
+  },
+  "subject": {
+   "reference": "Patient/pat-01"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-01"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 251,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-01-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "6690-2",
+     "display": "Leukocytes [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Leukocytes"
+  },
+  "subject": {
+   "reference": "Patient/pat-01"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-01"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 6.9,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-01-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-01"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-01"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-02",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482174"
+   }
+  ],
+  "name": [
+   {
+    "family": "Lindqvist",
+    "given": [
+     "Taylor"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1952-03-12"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-02",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-02"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-02-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "14749-6",
+     "display": "Glucose [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-02"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-02"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.6,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-02-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "4548-4",
+     "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    }
+   ],
+   "text": "HbA1c"
+  },
+  "subject": {
+   "reference": "Patient/pat-02"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-02"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.6,
+   "unit": "%",
+   "system": "http://unitsofmeasure.org",
+   "code": "%"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-02-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-02"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-02"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-03",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482211"
+   }
+  ],
+  "name": [
+   {
+    "family": "Okafor",
+    "given": [
+     "Riley"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1953-04-13"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-03",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-03"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-03-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2951-2",
+     "display": "Potassium"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-03"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-03"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-03-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "62292-8",
+     "display": "25-Hydroxyvitamin D2+D3 [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "25-hydroxyvitamin D"
+  },
+  "subject": {
+   "reference": "Patient/pat-03"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-03"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 31,
+   "unit": "ng/mL",
+   "system": "http://unitsofmeasure.org",
+   "code": "ng/mL"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-03-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-03"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-03"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-04",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482248"
+   }
+  ],
+  "name": [
+   {
+    "family": "Bianchi",
+    "given": [
+     "Robin"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1954-05-14"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-04",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-04"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-04-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "1742-6",
+     "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "ALT"
+  },
+  "subject": {
+   "reference": "Patient/pat-04"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-04"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 25,
+   "unit": "U/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "U/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-04-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "3016-3",
+     "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "TSH"
+  },
+  "subject": {
+   "reference": "Patient/pat-04"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-04"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.0,
+   "unit": "mIU/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mIU/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-04-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-04"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-04"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-05",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482285"
+   }
+  ],
+  "name": [
+   {
+    "family": "Haddad",
+    "given": [
+     "Morgan"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1955-06-15"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-05",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-05-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-05"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-05-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2951-2",
+     "display": "Sodium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Sodium"
+  },
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-05"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 142,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-05-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2075-0",
+     "display": "Chloride [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Chloride"
+  },
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-05"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 104,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-05-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2160-0",
+     "display": "Creatinine [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-05"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 1.1,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-05-9",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2345-7",
+     "display": "Glucose [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-05"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-05"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.8,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-06",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482322"
+   }
+  ],
+  "name": [
+   {
+    "family": "Kowalski",
+    "given": [
+     "Avery"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1956-07-16"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-06",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-06"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-06-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "718-7",
+     "display": "Hemoglobin [Mass/volume] in Blood"
+    }
+   ],
+   "text": "Hemoglobin"
+  },
+  "subject": {
+   "reference": "Patient/pat-06"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-06"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 138,
+   "unit": "g/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "g/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-06-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "777-3",
+     "display": "Platelets [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Platelets"
+  },
+  "subject": {
+   "reference": "Patient/pat-06"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-06"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 250,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-06-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "6690-2",
+     "display": "Leukocytes [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Leukocytes"
+  },
+  "subject": {
+   "reference": "Patient/pat-06"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-06"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 6.8,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-06-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-06"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-06"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-07",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482359"
+   }
+  ],
+  "name": [
+   {
+    "family": "Fernandes",
+    "given": [
+     "Sam"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1957-08-17"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-07",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-07"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-07-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "14749-6",
+     "display": "Glucose [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-07"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-07"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.5,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-07-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "4548-4",
+     "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    }
+   ],
+   "text": "HbA1c"
+  },
+  "subject": {
+   "reference": "Patient/pat-07"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-07"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.5,
+   "unit": "%",
+   "system": "http://unitsofmeasure.org",
+   "code": "%"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-07-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-07"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-07"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-07-9",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2345-7",
+     "display": "Creatinine"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-07"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-07"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 0.9,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-08",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482396"
+   }
+  ],
+  "name": [
+   {
+    "family": "Weber",
+    "given": [
+     "Casey"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1958-09-18"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-08",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-08"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-08-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2000-8",
+     "display": "Calcium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Calcium"
+  },
+  "subject": {
+   "reference": "Patient/pat-08"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-08"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.55,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-08-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "62292-8",
+     "display": "25-Hydroxyvitamin D2+D3 [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "25-hydroxyvitamin D"
+  },
+  "subject": {
+   "reference": "Patient/pat-08"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-08"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 33,
+   "unit": "ng/mL",
+   "system": "http://unitsofmeasure.org",
+   "code": "ng/mL"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-08-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-08"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-08"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-09",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482433"
+   }
+  ],
+  "name": [
+   {
+    "family": "Sato",
+    "given": [
+     "Jamie"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1959-01-10"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-09",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-09"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-09-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "1742-6",
+     "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "ALT"
+  },
+  "subject": {
+   "reference": "Patient/pat-09"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-09"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 24,
+   "unit": "U/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "U/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-09-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "3016-3",
+     "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "TSH"
+  },
+  "subject": {
+   "reference": "Patient/pat-09"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-09"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 1.9,
+   "unit": "mIU/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mIU/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-09-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-09"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-09"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 6.8,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-10",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482470"
+   }
+  ],
+  "name": [
+   {
+    "family": "Moreau",
+    "given": [
+     "Alex"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1960-02-11"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-10",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-10"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-10-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-10"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-10"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-10-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2951-2",
+     "display": "Sodium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Sodium"
+  },
+  "subject": {
+   "reference": "Patient/pat-10"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-10"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 141,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-10-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2075-0",
+     "display": "Chloride [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Chloride"
+  },
+  "subject": {
+   "reference": "Patient/pat-10"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-10"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 103,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-10-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2160-0",
+     "display": "Creatinine [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-10"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-10"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 1.0,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-11",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482507"
+   }
+  ],
+  "name": [
+   {
+    "family": "Novak",
+    "given": [
+     "Jordan"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1961-03-12"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-11",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-11-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "718-7",
+     "display": "Hemoglobin [Mass/volume] in Blood"
+    }
+   ],
+   "text": "Hemoglobin"
+  },
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-11"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 140,
+   "unit": "g/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "g/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-11-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "777-3",
+     "display": "Platelets [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Platelets"
+  },
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-11"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 252,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-11-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "6690-2",
+     "display": "Leukocytes [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Leukocytes"
+  },
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-11"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 7.0,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-11-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-11"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-11-9",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "777-3",
+     "display": "Hemoglobin"
+    }
+   ],
+   "text": "Hemoglobin"
+  },
+  "subject": {
+   "reference": "Patient/pat-11"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-11"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 141,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-12",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482544"
+   }
+  ],
+  "name": [
+   {
+    "family": "Lindqvist",
+    "given": [
+     "Taylor"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1962-04-13"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-12",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-12"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-12-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "14749-6",
+     "display": "Glucose [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-12"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-12"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-12-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "4548-4",
+     "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    }
+   ],
+   "text": "HbA1c"
+  },
+  "subject": {
+   "reference": "Patient/pat-12"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-12"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.4,
+   "unit": "%",
+   "system": "http://unitsofmeasure.org",
+   "code": "%"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-12-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-12"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-12"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-12-8",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2160-0",
+     "display": "Creatinine [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-12"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-12"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.4,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-13",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482581"
+   }
+  ],
+  "name": [
+   {
+    "family": "Okafor",
+    "given": [
+     "Riley"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1963-05-14"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-13",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-13"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-13-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2000-8",
+     "display": "Calcium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Calcium"
+  },
+  "subject": {
+   "reference": "Patient/pat-13"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-13"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.45,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-13-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "62292-8",
+     "display": "25-Hydroxyvitamin D2+D3 [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "25-hydroxyvitamin D"
+  },
+  "subject": {
+   "reference": "Patient/pat-13"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-13"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 32,
+   "unit": "ng/mL",
+   "system": "http://unitsofmeasure.org",
+   "code": "ng/mL"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-13-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-13"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-13"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-14",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482618"
+   }
+  ],
+  "name": [
+   {
+    "family": "Bianchi",
+    "given": [
+     "Robin"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1964-06-15"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-14",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-14"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-14-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "1742-6",
+     "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "ALT"
+  },
+  "subject": {
+   "reference": "Patient/pat-14"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-14"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 26,
+   "unit": "U/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "U/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-14-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "3016-3",
+     "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "TSH"
+  },
+  "subject": {
+   "reference": "Patient/pat-14"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-14"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.1,
+   "unit": "mIU/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mIU/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-14-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-14"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-14"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-14-9",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2345-7",
+     "display": "Glucose [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-14"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-14"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 6.1,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-15",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482655"
+   }
+  ],
+  "name": [
+   {
+    "family": "Haddad",
+    "given": [
+     "Morgan"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1965-07-16"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-15",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-15"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-15-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-15"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-15"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-15-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2951-2",
+     "display": "Sodium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Sodium"
+  },
+  "subject": {
+   "reference": "Patient/pat-15"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-15"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 140,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-15-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2075-0",
+     "display": "Chloride [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Chloride"
+  },
+  "subject": {
+   "reference": "Patient/pat-15"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-15"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 102,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-15-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2160-0",
+     "display": "Creatinine [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-15"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-15"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 0.9,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-16",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482692"
+   }
+  ],
+  "name": [
+   {
+    "family": "Kowalski",
+    "given": [
+     "Avery"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1966-08-17"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-16",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-16"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-16-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "718-7",
+     "display": "Hemoglobin [Mass/volume] in Blood"
+    }
+   ],
+   "text": "Hemoglobin"
+  },
+  "subject": {
+   "reference": "Patient/pat-16"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-16"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 139
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-16-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "777-3",
+     "display": "Platelets [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Platelets"
+  },
+  "subject": {
+   "reference": "Patient/pat-16"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-16"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 251,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-16-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "6690-2",
+     "display": "Leukocytes [#/volume] in Blood by Automated count"
+    }
+   ],
+   "text": "Leukocytes"
+  },
+  "subject": {
+   "reference": "Patient/pat-16"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-16"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 6.9,
+   "unit": "10*9/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "10*9/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-16-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-16"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-16"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-17",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482729"
+   }
+  ],
+  "name": [
+   {
+    "family": "Fernandes",
+    "given": [
+     "Sam"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1967-09-18"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-17",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-17"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-17-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "14749-6",
+     "display": "Glucose [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Glucose"
+  },
+  "subject": {
+   "reference": "Patient/pat-17"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-17"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.6,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-17-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "4548-4",
+     "display": "Hemoglobin A1c/Hemoglobin.total in Blood"
+    }
+   ],
+   "text": "HbA1c"
+  },
+  "subject": {
+   "reference": "Patient/pat-17"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-17"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 5.6,
+   "unit": "%",
+   "system": "http://unitsofmeasure.org",
+   "code": "%"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-17-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-17"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-17"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-18",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482766"
+   }
+  ],
+  "name": [
+   {
+    "family": "Weber",
+    "given": [
+     "Casey"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1968-01-10"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-18",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-18"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-18-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2000-8",
+     "display": "Calcium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Calcium"
+  },
+  "subject": {
+   "reference": "Patient/pat-18"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-18"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.35,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-18-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "62292-8",
+     "display": "25-Hydroxyvitamin D2+D3 [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "25-hydroxyvitamin D"
+  },
+  "subject": {
+   "reference": "Patient/pat-18"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-18"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 31,
+   "unit": "ng/mL",
+   "system": "http://unitsofmeasure.org",
+   "code": "ng/mL"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-18-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-18"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-18"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-18-9",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-18"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-18"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.2,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-19",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482803"
+   }
+  ],
+  "name": [
+   {
+    "family": "Sato",
+    "given": [
+     "Jamie"
+    ]
+   }
+  ],
+  "gender": "female",
+  "birthDate": "1969-02-11"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-19",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-19"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-19-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "1742-6",
+     "display": "Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "ALT"
+  },
+  "subject": {
+   "reference": "Patient/pat-19"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-19"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 25,
+   "unit": "U/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "U/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-19-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "3016-3",
+     "display": "Thyrotropin [Units/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "TSH"
+  },
+  "subject": {
+   "reference": "Patient/pat-19"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-19"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 2.0,
+   "unit": "mIU/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mIU/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-19-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-19"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-19"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.3,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Patient",
+  "id": "pat-20",
+  "identifier": [
+   {
+    "system": "https://northbridge.example/mrn",
+    "value": "NB-482840"
+   }
+  ],
+  "name": [
+   {
+    "family": "Moreau",
+    "given": [
+     "Alex"
+    ]
+   }
+  ],
+  "gender": "male",
+  "birthDate": "1970-03-12"
+ },
+ {
+  "resourceType": "ServiceRequest",
+  "id": "sr-20",
+  "status": "completed",
+  "intent": "order",
+  "subject": {
+   "reference": "Patient/pat-20"
+  },
+  "authoredOn": "2026-11-23T07:50:00+01:00",
+  "code": {
+   "text": "Laboratory panel"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-20-1",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2823-3",
+     "display": "Potassium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Potassium"
+  },
+  "subject": {
+   "reference": "Patient/pat-20"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-20"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 4.4,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-20-2",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2951-2",
+     "display": "Sodium [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Sodium"
+  },
+  "subject": {
+   "reference": "Patient/pat-20"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-20"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 142,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-20-3",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2075-0",
+     "display": "Chloride [Moles/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Chloride"
+  },
+  "subject": {
+   "reference": "Patient/pat-20"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-20"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 104,
+   "unit": "mmol/L",
+   "system": "http://unitsofmeasure.org",
+   "code": "mmol/L"
+  }
+ },
+ {
+  "resourceType": "Observation",
+  "id": "obs-20-4",
+  "status": "final",
+  "category": [
+   {
+    "coding": [
+     {
+      "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+      "code": "laboratory"
+     }
+    ]
+   }
+  ],
+  "code": {
+   "coding": [
+    {
+     "system": "http://loinc.org",
+     "code": "2160-0",
+     "display": "Creatinine [Mass/volume] in Serum or Plasma"
+    }
+   ],
+   "text": "Creatinine"
+  },
+  "subject": {
+   "reference": "Patient/pat-20"
+  },
+  "basedOn": [
+   {
+    "reference": "ServiceRequest/sr-20"
+   }
+  ],
+  "effectiveDateTime": "2026-11-23T08:15:00+01:00",
+  "issued": "2026-11-23T10:40:00+01:00",
+  "valueQuantity": {
+   "value": 1.1,
+   "unit": "mg/dL",
+   "system": "http://unitsofmeasure.org",
+   "code": "mg/dL"
+  }
+ }
+]

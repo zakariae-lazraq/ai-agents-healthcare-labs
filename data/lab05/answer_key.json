@@ -1,0 +1,120 @@
+{
+ "pat-01": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-02": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-03": {
+  "status": "HOLD",
+  "issues": [
+   "Wrong LOINC code: 'Potassium' coded 2951-2 (Sodium)"
+  ],
+  "notify": false
+ },
+ "pat-04": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-05": {
+  "status": "HOLD",
+  "issues": [
+   "Glucose value in mmol/L labelled mg/dL (implausible)"
+  ],
+  "notify": false
+ },
+ "pat-06": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-07": {
+  "status": "HOLD",
+  "issues": [
+   "Wrong LOINC code: 'Creatinine' coded 2345-7 (Glucose)"
+  ],
+  "notify": false
+ },
+ "pat-08": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-09": {
+  "status": "ESCALATE",
+  "issues": [
+   "Critical potassium 6.8 mmol/L (SOP-03: > 6.2): notify"
+  ],
+  "notify": true
+ },
+ "pat-10": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-11": {
+  "status": "HOLD",
+  "issues": [
+   "Wrong LOINC code: 'Hemoglobin' coded 777-3 (Platelets)"
+  ],
+  "notify": false
+ },
+ "pat-12": {
+  "status": "PASS",
+  "issues": [
+   "(challenge) creatinine 0.9 → 2.4 mg/dL since 2026-10-02: delta check"
+  ],
+  "notify": false
+ },
+ "pat-13": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-14": {
+  "status": "HOLD",
+  "issues": [
+   "Glucose value in mmol/L labelled mg/dL (implausible)"
+  ],
+  "notify": false
+ },
+ "pat-15": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-16": {
+  "status": "HOLD",
+  "issues": [
+   "Observation without a unit"
+  ],
+  "notify": false
+ },
+ "pat-17": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-18": {
+  "status": "HOLD",
+  "issues": [
+   "Duplicate potassium result for the same request"
+  ],
+  "notify": false
+ },
+ "pat-19": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ },
+ "pat-20": {
+  "status": "PASS",
+  "issues": [],
+  "notify": false
+ }
+}

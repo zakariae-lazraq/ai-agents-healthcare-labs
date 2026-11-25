@@ -26,6 +26,11 @@ def _summary(resp) -> str:
     if "violations" in resp:
         rules = [f"{v.get('rule')} ({v.get('level')})" for v in resp["violations"]]
         parts.append(", ".join(rules) if rules else "no violation")
+    if "results" in resp and "auto" in resp and "review" in resp:
+        parts.append(f"{len(resp['results'])} images: {resp['auto']} auto, {resp['review']} to review")
+    if resp.get("status") == "queued":
+        parts.append(f"{resp.get('image_id')} queued for review")
+        return "; ".join(parts)
     if resp.get("requires_human_approval"):
         parts.append("deviation note drafted for supervisor approval")
     if "status" in resp:
