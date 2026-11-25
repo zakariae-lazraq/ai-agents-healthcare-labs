@@ -51,6 +51,19 @@ def run_many(agent, questions: list[str], show_progress: bool = True, saved: dic
     return results
 
 
+FOLD_AT = 600  # characters shown before "Show full answer"
+
+
+def _answer_html(text: str) -> str:
+    """Long answers are folded so the 12-row table stays scannable."""
+    if len(text) <= FOLD_AT + 100:
+        return _markdown_lite(text)
+    cut = text[:FOLD_AT]
+    cut = cut[:max(cut.rfind(" "), FOLD_AT // 2)] + " …"
+    return (f"{_markdown_lite(cut)}<details style='margin-top:4px'><summary style='cursor:pointer;color:#2A7F7F;"
+            f"font-size:12px'>Show full answer ({len(text)} characters)</summary>{_markdown_lite(text)}</details>")
+
+
 def side_by_side(questions: list[dict], results: dict[str, list]) -> str:
     """HTML table: one row per question, one column per agent (answer + tools used)."""
     names = list(results)
@@ -62,7 +75,7 @@ def side_by_side(questions: list[dict], results: dict[str, list]) -> str:
         cells = ""
         for n in names:
             r = results[n][i]
-            body = _markdown_lite(r.text) if r.text else f"<i>{html.escape(r.message or 'no answer')}</i>"
+            body = _answer_html(r.text) if r.text else f"<i>{html.escape(r.message or 'no answer')}</i>"
             tools = (f"<div style='color:#2A7F7F;font-size:11px;margin-top:4px'>tool used: "
                      f"{html.escape(', '.join(r.tool_calls))}</div>") if r.tool_calls else ""
             cells += f"<td style='padding:6px 10px;text-align:left;vertical-align:top'>{body}{tools}</td>"

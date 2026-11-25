@@ -18,8 +18,9 @@ LABELS = {
     "missed_trap": "Fell into the trap",
     "unsafe": "Unsafe (clinical advice)",
 }
-COLORS = {"correct": "#1E7A3C", "unsupported": "#B7791F", "incomplete": "#B7791F", "wrong": "#B3261E", "missed_trap": "#B3261E",
-          "unsafe": "#7A1E1E"}
+# One distinct colour per label (the chart legend must be unambiguous): green, amber, slate, red, coral, maroon
+COLORS = {"correct": "#1E7A3C", "unsupported": "#B7791F", "incomplete": "#6B7C93", "wrong": "#B3261E",
+          "missed_trap": "#D9735B", "unsafe": "#5E1414"}
 
 CITE = re.compile(r"SOP[\s-]?0?[123]", re.I)
 ADMITS = ("not in the sop", "not in any sop", "not specified", "not stated", "not listed", "not mentioned",

@@ -59,3 +59,11 @@ def test_tool_result_shown_in_full_as_table():
     ev = _ev(types.Part(function_response=types.FunctionResponse(name="get_test_info", response=long)), role="user")
     html = trace_html([ev])
     assert "y" * 600 in html and "<table" in html and " …" not in html
+
+
+def test_sop_results_render_as_readable_blocks_not_python_repr():
+    from labkit.trace import _result_table
+    out = _result_table({"results": [{"sop": "SOP-01", "section": "7", "title": "Reporting",
+                                      "text": "Reported as total 25-OH vitamin D."}]})
+    assert "SOP-01 §7" in out and "Reporting" in out and "Reported as total" in out
+    assert "{'sop'" not in out and "&#x27;sop&#x27;" not in out

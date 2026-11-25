@@ -130,3 +130,18 @@ def test_bare_not_in_sop_on_list_question_is_incomplete_not_invented(questions):
     gr = scoring.grade(q, "Not in the SOP.")
     assert gr.label == "incomplete"
     assert "invent" not in gr.reason
+
+
+def test_side_by_side_folds_long_answers():
+    from labkit.agents import RunResult
+    from labkit.batch import side_by_side
+    long = "Intro sentence. " + "Detail about ion ratios. " * 60
+    html = side_by_side([{"id": "Q01", "question": "q?"}],
+                        {"Naive": [RunResult(long)], "Grounded": [RunResult("Short (SOP-01 §5).")]})
+    assert html.count("<details") == 1 and "Show full answer" in html
+    assert "Short (SOP-01 §5)." in html
+
+
+def test_every_grade_label_has_its_own_colour():
+    assert set(scoring.COLORS) == set(scoring.LABELS)
+    assert len(set(scoring.COLORS.values())) == len(scoring.COLORS)

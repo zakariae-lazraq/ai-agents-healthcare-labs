@@ -52,10 +52,25 @@ def _card(kind: str, body: str) -> str:
             f"<div style='margin-top:4px'>{body}</div></div>")
 
 
+def _item_html(item) -> str:
+    """One list item; SOP search results get a 'SOP-01 §7 — Reporting' header above their text."""
+    if not isinstance(item, dict):
+        return html.escape(str(item))
+    if "sop" in item and "section" in item:
+        head = f"{item['sop']} §{item['section']}" + (f" — {item['title']}" if item.get("title") else "")
+        rest = {k: v for k, v in item.items() if k not in ("sop", "section", "title")}
+        body = "<br>".join(html.escape(str(v)) if k == "text" else f"{html.escape(str(k))}: {html.escape(str(v))}"
+                           for k, v in rest.items())
+        return f"<b>{html.escape(head)}</b><br>{body}"
+    return "; ".join(f"{html.escape(str(k))}: {html.escape(str(v))}" for k, v in item.items())
+
+
 def _value_html(value) -> str:
     if isinstance(value, dict):
-        return "; ".join(f"{html.escape(str(k))}: {html.escape(str(v))}" for k, v in value.items())
+        return _item_html(value)
     if isinstance(value, list):
+        if any(isinstance(v, dict) for v in value):
+            return "".join(f"<div style='margin:0 0 6px'>{_item_html(v)}</div>" for v in value)
         return html.escape(", ".join(str(v) for v in value))
     return html.escape(str(value))
 
