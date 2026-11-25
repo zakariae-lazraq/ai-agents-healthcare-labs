@@ -122,7 +122,12 @@ def check_environment(model: str = DEFAULT_MODEL, *, ping_model: bool = True,
             client.models.generate_content(model=model, contents="Reply with OK")
             results.append(CheckResult("API key works", True, f"{model} answered"))
         except Exception as exc:
-            results.append(CheckResult("API key works", False, _scrub(exc, key), _classify_model_error(exc)))
+            fix = _classify_model_error(exc)
+            if fix == FIX_QUOTA:   # a 429 proves the key is valid: rate-limited, not broken
+                results.append(CheckResult("API key works", True, "key valid; the free quota is busy right now — "
+                                           "the labs wait and retry automatically (or wait a minute)"))
+            else:
+                results.append(CheckResult("API key works", False, _scrub(exc, key), fix))
 
     if ping_pubmed:
         try:

@@ -191,3 +191,46 @@ def test_network_hiccups_count_as_busy():
     for text in ("ReadTimeout: timed out", "Server disconnected without sending a response.",
                  "RemoteProtocolError: peer closed connection", "ConnectError: connection reset"):
         assert agents._error_kind(Exception(text)) == "busy", text
+
+
+# ---- live-run findings (2026-11-25): per-minute quota must not block participants
+def test_setup_treats_rate_limited_key_as_working(monkeypatch):
+    from labkit import setup
+
+    class FakeModels:
+        def generate_content(self, **kw):
+            raise RuntimeError("429 RESOURCE_EXHAUSTED. Quota exceeded for metric generate_content_free_tier_requests "
+                               "GenerateRequestsPerMinutePerProjectPerModel-FreeTier. Please retry in 21.4s.")
+
+    monkeypatch.setattr(setup, "get_api_key", lambda: "k")
+    monkeypatch.setattr(setup, "_make_client", lambda key: type("C", (), {"models": FakeModels()})())
+    res = {r.name: r for r in setup.check_environment(ping_pubmed=False)}
+    assert res["API key works"].ok is True and "wait" in res["API key works"].detail.lower()
+
+
+def test_arun_waits_and_retries_on_per_minute_quota(monkeypatch):
+    import asyncio
+    from types import SimpleNamespace
+    from labkit import agents
+    labkit._state["setup_ok"] = True
+    calls, waits = [], []
+
+    class FakeRunner:
+        def __init__(self, agent, app_name, plugins=None):
+            self.agent = agent
+
+        async def run_debug(self, message, quiet=True):
+            calls.append(1)
+            if len(calls) == 1:
+                raise RuntimeError("429 RESOURCE_EXHAUSTED. PerMinute quota. Please retry in 12.5s.")
+            return []
+
+    async def fake_sleep(s):
+        waits.append(s)
+
+    monkeypatch.setattr(agents, "InMemoryRunner", FakeRunner)
+    monkeypatch.setattr(agents, "_sleep", fake_sleep)
+    monkeypatch.setattr(agents, "get_api_key", lambda: "k")
+    agent = SimpleNamespace(name="a", instruction="x", model=SimpleNamespace(model="m"))
+    r = asyncio.run(agents.arun(agent, "q"))
+    assert r.message == "" and len(calls) == 2 and 12 <= waits[0] <= 15 and r.note == ""

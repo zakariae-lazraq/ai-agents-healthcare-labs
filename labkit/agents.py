@@ -117,14 +117,23 @@ async def arun(agent, message: str, plugins: list | None = None) -> RunResult:
     last_kind = ""
     for backup in candidates:
         current = agent if backup is None else agent.model_copy(update={"model": make_model(backup)})
-        runner = InMemoryRunner(agent=current, app_name="lab", plugins=plugins)
-        try:
-            events = await runner.run_debug(message, quiet=True)
-        except Exception as exc:
-            kind = _error_kind(exc)
-            if kind not in ("busy", "quota"):
-                raise
-            last_kind = kind
+        events = None
+        for _attempt in range(3):   # per-minute quota: wait the delay Google gives, then retry the same model
+            runner = InMemoryRunner(agent=current, app_name="lab", plugins=plugins)
+            try:
+                events = await runner.run_debug(message, quiet=True)
+                break
+            except Exception as exc:
+                kind = _error_kind(exc)
+                if kind not in ("busy", "quota"):
+                    raise
+                last_kind = kind
+                delay = _retry_delay(exc)
+                if kind == "quota" and delay is not None and delay <= MAX_QUOTA_WAIT and _attempt < 2:
+                    await _sleep(delay + 1)
+                    continue
+                break
+        if events is None:
             continue
         text, calls = summarize(events)
         note = f"The model {primary} was busy, so this answer comes from the backup model {backup}." if backup else ""
@@ -163,6 +172,21 @@ def run(agent, message: str, *, plugins: list | None = None, show: bool = True) 
                 display(HTML(f"<div style='font-family:sans-serif;font-size:13px;color:#5F6B7A'>Note: {result.note}</div>"))
             display(trace_cards(result.events))
     return result
+
+
+MAX_QUOTA_WAIT = 65   # seconds: per-minute limits reset within a minute; per-day limits do not
+
+
+async def _sleep(seconds: float) -> None:
+    await asyncio.sleep(seconds)
+
+
+def _retry_delay(exc: Exception) -> float | None:
+    """Seconds Google asks us to wait ('retry in 21.4s' / retryDelay '21s'); None if not given."""
+    import re
+    m = re.search(r"retry in ([\d.]+)\s*s", str(exc), re.I) or re.search(r"retryDelay['\"]?\s*[:=]\s*['\"]?([\d.]+)s",
+                                                                          str(exc))
+    return float(m.group(1)) if m else None
 
 
 def _error_kind(exc: Exception) -> str:

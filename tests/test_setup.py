@@ -55,8 +55,9 @@ def test_quota_message(monkeypatch):
     monkeypatch.setenv("GOOGLE_API_KEY", "k")
     monkeypatch.setattr(setup, "_make_client", lambda k: FakeClient(Exception("429 RESOURCE_EXHAUSTED")))
     r = by_name(setup.check_environment(ping_pubmed=False))
-    assert r["API key works"].ok is False
-    assert "Wait one minute" in r["API key works"].fix
+    # a 429 proves the key is valid: setup passes, with an explanation (live finding 2026-11-25)
+    assert r["API key works"].ok is True
+    assert "quota is busy" in r["API key works"].detail
 
 
 def test_working_key_all_ok_and_sets_flag(monkeypatch):
