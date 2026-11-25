@@ -102,3 +102,18 @@ def test_predict_risk_records_every_real_run(tools):
     assert risk.ran_on_invalid_input() is True
     risk.RUN_LOG.clear()
     assert risk.ran_on_invalid_input() is False
+
+
+def test_model_card_has_calibration_and_teaching_truth(model):
+    cal = model["calibration"]
+    assert len(cal) == 5 and all(0 <= b["predicted"] <= 1 and 0 <= b["observed"] <= 1 for b in cal)
+    assert max(abs(b["predicted"] - b["observed"]) for b in cal) < 0.08      # well calibrated on validation data
+    truth = model["teaching_truth"]
+    for f in model["features"]:
+        assert (truth[f] > 0) == (model["coef"][f] > 0), f                     # model recovered every direction
+
+
+def test_calibration_and_truth_charts(model):
+    import matplotlib
+    matplotlib.use("Agg")
+    assert risk.calibration_chart(model).axes and risk.truth_chart(model).axes

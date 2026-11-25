@@ -1,4 +1,45 @@
 {
+ "calibration": [
+  {
+   "bin": 1,
+   "predicted": 0.05,
+   "observed": 0.025,
+   "n": 200
+  },
+  {
+   "bin": 2,
+   "predicted": 0.11,
+   "observed": 0.115,
+   "n": 200
+  },
+  {
+   "bin": 3,
+   "predicted": 0.183,
+   "observed": 0.18,
+   "n": 200
+  },
+  {
+   "bin": 4,
+   "predicted": 0.282,
+   "observed": 0.34,
+   "n": 200
+  },
+  {
+   "bin": 5,
+   "predicted": 0.479,
+   "observed": 0.515,
+   "n": 200
+  }
+ ],
+ "teaching_truth": {
+  "age": 0.06,
+  "male": 0.55,
+  "systolic_bp": 0.018,
+  "cholesterol": 0.006,
+  "max_heart_rate": -0.02,
+  "smoker": 0.7,
+  "diabetes": 0.8
+ },
  "name": "Northbridge 10-year cardiovascular risk (teaching model)",
  "type": "logistic regression on standardised features",
  "features": [

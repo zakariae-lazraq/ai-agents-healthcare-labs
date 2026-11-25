@@ -177,3 +177,44 @@ def explanation_chart(model: dict, features: dict, title: str = ""):
         ax.spines[s].set_visible(False)
     fig.tight_layout()
     return fig
+
+
+def calibration_chart(model: dict):
+    """Predicted versus observed event rate in 5 risk groups of the validation set (on the diagonal = calibrated)."""
+    import matplotlib.pyplot as plt
+
+    cal = model["calibration"]
+    fig, ax = plt.subplots(figsize=(4.2, 3.6), dpi=110)
+    ax.plot([0, 1], [0, 1], color="#C9D2DC", lw=1, ls="--", label="perfect calibration")
+    ax.plot([b["predicted"] for b in cal], [b["observed"] for b in cal], marker="o", color="#2A7F7F", label="model")
+    ax.set_xlabel("predicted risk (mean per group)")
+    ax.set_ylabel("observed event rate")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_title("Calibration on validation data", loc="left", fontsize=11)
+    ax.legend(frameon=False, fontsize=8)
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    fig.tight_layout()
+    return fig
+
+
+def truth_chart(model: dict):
+    """Teaching only: the direction the model learned for each factor versus the true effect used to make the data."""
+    import matplotlib.pyplot as plt
+
+    feats = model["features"]
+    learned = [model["coef"][f] for f in feats]
+    truth = [model["teaching_truth"][f] * model["sd"][f] for f in feats]   # true effect per 1 SD, comparable scale
+    fig, ax = plt.subplots(figsize=(7, 3), dpi=110)
+    y = range(len(feats))
+    ax.barh([i + 0.2 for i in y], truth, height=0.38, color="#C9D2DC", label="true effect (synthetic data)")
+    ax.barh([i - 0.2 for i in y], learned, height=0.38, color="#1F3A5F", label="learned by the model")
+    ax.set_yticks(list(y), feats)
+    ax.axvline(0, color="#5F6B7A", lw=1)
+    ax.set_xlabel("effect on log-odds per 1 SD (right = raises risk)")
+    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    fig.tight_layout()
+    return fig
