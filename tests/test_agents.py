@@ -8,7 +8,8 @@ def test_make_model_defaults():
     m = agents.make_model()
     assert m.model == "gemini-3.5-flash-lite"
     assert m.retry_options.attempts == 3
-    assert 429 in m.retry_options.http_status_codes
+    assert 503 in m.retry_options.http_status_codes
+    assert 429 not in m.retry_options.http_status_codes   # quota is handled by arun's wait-and-retry
 
 
 def test_final_text_and_tool_calls_from_events():
