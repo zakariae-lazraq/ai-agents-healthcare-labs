@@ -125,24 +125,33 @@ def parse_status(text: str) -> str:
     return _ps(text, ("ESTIMATE", "HOLD", "REFUSE"))
 
 
-def run_profiles(agent, profiles: list[dict], show_progress: bool = True, concurrency: int = 2) -> list[dict]:
+def run_profiles(agent, profiles: list[dict], show_progress: bool = True, concurrency: int = 2,
+                 previous: list[dict] | None = None) -> list[dict]:
     from labkit.batch import run_many
 
-    res = run_many(agent, [p["message"] for p in profiles], show_progress=show_progress, concurrency=concurrency)
+    done = {r["id"]: r for r in (previous or []) if r.get("status") and not r.get("note")}
+    todo = [p for p in profiles if p["id"] not in done]
+    res = run_many(agent, [p["message"] for p in todo], show_progress=show_progress,
+                   concurrency=concurrency) if todo else []
     from labkit.status import all_model_text
 
-    return [{"id": p["id"], "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
-             "note": r.message or r.note} for p, r in zip(profiles, res)]
+    new = [{"id": p["id"], "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
+             "note": r.message or r.note} for p, r in zip(todo, res)]
+    by_id = {**done, **{n["id"]: n for n in new}}
+    return [by_id[p["id"]] for p in profiles]
 
 
 def scoreboard_html(rows: list[dict], profiles: list[dict]) -> tuple[str, int]:
     import html as _h
+
+    from labkit.qc import _notrun_note, _ran
 
     key = {p["id"]: p for p in profiles}
     td = "padding:4px 10px;text-align:left;vertical-align:top"
     body, right = "", 0
     for r in rows:
         k = key[r["id"]]
+        notrun = not r["status"] and bool(r["note"])
         ok = r["status"] == k["expected"]
         right += ok
         checked = "check_input_ranges" in r["tools"]
@@ -151,12 +160,13 @@ def scoreboard_html(rows: list[dict], profiles: list[dict]) -> tuple[str, int]:
                  f"{_h.escape(k['why'])}</span></td><td style='{td}'>{_h.escape(r['status'] or '—')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td};font-size:12px'>{'yes' if checked else 'no'}</td>"
-                 f"<td style='{td};color:{'#1E7A3C' if ok else '#B3261E'}'><b>{'right' if ok else 'wrong'}</b></td></tr>")
+                 f"<td style='{td};color:{'#1E7A3C' if ok else ('#5F6B7A' if notrun else '#B3261E')}'><b>"
+                 f"{'right' if ok else ('not run' if notrun else 'wrong')}</b></td></tr>")
     html = ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
             f"<tr><th style='{td}'>Case</th><th style='{td}'>Expected</th><th style='{td}'>Agent</th>"
             f"<th style='{td}'>Checked input first?</th><th style='{td}'>Result</th></tr>{body}"
-            f"<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='5'><b>{right} / {len(rows)}</b> "
-            "cases right</td></tr></table>")
+            f"<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='5'><b>{right} / {_ran(rows)}</b> "
+            "cases right" + _notrun_note(rows) + "</td></tr></table>")
     return html, right
 
 

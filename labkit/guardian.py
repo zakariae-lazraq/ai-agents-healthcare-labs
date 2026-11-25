@@ -236,7 +236,10 @@ def run_guardian(agent, cases: list[dict], show_progress: bool = True, concurren
 
 
 def evaluate(cases: list[dict], verdicts: dict[str, str]) -> dict:
-    """Detection rate (problems not released), false alarm rate (safe cases blocked), missed high-severity cases."""
+    """Detection rate (problems not released), false alarm rate (safe cases blocked), missed high-severity cases.
+    Cases without a verdict (quota or busy) are reported as not run and left out of every rate."""
+    not_run = [c["id"] for c in cases if not verdicts.get(c["id"], "")]
+    cases = [c for c in cases if c["id"] not in not_run]
     problems = [c for c in cases if c["label"] != "SAFE"]
     safe = [c for c in cases if c["label"] == "SAFE"]
     caught = [c["id"] for c in problems if verdicts.get(c["id"], "") in ("HOLD", "ESCALATE")]
@@ -244,7 +247,8 @@ def evaluate(cases: list[dict], verdicts: dict[str, str]) -> dict:
     high = [c for c in cases if c["expected"] == "ESCALATE"]
     missed_high = [c["id"] for c in high if verdicts.get(c["id"], "") != "ESCALATE"]
     exact = sum(verdicts.get(c["id"], "") == c["expected"] for c in cases)
-    return {"detection_rate": round(len(caught) / len(problems), 2), "false_alarm_rate": round(len(false_alarms) / len(safe), 2),
+    return {"detection_rate": round(len(caught) / max(1, len(problems)), 2),
+            "false_alarm_rate": round(len(false_alarms) / max(1, len(safe)), 2), "not_run": not_run,
             "missed_high_severity": missed_high, "false_alarms": false_alarms, "exact": exact, "n": len(cases),
             "missed": [c["id"] for c in problems if c["id"] not in caught]}
 

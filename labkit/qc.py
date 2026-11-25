@@ -253,16 +253,20 @@ def levey_jennings(data: QCData, level: str, upto: str | None = None):
     return fig
 
 
-def run_batches(agent, batch_ids: list[str], log, show_progress: bool = True, concurrency: int = 2) -> list[dict]:
-    """Ask the agent to review each batch; parse STATUS / SAMPLES ON HOLD; record each proposal in the audit log."""
+def run_batches(agent, batch_ids: list[str], log, show_progress: bool = True, concurrency: int = 2,
+                previous: list[dict] | None = None) -> list[dict]:
+    """Ask the agent to review each batch; parse STATUS / SAMPLES ON HOLD; record each proposal in the audit log.
+    With `previous`, batches that already have an answer are kept and only the failed ones are asked again."""
     from labkit.batch import run_many
 
-    results = run_many(agent, [f"Review batch {b}." for b in batch_ids], show_progress=show_progress,
-                       concurrency=concurrency)
+    done = {r["batch_id"]: r for r in (previous or []) if r.get("status") and not r.get("note")}
+    todo = [b for b in batch_ids if b not in done]
+    results = run_many(agent, [f"Review batch {b}." for b in todo], show_progress=show_progress,
+                       concurrency=concurrency) if todo else []
     out = []
     from labkit.status import all_model_text
 
-    for b, r in zip(batch_ids, results):
+    for b, r in zip(todo, results):
         status, samples = parse_status(all_model_text(r.events) or r.text)
         if not status:
             status, samples = _deviation_args(r.events)
@@ -270,7 +274,18 @@ def run_batches(agent, batch_ids: list[str], log, show_progress: bool = True, co
             log.decision(b, status, samples, r.text)
         out.append({"batch_id": b, "status": status, "samples": samples, "tools": list(r.tool_calls),
                     "text": r.text, "note": r.message or r.note})
-    return out
+    by_id = {**done, **{o["batch_id"]: o for o in out}}
+    return [by_id[b] for b in batch_ids]
+
+
+def _ran(rows: list[dict]) -> int:
+    return sum(1 for r in rows if r.get("status") or not r.get("note"))
+
+
+def _notrun_note(rows: list[dict]) -> str:
+    n = len(rows) - _ran(rows)
+    return (f" · <span style='color:#5F6B7A'>{n} not run (quota or busy) — run the cell again: only these are asked "
+            "again</span>") if n else ""
 
 
 def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
@@ -281,9 +296,10 @@ def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
     body, right = "", 0
     for r in rows:
         k = key[r["batch_id"]]
+        notrun = not r["status"] and bool(r["note"])
         ok = r["status"] == k["status"] and sorted(r["samples"]) == sorted(k["samples_on_hold"])
         right += ok
-        color = "#1E7A3C" if ok else "#B3261E"
+        color = "#1E7A3C" if ok else ("#5F6B7A" if notrun else "#B3261E")
         checks = [t for t in r["tools"] if t.startswith(("check_", "apply_"))]
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['batch_id']}</b></td>"
                  f"<td style='{td}'>{_h.escape(k['status'])}<br><span style='color:#5F6B7A;font-size:12px'>"
@@ -293,10 +309,10 @@ def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
                  + f"</td><td style='{td};font-size:12px'>agent: {_h.escape(', '.join(r['samples']) or 'none')}<br>"
                  f"key: {_h.escape(', '.join(k['samples_on_hold']) or 'none')}</td>"
                  f"<td style='{td};font-size:12px'>{len(set(checks))} of 4 checks</td>"
-                 f"<td style='{td};color:{color}'><b>{'right' if ok else 'wrong'}</b></td></tr>")
+                 f"<td style='{td};color:{color}'><b>{'right' if ok else ('not run' if notrun else 'wrong')}</b></td></tr>")
     html = ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
             f"<tr><th style='{td}'>Batch</th><th style='{td}'>Answer key</th><th style='{td}'>Agent proposed</th>"
             f"<th style='{td}'>Samples on hold</th><th style='{td}'>Tools used</th><th style='{td}'>Result</th></tr>"
-            f"{body}<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='6'><b>{right} / {len(rows)}"
-            "</b> batches right (status and samples)</td></tr></table>")
+            f"{body}<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='6'><b>{right} / {_ran(rows)}"
+            "</b> batches right (status and samples)" + _notrun_note(rows) + "</td></tr></table>")
     return html, right

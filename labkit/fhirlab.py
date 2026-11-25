@@ -228,15 +228,20 @@ def parse_status(text: str) -> str:
     return _ps(text, ("PASS", "HOLD", "ESCALATE"))
 
 
-def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 2) -> list[dict]:
+def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 2,
+                 previous: list[dict] | None = None) -> list[dict]:
     from labkit.batch import run_many
 
-    res = run_many(agent, [f"Review the laboratory results of patient {p}." for p in patient_ids],
-                   show_progress=show_progress, concurrency=concurrency)
+    done = {r["patient_id"]: r for r in (previous or []) if r.get("status") and not r.get("note")}
+    todo = [p for p in patient_ids if p not in done]
+    res = run_many(agent, [f"Review the laboratory results of patient {p}." for p in todo],
+                   show_progress=show_progress, concurrency=concurrency) if todo else []
     from labkit.status import all_model_text
 
-    return [{"patient_id": p, "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
-             "note": r.message or r.note} for p, r in zip(patient_ids, res)]
+    new = [{"patient_id": p, "status": parse_status(all_model_text(r.events) or r.text), "tools": list(r.tool_calls), "text": r.text,
+             "note": r.message or r.note} for p, r in zip(todo, res)]
+    by_id = {**done, **{n["patient_id"]: n for n in new}}
+    return [by_id[p] for p in patient_ids]
 
 
 def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> tuple[str, int, bool]:
@@ -249,6 +254,7 @@ def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> t
     body, right = "", 0
     for r in rows:
         k = key[r["patient_id"]]
+        notrun = not r["status"] and bool(r["note"])
         ok = r["status"] == k["status"]
         right += ok
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['patient_id']}</b></td>"
@@ -257,9 +263,12 @@ def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> t
                  f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td}'>{'notified' if r['patient_id'] in notified else ''}</td>"
-                 f"<td style='{td};color:{'#1E7A3C' if ok else '#B3261E'}'><b>{'right' if ok else 'wrong'}</b></td></tr>")
+                 f"<td style='{td};color:{'#1E7A3C' if ok else ('#5F6B7A' if notrun else '#B3261E')}'><b>"
+                 f"{'right' if ok else ('not run' if notrun else 'wrong')}</b></td></tr>")
     notify_ok = notified == should
-    foot = (f"<b>{right} / {len(rows)}</b> statuses right · notifications: "
+    from labkit.qc import _notrun_note, _ran
+
+    foot = (f"<b>{right} / {_ran(rows)}</b> statuses right{_notrun_note(rows)} · notifications: "
             + ("exactly the critical patient(s)" if notify_ok else
                f"<span style='color:#B3261E'>expected {sorted(should)}, got {sorted(notified)}</span>"))
     html = ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
