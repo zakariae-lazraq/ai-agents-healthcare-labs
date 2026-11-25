@@ -148,6 +148,9 @@ def run(agent, message: str, *, plugins: list | None = None, show: bool = True) 
     try:
         with _quiet_adk_logs():
             result = _run_coro(arun(agent, message, plugins))
+    except Exception as exc:   # unexpected model/tool error: one clear line instead of a traceback
+        result = RunResult("", [], [], f"Gemini returned an error: {str(exc)[:200]}. Run the cell again; "
+                                       "if it repeats, tell the trainer.")
     finally:
         if handle:
             handle.update(HTML(""))
