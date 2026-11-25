@@ -106,7 +106,7 @@ def copy_box(text: str, title: str = "Copy this"):
         f"<pre style='white-space:pre-wrap;margin:6px 0 0'>{safe}</pre></div>")
 
 
-def done_card(lab: str, items: list[str], complete: bool | None = None):
+def done_card(lab: str, items: list[str], complete: bool | None = None, complete_text: str = "Complete"):
     """Completion/status card. With complete=None the title is '<lab> complete' (legacy);
     with complete=True/False the title is <lab> and a coloured verdict line is added."""
     from IPython.display import HTML
@@ -118,7 +118,7 @@ def done_card(lab: str, items: list[str], complete: bool | None = None):
         title = lab
         top = TEAL if complete else RED
         verdict = (f"<div style='font-weight:700;color:{GREEN if complete else RED};margin-top:4px'>"
-                   f"{'Complete — ready for Day 1' if complete else 'Not complete yet — fix the lines marked FIX'}</div>")
+                   f"{complete_text if complete else 'Not complete yet — fix the lines marked FIX'}</div>")
     return HTML(
         f"<div style='{FONT};border:1px solid #C9D2DC;border-top:6px solid {top};border-radius:6px;"
         "padding:14px 20px;max-width:620px;background:#FFFFFF;color:#1B2430'>"
