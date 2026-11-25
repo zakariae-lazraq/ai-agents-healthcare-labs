@@ -211,3 +211,81 @@ def parse_status(text: str) -> tuple[str, list[str]]:
     h = _HOLD.search(text or "")
     samples = re.findall(r"B\d{2}-S\d{2}", h.group(1)) if h else []
     return status, samples
+
+
+# ---------------------------------------------------------------- notebook helpers
+def levey_jennings(data: QCData, level: str, upto: str | None = None):
+    """Levey-Jennings chart of one QC level: run means in SD units, history then batches, with ±1/2/3 SD lines."""
+    import matplotlib.pyplot as plt
+
+    z = z_table(data)
+    z = z[z.level == level]
+    runs = list(dict.fromkeys(z.run))
+    if upto in runs:
+        runs = runs[: runs.index(upto) + 1]
+    z = z[z.run.isin(runs)]
+    fig, ax = plt.subplots(figsize=(10, 3.4), dpi=110)
+    for k, c in ((3, "#B3261E"), (2, "#B7791F"), (1, "#C9D2DC")):
+        for s in (k, -k):
+            ax.axhline(s, color=c, lw=1, ls="--" if k < 3 else "-")
+    ax.axhline(0, color="#1F3A5F", lw=1)
+    xs = {r: i for i, r in enumerate(runs)}
+    ax.scatter([xs[r] for r in z.run], z.z, s=14, color="#5F6B7A", zorder=3, label="replicates")
+    means = z.groupby("run", sort=False).z.mean().reindex(runs)
+    ax.plot(range(len(runs)), means.values, color="#2A7F7F", lw=1.5, marker="o", ms=4, label="run mean")
+    first_batch = next((i for i, r in enumerate(runs) if r.startswith("B")), len(runs))
+    ax.axvspan(first_batch - 0.5, len(runs) - 0.5, color="#EEF1F5", zorder=0)
+    ax.set_xticks(range(len(runs)), runs, rotation=90, fontsize=8)
+    ax.set_ylabel("SD from target")
+    ax.set_ylim(-4, 4)
+    t = data.targets.set_index("level").loc[level]
+    ax.set_title(f"{level}: target {t['mean']:g} ng/mL, SD {t['sd']:g} (shaded: this week's batches)", loc="left", fontsize=11)
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    fig.tight_layout()
+    return fig
+
+
+def run_batches(agent, batch_ids: list[str], log, show_progress: bool = True, concurrency: int = 2) -> list[dict]:
+    """Ask the agent to review each batch; parse STATUS / SAMPLES ON HOLD; record each proposal in the audit log."""
+    from labkit.batch import run_many
+
+    results = run_many(agent, [f"Review batch {b}." for b in batch_ids], show_progress=show_progress,
+                       concurrency=concurrency)
+    out = []
+    for b, r in zip(batch_ids, results):
+        status, samples = parse_status(r.text)
+        if r.text:
+            log.decision(b, status, samples, r.text)
+        out.append({"batch_id": b, "status": status, "samples": samples, "tools": list(r.tool_calls),
+                    "text": r.text, "note": r.message or r.note})
+    return out
+
+
+def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
+    """Agent proposals versus the answer key. Returns (html, number of batches fully right)."""
+    import html as _h
+
+    td = "padding:4px 10px;text-align:left;vertical-align:top"
+    body, right = "", 0
+    for r in rows:
+        k = key[r["batch_id"]]
+        ok = r["status"] == k["status"] and sorted(r["samples"]) == sorted(k["samples_on_hold"])
+        right += ok
+        color = "#1E7A3C" if ok else "#B3261E"
+        checks = [t for t in r["tools"] if t.startswith(("check_", "apply_"))]
+        body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['batch_id']}</b></td>"
+                 f"<td style='{td}'>{_h.escape(k['status'])}<br><span style='color:#5F6B7A;font-size:12px'>"
+                 f"{_h.escape(k['issue'])}</span></td>"
+                 f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
+                 + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
+                 + f"</td><td style='{td};font-size:12px'>agent: {_h.escape(', '.join(r['samples']) or 'none')}<br>"
+                 f"key: {_h.escape(', '.join(k['samples_on_hold']) or 'none')}</td>"
+                 f"<td style='{td};font-size:12px'>{len(set(checks))} of 4 checks</td>"
+                 f"<td style='{td};color:{color}'><b>{'right' if ok else 'wrong'}</b></td></tr>")
+    html = ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
+            f"<tr><th style='{td}'>Batch</th><th style='{td}'>Answer key</th><th style='{td}'>Agent proposed</th>"
+            f"<th style='{td}'>Samples on hold</th><th style='{td}'>Tools used</th><th style='{td}'>Result</th></tr>"
+            f"{body}<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='6'><b>{right} / {len(rows)}"
+            "</b> batches right (status and samples)</td></tr></table>")
+    return html, right

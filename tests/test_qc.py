@@ -81,3 +81,36 @@ def test_tools_have_docstrings_for_the_model(tools):
 ])
 def test_parse_status(text, status, samples):
     assert qc.parse_status(text) == (status, samples)
+
+
+def test_levey_jennings_figure_has_limits_and_all_runs():
+    import matplotlib
+    matplotlib.use("Agg")
+    d = qc.load(DATA)
+    fig = qc.levey_jennings(d, "QC-H", upto="B03")
+    ax = fig.axes[0]
+    assert len(ax.get_xticks()) >= 23 or len(ax.lines) >= 7
+
+
+def test_run_batches_parses_status_and_logs_decision(monkeypatch):
+    import labkit
+    from labkit import agents
+    from labkit.audit import AuditLog
+    labkit._state["setup_ok"] = True
+
+    async def fake(agent, message, plugins=None):
+        b = message.split()[-1].rstrip(".")
+        return agents.RunResult(f"Findings...\nSTATUS: HOLD\nSAMPLES ON HOLD: {b}-S11", [], ["check_internal_standard"])
+
+    monkeypatch.setattr(agents, "arun", fake)
+    log = AuditLog()
+    out = qc.run_batches("agent", ["B04", "B05"], log, show_progress=False)
+    assert [o["status"] for o in out] == ["HOLD", "HOLD"] and out[0]["samples"] == ["B04-S11"]
+    assert [e["tool"] for e in log.entries] == ["DECISION (agent proposal)"] * 2
+
+
+def test_batch_scoreboard_counts_matches(key):
+    rows = [{"batch_id": "B01", "status": "PASS", "samples": [], "tools": ["check_calibration"], "text": "", "note": ""},
+            {"batch_id": "B04", "status": "HOLD", "samples": ["B04-S11"], "tools": [], "text": "", "note": ""}]
+    html, n = qc.scoreboard_html(rows, key)
+    assert n == 1 and "B04-S12" in html and "PASS" in html
