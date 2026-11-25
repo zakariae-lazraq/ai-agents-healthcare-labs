@@ -1,0 +1,74 @@
+{
+ "B01": {
+  "status": "PASS",
+  "samples_on_hold": [],
+  "issue": "none (clean batch)",
+  "tool": "-"
+ },
+ "B02": {
+  "status": "ESCALATE",
+  "samples_on_hold": [],
+  "issue": "CAL3 back-calculated accuracy +17 % (limit ±15 %) although r² = 0.996 passes",
+  "tool": "check_calibration"
+ },
+ "B03": {
+  "status": "ESCALATE",
+  "samples_on_hold": [],
+  "issue": "QC-high above its mean for 10 consecutive runs (drift): 10-x",
+  "tool": "apply_westgard"
+ },
+ "B04": {
+  "status": "HOLD",
+  "samples_on_hold": [
+   "B04-S11",
+   "B04-S12",
+   "B04-S13",
+   "B04-S14",
+   "B04-S15"
+  ],
+  "issue": "IS area drop on 5 consecutive patients (injection problem): re-inject",
+  "tool": "check_internal_standard"
+ },
+ "B05": {
+  "status": "HOLD",
+  "samples_on_hold": [
+   "B05-S07",
+   "B05-S29"
+  ],
+  "issue": "ion ratio outside ±20 % on 2 patients (interference)",
+  "tool": "check_ion_ratio"
+ },
+ "B06": {
+  "status": "ESCALATE",
+  "samples_on_hold": [],
+  "issue": "QC-mid duplicates +2.5 SD and −2.1 SD: R-4s (random error)",
+  "tool": "apply_westgard"
+ },
+ "B07": {
+  "status": "HOLD",
+  "samples_on_hold": [
+   "B07-S18",
+   "B07-S33"
+  ],
+  "issue": "IS area high on S18; ion ratio on S33",
+  "tool": "check_internal_standard, check_ion_ratio"
+ },
+ "B08": {
+  "status": "ESCALATE",
+  "samples_on_hold": [],
+  "issue": "QC-low at +3.4 SD: 1-3s",
+  "tool": "apply_westgard"
+ },
+ "B09": {
+  "status": "ESCALATE",
+  "samples_on_hold": [],
+  "issue": "QC-low and QC-mid both above +2 SD in the same run: 2-2s",
+  "tool": "apply_westgard"
+ },
+ "B10": {
+  "status": "PASS",
+  "samples_on_hold": [],
+  "issue": "retention time shift on S04–S06 — invisible to the core tools (challenge: HOLD 3 with a retention-time check)",
+  "tool": "check_retention_time (challenge)"
+ }
+}
