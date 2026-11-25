@@ -1,0 +1,24 @@
+{
+ "name": "Northbridge tissue-tile classifier (teaching model)",
+ "architecture": "small CNN (5 conv layers with batch norm), 28\u00d728 input",
+ "classes": [
+  "adipose",
+  "background",
+  "debris",
+  "lymphocytes",
+  "mucus",
+  "smooth muscle",
+  "normal colon mucosa",
+  "cancer-associated stroma",
+  "colorectal adenocarcinoma epithelium"
+ ],
+ "trained_on": "all 89 996 PathMNIST training tiles (CPU, 14 epochs)",
+ "accuracy_validation": 0.989,
+ "accuracy_test": 0.888,
+ "source": "MedMNIST v3, Zenodo 10519652, pathmnist.npz (CC BY 4.0); derived from NCT-CRC-HE-100K",
+ "limits": [
+  "Teaching model: not validated for diagnosis.",
+  "Trained only on H&E colorectal tissue tiles: any other image is out of scope, but the model will still output 9 probabilities that sum to 1.",
+  "Confidence is not correctness: a high probability can still be wrong."
+ ]
+}

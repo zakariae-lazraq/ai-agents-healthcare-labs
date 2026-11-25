@@ -20,11 +20,12 @@ CLASSES = ["adipose", "background", "debris", "lymphocytes", "mucus", "smooth mu
 def make_net():
     from torch import nn
 
-    return nn.Sequential(
-        nn.Conv2d(3, 16, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
-        nn.Conv2d(16, 32, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
-        nn.Conv2d(32, 64, 3, padding=1), nn.ReLU(), nn.AdaptiveAvgPool2d(1),
-        nn.Flatten(), nn.Linear(64, 9))
+    def block(cin, cout):
+        return [nn.Conv2d(cin, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU()]
+
+    return nn.Sequential(*block(3, 32), *block(32, 32), nn.MaxPool2d(2),
+                         *block(32, 64), *block(64, 64), nn.MaxPool2d(2),
+                         *block(64, 128), nn.AdaptiveAvgPool2d(1), nn.Flatten(), nn.Dropout(0.2), nn.Linear(128, 9))
 
 
 def to_model_input(images: np.ndarray) -> np.ndarray:
@@ -109,12 +110,14 @@ def sweep_chart(rows: list[dict], mark: float | None = None):
 
 
 def quality_problem(image: np.ndarray) -> str:
-    """Reference image-quality check (challenge): '' if usable, else the reason."""
+    """Reference image-quality check (challenge): '' if usable, else the reason.
+    Blank: almost no contrast. Blurred: little pixel-to-pixel change relative to the contrast — real 'background'
+    tiles are smooth but low-contrast, so sharpness is judged relative to contrast, not in absolute terms."""
     g = np.asarray(image, dtype=np.float32).mean(axis=2)
-    if g.std() < 8:
+    if g.std() < 1.0:
         return "blank or nearly uniform image"
-    sharp = np.abs(np.diff(g, axis=0)).mean() + np.abs(np.diff(g, axis=1)).mean()
-    if sharp < 4:
+    sharpness = np.abs(np.diff(g, axis=0)).mean() + np.abs(np.diff(g, axis=1)).mean()
+    if sharpness / g.std() < 0.3:
         return "image too blurred"
     return ""
 
