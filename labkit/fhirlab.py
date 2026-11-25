@@ -228,3 +228,69 @@ _STATUS = re.compile(r"status\s*[:\-–]?\s*\**\s*(pass|hold|escalate)\b", re.I)
 def parse_status(text: str) -> str:
     m = _STATUS.search(text or "")
     return m.group(1).upper() if m else ""
+
+
+def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 2) -> list[dict]:
+    from labkit.batch import run_many
+
+    res = run_many(agent, [f"Review the laboratory results of patient {p}." for p in patient_ids],
+                   show_progress=show_progress, concurrency=concurrency)
+    return [{"patient_id": p, "status": parse_status(r.text), "tools": list(r.tool_calls), "text": r.text,
+             "note": r.message or r.note} for p, r in zip(patient_ids, res)]
+
+
+def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> tuple[str, int, bool]:
+    """Agent status per patient vs the answer key; and: were exactly the critical patients notified?"""
+    import html as _h
+
+    td = "padding:4px 10px;text-align:left;vertical-align:top"
+    notified = {n["patient_id"] for n in notifications}
+    should = {p for p, k in key.items() if k["notify"]}
+    body, right = "", 0
+    for r in rows:
+        k = key[r["patient_id"]]
+        ok = r["status"] == k["status"]
+        right += ok
+        body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['patient_id']}</b></td>"
+                 f"<td style='{td}'>{k['status']}<br><span style='color:#5F6B7A;font-size:12px'>"
+                 f"{_h.escape('; '.join(k['issues']) or 'clean')}</span></td>"
+                 f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
+                 + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
+                 + f"</td><td style='{td}'>{'notified' if r['patient_id'] in notified else ''}</td>"
+                 f"<td style='{td};color:{'#1E7A3C' if ok else '#B3261E'}'><b>{'right' if ok else 'wrong'}</b></td></tr>")
+    notify_ok = notified == should
+    foot = (f"<b>{right} / {len(rows)}</b> statuses right · notifications: "
+            + ("exactly the critical patient(s)" if notify_ok else
+               f"<span style='color:#B3261E'>expected {sorted(should)}, got {sorted(notified)}</span>"))
+    html = ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
+            f"<tr><th style='{td}'>Patient</th><th style='{td}'>Answer key</th><th style='{td}'>Agent</th>"
+            f"<th style='{td}'>Notification</th><th style='{td}'>Result</th></tr>{body}"
+            f"<tr style='border-top:2px solid #1F3A5F'><td style='{td}' colspan='5'>{foot}</td></tr></table>")
+    return html, right, notify_ok
+
+
+HL7_FIELDS = {
+    "MSH": {9: "message type (ORU^R01 = observation result)", 10: "message control id", 12: "HL7 version"},
+    "PID": {3: "patient identifier (MRN)", 5: "patient name"},
+    "OBR": {2: "placer order number (the request)", 4: "ordered test (LOINC)", 7: "collection date/time"},
+    "OBX": {2: "value type (NM = numeric)", 3: "test code (LOINC)", 5: "value", 6: "unit (UCUM)",
+            7: "reference range", 8: "abnormal flag (HH = critically high)", 11: "result status (F = final)"},
+}
+
+
+def hl7_guide_html(message: str) -> str:
+    """Each segment of an HL7 v2 message, with the meaning of its important fields."""
+    import html as _h
+
+    td = "padding:3px 10px;text-align:left;vertical-align:top;font-size:12px"
+    rows = ""
+    for seg in [s for s in message.replace("\n", "\r").split("\r") if s.strip()]:
+        f = seg.split("|")
+        name = f[0]
+        for i, meaning in HL7_FIELDS.get(name, {}).items():
+            idx = i - 1 if name == "MSH" else i   # MSH-1 is the field separator itself
+            if idx < len(f) and f[idx]:
+                rows += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{name}-{i}</b></td>"
+                         f"<td style='{td};font-family:monospace'>{_h.escape(f[idx])}</td><td style='{td}'>{meaning}</td></tr>")
+    return ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif'>"
+            f"<tr><th style='{td}'>Field</th><th style='{td}'>Content</th><th style='{td}'>Meaning</th></tr>{rows}</table>")

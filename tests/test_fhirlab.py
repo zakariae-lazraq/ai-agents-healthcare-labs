@@ -83,3 +83,29 @@ def test_delta_check_challenge(lab):
                                          ("status - pass", "PASS"), ("", "")])
 def test_parse_status(text, status):
     assert fhirlab.parse_status(text) == status
+
+
+def test_run_patients_and_scoreboard(lab, key, monkeypatch):
+    import labkit
+    from labkit import agents
+    labkit._state["setup_ok"] = True
+
+    async def fake(agent, message, plugins=None):
+        pid = message.split()[-1].rstrip(".")
+        return agents.RunResult(f"Done.\nSTATUS: {key[pid]['status']}", [], ["check_units"])
+
+    monkeypatch.setattr(agents, "arun", fake)
+    lab.notifications.clear()
+    lab.notifications.append({"patient_id": "pat-09", "mrn": "x", "message": "K 6.8", "urgency": "urgent"})
+    rows = fhirlab.run_patients("agent", lab.patients, show_progress=False)
+    html, right, notify_ok = fhirlab.scoreboard_html(rows, key, lab.notifications)
+    assert right == 20 and notify_ok is True and "pat-09" in html
+    lab.notifications.append({"patient_id": "pat-01", "mrn": "y", "message": "?", "urgency": "urgent"})
+    assert fhirlab.scoreboard_html(rows, key, lab.notifications)[2] is False
+
+
+def test_hl7_guide_lists_segments(lab):
+    html = fhirlab.hl7_guide_html((DATA / "oru_example.hl7").read_text(encoding="utf-8"))
+    for seg in ("MSH", "PID", "OBR", "OBX"):
+        assert seg in html
+    assert "6.8" in html and "HH" in html
