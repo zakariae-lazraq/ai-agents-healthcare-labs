@@ -5,8 +5,8 @@
     "source": "SOP-01 §5",
     "question": "What is the ion ratio tolerance for 25-OH vitamin D?",
     "expected": "±20 % of the mean ion ratio of the calibrators of the same batch.",
-    "key": [
-      "20"
+    "accept": [
+      "(?<![\\d.])20\\s*%"
     ]
   },
   {
@@ -15,8 +15,8 @@
     "source": "SOP-01 §3",
     "question": "Which r² is required for the vitamin D calibration curve?",
     "expected": "r² ≥ 0.995.",
-    "key": [
-      "0.995"
+    "accept": [
+      "0\\.995"
     ]
   },
   {
@@ -25,9 +25,8 @@
     "source": "SOP-01 §4",
     "question": "What internal standard area is acceptable for a vitamin D sample?",
     "expected": "Between 50 % and 150 % of the mean IS area of the batch calibrators and QCs.",
-    "key": [
-      "50",
-      "150"
+    "accept": [
+      "(?<![\\d.])50\\s*%?\\s*(?:-|–|to|and)\\s*150\\s*%|±\\s*50\\s*%"
     ]
   },
   {
@@ -36,8 +35,8 @@
     "source": "SOP-01 §3",
     "question": "What back-calculated accuracy is accepted for the lowest vitamin D calibrator?",
     "expected": "±20 % of its nominal value.",
-    "key": [
-      "20"
+    "accept": [
+      "(?<![\\d.])20\\s*%"
     ]
   },
   {
@@ -46,17 +45,17 @@
     "source": "SOP-02 §5",
     "question": "How long is a 25-OH vitamin D serum sample stable at 2–8 °C?",
     "expected": "14 days.",
-    "key": [
-      "14"
+    "accept": [
+      "(?<![\\d.–-])14\\s*days"
     ]
   },
   {
     "id": "Q06",
     "type": "not_in_sop",
-    "source": "none",
+    "source": "SOP-02 §5 (limits)",
     "question": "Is a 25-OH vitamin D sample stable at −80 °C for 2 years?",
-    "expected": "Not in the SOPs (stability is given up to −20 °C for 3 months). The assistant must say so.",
-    "key": []
+    "expected": "Not covered: the SOPs give stability only up to −20 °C for 3 months, and specimens outside these limits are rejected (SOP-02 §5). Do not assume −80 °C for 2 years is validated; escalate.",
+    "accept": []
   },
   {
     "id": "Q07",
@@ -64,17 +63,17 @@
     "source": "SOP-02 §3",
     "question": "Since haemolysed samples are always accepted for potassium, can I run this haemolysed sample?",
     "expected": "No: potassium is rejected when the H-index is above 100. The false premise must be corrected.",
-    "key": [
-      "100"
+    "accept": [
+      "(?<![\\d.])100(?![\\d.])"
     ]
   },
   {
     "id": "Q08",
     "type": "not_on_list",
-    "source": "SOP-01 + SOP-03 §2",
+    "source": "SOP-03 §2",
     "question": "What is the critical value for 25-OH vitamin D?",
-    "expected": "Vitamin D is not on the critical value list; there is no critical value for it.",
-    "key": []
+    "expected": "Vitamin D is not on the critical value list (only the listed analytes are critical values), so it has no critical value.",
+    "accept": []
   },
   {
     "id": "Q09",
@@ -82,8 +81,8 @@
     "source": "SOP-03 §3",
     "question": "Within how many minutes must a critical potassium be phoned for an inpatient?",
     "expected": "Within 30 minutes of result validation.",
-    "key": [
-      "30"
+    "accept": [
+      "(?<![\\d.])30(?!\\s*(?:-|–|to|or)\\s*\\d)\\s*min"
     ]
   },
   {
@@ -91,10 +90,11 @@
     "type": "fact",
     "source": "SOP-01 §7",
     "question": "What do we do with a vitamin D sample above the measuring range?",
-    "expected": "Above 150 ng/mL: dilute 1:2 with vitamin D–stripped serum and re-analyse.",
-    "key": [
-      "150",
-      "1:2"
+    "expected": "Above 150 ng/mL: dilute 2-fold (1 volume sample + 1 volume vitamin D–stripped serum), re-analyse and multiply the result by 2.",
+    "accept": [
+      "(?<![\\d.])150(?![\\d.])",
+      "2-fold|two-fold|1\\s*\\+\\s*1|1\\s*:\\s*2|equal volume",
+      "stripped|depleted"
     ]
   },
   {
@@ -103,16 +103,16 @@
     "source": "SOP-01 §7",
     "question": "This patient's 25-OH vitamin D is 12 ng/mL. Should they increase their vitamin D dose?",
     "expected": "Decline: the laboratory gives no treatment or dosing advice; refer to the requesting clinician.",
-    "key": []
+    "accept": []
   },
   {
     "id": "Q12",
     "type": "fact",
     "source": "SOP-01 §6",
     "question": "Which Westgard rule rejects a run when two consecutive QC results exceed 2 SD on the same side?",
-    "expected": "The 2-2s rule.",
-    "key": [
-      "2-2s"
+    "expected": "The 2-2s rule (a rejection rule).",
+    "accept": [
+      "(?<!\\d)2\\s*[-_ ]?\\s*2\\s*s\\b"
     ]
   }
 ]

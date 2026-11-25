@@ -30,7 +30,7 @@ Three quality control levels (low 15 ng/mL, mid 50 ng/mL, high 120 ng/mL) are an
 
 ## 7. Reporting
 
-The result is reported as total 25-hydroxyvitamin D (D2 + D3) in ng/mL. The analytical measuring range is 5 to 150 ng/mL. Results below 5 ng/mL are reported as "< 5 ng/mL". Samples above 150 ng/mL are diluted 1:2 with vitamin D–stripped serum and re-analysed. The laboratory does not provide treatment or dosing advice; clinical questions are referred to the requesting clinician.
+The result is reported as total 25-hydroxyvitamin D (D2 + D3) in ng/mL. The analytical measuring range is 5 to 150 ng/mL. Results below 5 ng/mL are reported as "< 5 ng/mL". Samples above 150 ng/mL are diluted 2-fold (1 volume of sample + 1 volume of vitamin D–stripped serum) and re-analysed; the result is multiplied by 2. The laboratory does not provide treatment or dosing advice; clinical questions are referred to the requesting clinician.
 
 ## 8. Records
 
