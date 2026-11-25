@@ -22,7 +22,8 @@ from labkit.ui import SETUP_NOT_PASSED, error_line, has_blank
 RETRY = types.HttpRetryOptions(attempts=3, initial_delay=1, exp_base=3,
                                http_status_codes=[429, 500, 503, 504])
 # Tried in order when the agent's model is busy (503 high demand) or out of free quota (429).
-BACKUP_MODELS = ["gemini-3.6-flash", "gemini-flash-lite-latest"]
+# Flash-Lite first: the free tier allows only ~20 requests per day for Flash models (seen 2026-11-25).
+BACKUP_MODELS = ["gemini-flash-lite-latest", "gemini-3.6-flash"]
 QUOTA_MESSAGE = "Free quota reached — wait one minute and run this cell again."
 # Course rule (outline 3.1): temperature 0 for reproducible answers. Pass as generate_content_config=DETERMINISTIC.
 DETERMINISTIC = types.GenerateContentConfig(temperature=0)
