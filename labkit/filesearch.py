@@ -1,6 +1,9 @@
-"""Lab 1 challenge: ask a question with Gemini File Search (Google-managed retrieval).
+"""Lab 1 challenge: two alternatives to a hand-written search tool.
 
-Creates a temporary File Search store, uploads the SOPs, asks once, and always deletes the store.
+1. Gemini File Search (Google-managed retrieval): a temporary store is created, the SOPs are uploaded, the question
+   is asked once, and the store is always deleted. `sources` are the documents File Search reports it retrieved.
+2. Long context: every SOP is placed in the prompt. There is no retrieval, so no `sources`: `in_prompt` lists what
+   the model was given.
 Problems come back as a plain message (never a traceback): the challenge is optional.
 """
 
@@ -10,18 +13,20 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from labkit.agents import BUSY_MESSAGE, _error_kind
+from labkit.agents import BACKUP_MODELS, BUSY_MESSAGE, QUOTA_MESSAGE, _error_kind
 
 QUOTA_FS = ("File Search reached a free-tier quota (it embeds your documents and your question). Wait one minute "
             "and run the cell again. This challenge is optional — you can skip it.")
-UPLOAD_ATTEMPTS = 3
-QUOTA_WAIT = 20  # seconds
+UPLOAD_ATTEMPTS = 2
+QUOTA_WAIT = 15          # seconds between upload attempts
+INDEX_TIMEOUT = 60       # seconds per document
 
 
 @dataclass
 class FileSearchResult:
     text: str = ""
-    sources: list[str] = field(default_factory=list)
+    sources: list[str] = field(default_factory=list)     # documents reported by retrieval
+    in_prompt: list[str] = field(default_factory=list)   # documents placed whole in the prompt (long context)
     message: str | None = None
 
 
@@ -36,8 +41,17 @@ def _sources(resp) -> list[str]:
     return sorted(titles)
 
 
+def _message(exc: Exception, quota_text: str) -> str:
+    kind = _error_kind(exc)
+    if kind == "quota":
+        return quota_text
+    if kind == "busy":
+        return BUSY_MESSAGE + " This challenge is optional."
+    return f"The request failed: {str(exc)[:200]}. This challenge is optional."
+
+
 def ask_with_file_search(folder, question: str, model: str, client=None, sleep=time.sleep,
-                         timeout: float = 120) -> FileSearchResult:
+                         progress=print) -> FileSearchResult:
     from google.genai import types
 
     if client is None:
@@ -47,7 +61,8 @@ def ask_with_file_search(folder, question: str, model: str, client=None, sleep=t
     try:
         store = client.file_search_stores.create(config={"display_name": "northbridge-sops"})
         for f in sorted(Path(folder).glob("*.md")):
-            for attempt in range(UPLOAD_ATTEMPTS):  # indexing has a tight per-minute quota: wait and retry
+            progress(f"  indexing {f.stem}…")
+            for attempt in range(UPLOAD_ATTEMPTS):  # indexing has a tight per-minute quota: wait once and retry
                 try:
                     op = client.file_search_stores.upload_to_file_search_store(
                         file=str(f), file_search_store_name=store.name,
@@ -56,26 +71,23 @@ def ask_with_file_search(folder, question: str, model: str, client=None, sleep=t
                 except Exception as exc:
                     if _error_kind(exc) != "quota" or attempt == UPLOAD_ATTEMPTS - 1:
                         raise
+                    progress(f"  quota reached, waiting {QUOTA_WAIT} s…")
                     sleep(QUOTA_WAIT)
-            waited = 0.0
+            waited = 0
             while not op.done:
-                if waited >= timeout:
+                if waited >= INDEX_TIMEOUT:
                     return FileSearchResult(message="Indexing took too long. Run the cell again in a minute.")
                 sleep(2)
                 waited += 2
                 op = client.operations.get(op)
+        progress("  asking…")
         resp = client.models.generate_content(
             model=model, contents=question + " Answer only from the documents and cite them.",
             config=types.GenerateContentConfig(temperature=0, tools=[types.Tool(
                 file_search=types.FileSearch(file_search_store_names=[store.name]))]))
         return FileSearchResult(text=resp.text or "", sources=_sources(resp))
     except Exception as exc:  # participant-facing: plain message instead of a traceback
-        kind = _error_kind(exc)
-        if kind == "quota":
-            return FileSearchResult(message=QUOTA_FS)
-        if kind == "busy":
-            return FileSearchResult(message=BUSY_MESSAGE)
-        return FileSearchResult(message=f"File Search failed: {str(exc)[:200]}. This challenge is optional.")
+        return FileSearchResult(message=_message(exc, QUOTA_FS))
     finally:
         if store is not None:
             try:
@@ -95,12 +107,14 @@ def ask_long_context(folder, question: str, model: str, client=None) -> FileSear
     docs = "\n\n".join(f.read_text(encoding="utf-8") for f in files)
     prompt = (f"Documents:\n\n{docs}\n\nQuestion: {question}\n"
               "Answer only from the documents above and cite the SOP number and section.")
-    try:
-        resp = client.models.generate_content(model=model, contents=prompt,
-                                              config=types.GenerateContentConfig(temperature=0))
-        return FileSearchResult(text=resp.text or "", sources=[f.stem for f in files])
-    except Exception as exc:
-        kind = _error_kind(exc)
-        msg = {"quota": "Free quota reached — wait one minute and run this cell again.",
-               "busy": BUSY_MESSAGE}.get(kind, f"The request failed: {str(exc)[:200]}.")
-        return FileSearchResult(message=msg + " This challenge is optional.")
+    last = None
+    for m in [model] + [b for b in BACKUP_MODELS if b != model]:
+        try:
+            resp = client.models.generate_content(model=m, contents=prompt,
+                                                  config=types.GenerateContentConfig(temperature=0))
+            return FileSearchResult(text=resp.text or "", in_prompt=[f.stem for f in files])
+        except Exception as exc:
+            last = exc
+            if _error_kind(exc) not in ("busy", "quota"):
+                break
+    return FileSearchResult(message=_message(last, QUOTA_MESSAGE + " This challenge is optional."))

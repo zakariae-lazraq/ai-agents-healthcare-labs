@@ -86,3 +86,13 @@ def test_ready_reports_blank_and_wrong_tools():
     assert ui.ready("___", "rules", [tool]) is False
     assert ui.ready("name", "rules", ["___"]) is False
     assert ui.ready("name", "rules", ["get_test_info"]) is False  # quoted name instead of the function
+
+
+def test_ready_names_the_labs_own_tool(monkeypatch):
+    from labkit import ui
+    shown = []
+    monkeypatch.setattr(ui, "error_line", lambda m: shown.append(m) or m)
+    import IPython.display
+    monkeypatch.setattr(IPython.display, "display", lambda *a, **k: None)
+    assert ui.ready("a", "rules", ["search_sop"], example="search_sop") is False
+    assert "TOOLS = [search_sop]" in shown[0]

@@ -78,7 +78,8 @@ def test_transient_quota_on_upload_is_retried(sops):
     r = ask_with_file_search(sops, "q", "m", client=c, sleep=waits.append)
     assert r.message is None and r.text
     assert c.uploaded == ["SOP-01_Vitamin_D", "SOP-03_Critical_Values"]
-    assert 20 in waits
+    from labkit.filesearch import QUOTA_WAIT
+    assert QUOTA_WAIT in waits and sum(waits) <= 60
 
 
 def test_cleanup_failure_does_not_hide_answer(sops):
@@ -99,7 +100,27 @@ def test_long_context_puts_every_sop_in_the_prompt(sops):
     r = ask_long_context(sops, "Critical value for vitamin D?", "m", client=c)
     assert r.message is None and r.text.startswith("Not on the list")
     assert "# SOP-01_Vitamin_D" in seen["prompt"] and "# SOP-03_Critical_Values" in seen["prompt"]
-    assert r.sources == ["SOP-01_Vitamin_D", "SOP-03_Critical_Values"]
+    assert r.sources == [] and r.in_prompt == ["SOP-01_Vitamin_D", "SOP-03_Critical_Values"]
+
+
+def test_long_context_tries_backup_model_when_busy(sops):
+    from labkit.filesearch import ask_long_context
+    models = []
+
+    def gen(model, contents, config):
+        models.append(model)
+        if len(models) == 1:
+            raise RuntimeError("503 UNAVAILABLE high demand")
+        return NS(text="ok", candidates=[])
+
+    r = ask_long_context(sops, "q", "primary", client=NS(models=NS(generate_content=gen)))
+    assert r.text == "ok" and models[0] == "primary" and len(models) == 2
+
+
+def test_file_search_reports_progress(sops):
+    lines = []
+    ask_with_file_search(sops, "q", "m", client=FakeClient(), sleep=lambda s: None, progress=lines.append)
+    assert any("SOP-01_Vitamin_D" in x for x in lines)
 
 
 def test_long_context_error_is_a_message(sops):

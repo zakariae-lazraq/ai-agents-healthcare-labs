@@ -62,14 +62,14 @@ def has_blank(*values) -> str | None:
     return None
 
 
-def ready(name: str, instruction: str, tools: list) -> bool:
+def ready(name: str, instruction: str, tools: list, example: str = "get_test_info") -> bool:
     """True if an agent can be built from these values; otherwise shows one 'Action needed' line."""
     from IPython.display import display
 
     problem = has_blank(name, instruction)
     if problem is None and (not isinstance(tools, list) or not tools
                             or not all(callable(t) for t in tools)):
-        problem = ("TOOLS must contain the tool function itself, e.g. TOOLS = [get_test_info] "
+        problem = (f"TOOLS must contain the tool function itself, e.g. TOOLS = [{example}] "
                    "— no quotation marks, no ().")
     if problem:
         display(error_line(problem + " Then run this cell again."))
