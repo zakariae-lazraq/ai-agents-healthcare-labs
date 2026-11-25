@@ -1,0 +1,53 @@
+{
+ "name": "Northbridge 10-year cardiovascular risk (teaching model)",
+ "type": "logistic regression on standardised features",
+ "features": [
+  "age",
+  "male",
+  "systolic_bp",
+  "cholesterol",
+  "max_heart_rate",
+  "smoker",
+  "diabetes"
+ ],
+ "mean": {
+  "age": 54.953667,
+  "male": 0.514667,
+  "systolic_bp": 130.833667,
+  "cholesterol": 213.589667,
+  "max_heart_rate": 171.284667,
+  "smoker": 0.236,
+  "diabetes": 0.154667
+ },
+ "sd": {
+  "age": 10.033697,
+  "male": 0.499868,
+  "systolic_bp": 17.352571,
+  "cholesterol": 39.907328,
+  "max_heart_rate": 16.433877,
+  "smoker": 0.424693,
+  "diabetes": 0.361647
+ },
+ "intercept": -1.527717,
+ "coef": {
+  "age": 0.632451,
+  "male": 0.208574,
+  "systolic_bp": 0.307288,
+  "cholesterol": 0.257862,
+  "max_heart_rate": -0.311517,
+  "smoker": 0.292929,
+  "diabetes": 0.233508
+ },
+ "metrics": {
+  "auc_validation": 0.78,
+  "n_train": 3000,
+  "n_validation": 1000,
+  "event_rate": 0.225
+ },
+ "limits": [
+  "Trained on synthetic data for teaching \u2014 not validated on real patients.",
+  "Training ranges: age 30\u201379, systolic BP 90\u2013200 mmHg, cholesterol 120\u2013400 mg/dL, max heart rate 70\u2013205 bpm; outside these the model extrapolates.",
+  "Gives a population risk estimate, not a diagnosis and not a treatment decision.",
+  "No external validation, no calibration study, no regulatory clearance (IVDR / FDA)."
+ ]
+}
