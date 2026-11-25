@@ -2,32 +2,32 @@
  "calibration": [
   {
    "bin": 1,
-   "predicted": 0.05,
-   "observed": 0.025,
+   "predicted": 0.059,
+   "observed": 0.06,
    "n": 200
   },
   {
    "bin": 2,
-   "predicted": 0.11,
-   "observed": 0.115,
+   "predicted": 0.122,
+   "observed": 0.13,
    "n": 200
   },
   {
    "bin": 3,
-   "predicted": 0.183,
-   "observed": 0.18,
+   "predicted": 0.193,
+   "observed": 0.19,
    "n": 200
   },
   {
    "bin": 4,
-   "predicted": 0.282,
-   "observed": 0.34,
+   "predicted": 0.285,
+   "observed": 0.325,
    "n": 200
   },
   {
    "bin": 5,
-   "predicted": 0.479,
-   "observed": 0.515,
+   "predicted": 0.472,
+   "observed": 0.51,
    "n": 200
   }
  ],
@@ -36,7 +36,7 @@
   "male": 0.55,
   "systolic_bp": 0.018,
   "cholesterol": 0.006,
-  "max_heart_rate": -0.02,
+  "max_heart_rate": -0.006,
   "smoker": 0.7,
   "diabetes": 0.8
  },
@@ -69,26 +69,26 @@
   "smoker": 0.424693,
   "diabetes": 0.361647
  },
- "intercept": -1.527717,
+ "intercept": -1.449544,
  "coef": {
-  "age": 0.632451,
-  "male": 0.208574,
-  "systolic_bp": 0.307288,
-  "cholesterol": 0.257862,
-  "max_heart_rate": -0.311517,
-  "smoker": 0.292929,
-  "diabetes": 0.233508
+  "age": 0.65825,
+  "male": 0.223586,
+  "systolic_bp": 0.285049,
+  "cholesterol": 0.244207,
+  "max_heart_rate": -0.126766,
+  "smoker": 0.254979,
+  "diabetes": 0.260394
  },
  "metrics": {
-  "auc_validation": 0.78,
+  "auc_validation": 0.748,
   "n_train": 3000,
   "n_validation": 1000,
-  "event_rate": 0.225
+  "event_rate": 0.232
  },
  "limits": [
   "Trained on synthetic data for teaching \u2014 not validated on real patients.",
   "Training ranges: age 30\u201379, systolic BP 90\u2013200 mmHg, cholesterol 120\u2013400 mg/dL, max heart rate 70\u2013205 bpm; outside these the model extrapolates.",
   "Gives a population risk estimate, not a diagnosis and not a treatment decision.",
-  "No external validation, no calibration study, no regulatory clearance (IVDR / FDA)."
+  "No external validation, no external calibration study, no regulatory clearance (MDR / IVDR / FDA)."
  ]
 }

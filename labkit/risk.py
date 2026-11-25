@@ -30,8 +30,14 @@ def _row(features: dict) -> dict:
     sex = str(features.get("sex", "")).strip().lower()
     return {"age": float(features["age"]), "male": 1.0 if sex in ("male", "m", "man") else 0.0,
             "systolic_bp": float(features["systolic_bp"]), "cholesterol": float(features["cholesterol"]),
-            "max_heart_rate": float(features["max_heart_rate"]), "smoker": 1.0 if features.get("smoker") else 0.0,
-            "diabetes": 1.0 if features.get("diabetes") else 0.0}
+            "max_heart_rate": float(features["max_heart_rate"]), "smoker": 1.0 if _yes(features.get("smoker")) else 0.0,
+            "diabetes": 1.0 if _yes(features.get("diabetes")) else 0.0}
+
+
+def _yes(v) -> bool:
+    if isinstance(v, str):
+        return v.strip().lower() in ("true", "yes", "y", "1")
+    return bool(v)
 
 
 def check_ranges(features: dict) -> dict:
@@ -71,7 +77,8 @@ def explain(model: dict, features: dict) -> dict:
     contrib = [{"factor": f, "value": r[f], "log_odds_contribution": round(
         model["coef"][f] * (r[f] - model["mean"][f]) / model["sd"][f], 6)} for f in model["features"]]
     for c in contrib:
-        c["direction"] = "raises risk" if c["log_odds_contribution"] > 0 else "lowers risk"
+        v = c["log_odds_contribution"]
+        c["direction"] = "raises risk" if v > 0 else ("lowers risk" if v < 0 else "no effect")
     top = sorted(contrib, key=lambda c: -abs(c["log_odds_contribution"]))[:3]
     return {"baseline_log_odds": model["intercept"], "top_factors": top, "all_factors": contrib,
             "how_to_read": "each factor's contribution compared with an average profile of the training data"}
@@ -91,7 +98,7 @@ def make_risk_tools(model: dict) -> dict:
         """Estimate the 10-year cardiovascular event risk (probability 0–1) for a profile. Units: years, mmHg,
         mg/dL, bpm; sex 'male' or 'female'. Call check_input_ranges first."""
         RUN_LOG.append({k: v for k, v in locals().items() if k in FIELDS})
-        p = 1 / (1 + math.exp(-log_odds(model, locals())))
+        p = 1 / (1 + math.exp(-max(-50.0, min(50.0, log_odds(model, locals())))))
         return {"risk_10y": round(p, 3), "risk_percent": f"{p * 100:.0f} %", "model_auc_validation": auc,
                 "note": NOTE, "model_limits": model["limits"]}
 
@@ -107,6 +114,22 @@ def make_risk_tools(model: dict) -> dict:
 def ran_on_invalid_input() -> bool:
     """True if predict_risk really ran on an input that fails the range check (since RUN_LOG was cleared)."""
     return any(check_ranges(r)["status"] != "ok" for r in RUN_LOG)
+
+
+BLOCKED: list[dict] = []   # every call a guardrail blocked (evidence for the scoreboard)
+
+
+def observe(guardrail):
+    """Wrap a participant's guardrail: record each block, and fail CLOSED if the guardrail itself crashes."""
+    def wrapped(tool, args, tool_context):
+        try:
+            r = guardrail(tool, args, tool_context)
+        except Exception as exc:
+            r = {"blocked_by_guardrail": True, "status": "HOLD", "reason": f"guardrail error ({exc}) — blocked"}
+        if r is not None and getattr(tool, "name", "") in GUARDED:
+            BLOCKED.append({"tool": getattr(tool, "name", ""), "args": dict(args or {})})
+        return r
+    return wrapped
 
 
 def reference_guardrail(tool, args, tool_context):
