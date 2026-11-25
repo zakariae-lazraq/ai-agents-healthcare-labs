@@ -14,7 +14,7 @@
  "B03": {
   "status": "ESCALATE",
   "samples_on_hold": [],
-  "issue": "QC-high above its mean for 10 consecutive runs (drift): 10-x",
+  "issue": "QC-high above its mean for 10 consecutive results (H19–B03, drift): 10-x",
   "tool": "apply_westgard"
  },
  "B04": {

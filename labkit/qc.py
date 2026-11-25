@@ -131,17 +131,20 @@ def westgard(data: QCData, batch_id: str) -> dict:
             v.append({"rule": "2-2s", "level": lvl, "detail": "both replicates beyond 2 SD on the same side"})
         if len(zs) == 2 and max(zs) > 2 and min(zs) < -2:
             v.append({"rule": "R-4s", "level": lvl, "detail": f"replicates at {max(zs):+.1f} SD and {min(zs):+.1f} SD"})
-        means = z[(z.level == lvl) & z.run.isin(upto)].groupby("run", sort=False).z.mean().reindex(upto).tolist()
-        if len(means) >= 4 and (all(m > 1 for m in means[-4:]) or all(m < -1 for m in means[-4:])):
-            v.append({"rule": "4-1s", "level": lvl, "detail": "4 consecutive runs beyond 1 SD on the same side"})
-        if len(means) >= 10 and (all(m > 0 for m in means[-10:]) or all(m < 0 for m in means[-10:])):
-            v.append({"rule": "10-x", "level": lvl, "detail": "10 consecutive runs on the same side of the mean (drift)"})
+        series = z[(z.level == lvl) & z.run.isin(upto)].z.tolist()      # individual results, in run order
+        if len(series) >= 4 and (all(x > 1 for x in series[-4:]) or all(x < -1 for x in series[-4:])):
+            v.append({"rule": "4-1s", "level": lvl, "detail": "4 consecutive results beyond 1 SD on the same side"})
+        if len(series) >= 10 and (all(x > 0 for x in series[-10:]) or all(x < 0 for x in series[-10:])):
+            v.append({"rule": "10-x", "level": lvl,
+                      "detail": "10 consecutive results on the same side of the mean (systematic drift)"})
     for side in (1, -1):   # 2-2s across levels in the same run
         lv = sorted({r.level for r in cur.itertuples() if side * r.z > 2})
         if len(lv) >= 2:
             v.append({"rule": "2-2s", "level": " + ".join(lv), "detail": "two QC levels beyond 2 SD on the same side"})
     qc_now = {lvl: [round(float(x), 2) for x in cur[cur.level == lvl].z] for lvl in LEVELS}
-    return {"batch_id": batch_id, "qc_z_scores": qc_now, "violations": v,
+    warnings = [f"1-2s on {r.level} ({r.z:+.1f} SD): warning, inspect the other rules"
+                for r in cur.itertuples() if abs(r.z) > 2]
+    return {"batch_id": batch_id, "qc_z_scores": qc_now, "violations": v, "warnings": warnings,
             "status": "reject" if v else "accept",
             "rule": "Westgard 1-3s, 2-2s, R-4s, 4-1s, 10-x against established QC targets (SOP-01 §6)"}
 
@@ -288,7 +291,7 @@ def _notrun_note(rows: list[dict]) -> str:
             "again</span>") if n else ""
 
 
-def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
+def scoreboard_html(rows: list[dict], key: dict, hide_issue: list[str] | None = None) -> tuple[str, int]:
     """Agent proposals versus the answer key. Returns (html, number of batches fully right)."""
     import html as _h
 
@@ -303,7 +306,7 @@ def scoreboard_html(rows: list[dict], key: dict) -> tuple[str, int]:
         checks = [t for t in r["tools"] if t.startswith(("check_", "apply_"))]
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['batch_id']}</b></td>"
                  f"<td style='{td}'>{_h.escape(k['status'])}<br><span style='color:#5F6B7A;font-size:12px'>"
-                 f"{_h.escape(k['issue'])}</span></td>"
+                 f"{_h.escape('see Task 4' if r['batch_id'] in (hide_issue or []) else k['issue'])}</span></td>"
                  f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td};font-size:12px'>agent: {_h.escape(', '.join(r['samples']) or 'none')}<br>"
