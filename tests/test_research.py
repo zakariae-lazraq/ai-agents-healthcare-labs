@@ -39,21 +39,21 @@ def test_trap_has_no_record_about_the_biomarker(client):
 def test_tools_record_what_was_retrieved(client):
     t = research.make_research_tools(client)
     r = t["search_pubmed"]("high-sensitivity troponin rule-out myocardial infarction", 3)
-    assert r["count"] == 3 and set(r["pmids"]) <= client.retrieved
+    assert r["count"] == 3 and not set(r["pmids"]) & client.retrieved   # found is not read
     a = t["fetch_abstracts"](r["pmids"])
-    assert a["articles"] and a["articles"][0]["abstract"]
+    assert a["articles"] and a["articles"][0]["abstract"] and set(r["pmids"]) <= client.retrieved
 
 
 def test_support_scoring(client):
     rec = client.cache["records"]["34061019"]
     claim = "High-sensitivity troponin assays allow early rule-out of acute myocardial infarction (PMID 34061019)."
-    assert research.support(claim, rec)[0] == "supported"
-    assert research.support("Pembrolizumab doubles survival in melanoma (PMID 34061019).", rec)[0] == "not supported"
+    assert research.support(claim, rec)[0] == "word overlap high"
+    assert research.support("Pembrolizumab doubles survival in melanoma (PMID 34061019).", rec)[0] == "word overlap low"
 
 
 def test_review_summary_verdicts(client):
     t = research.make_research_tools(client)
-    t["search_pubmed"]("high-sensitivity troponin rule-out myocardial infarction", 3)
+    t["fetch_abstracts"](t["search_pubmed"]("high-sensitivity troponin rule-out myocardial infarction", 3)["pmids"])
     ok = "High-sensitivity troponin assays allow early rule-out of acute myocardial infarction (PMID 34061019)."
     assert research.review_summary(client, ok)["verdict"] == "RELEASE"
     unretrieved = ok + " Pembrolizumab improves survival in PD-L1 positive lung cancer (PMID 28293123)."
@@ -68,3 +68,11 @@ def test_review_summary_verdicts(client):
 
 def test_evidence_level(client):
     assert research.evidence_level(client.cache["records"]["34061019"]) in ("Systematic Review", "Meta-Analysis")
+
+
+def test_pmid_parser_lists_and_abbreviations():
+    assert research.pmids_in("see PMIDs 1234567, 2345678 and 3456789") == ["1234567", "2345678", "3456789"]
+    assert research.pmids_in("(PMID: 1234567; PMID 7654321)") == ["1234567", "7654321"]
+    s = research.cited_sentences("## Summary\nLC-MS/MS vs. immunoassay differ, e.g. at low levels (Smith et al. 2020; "
+                                 "PMID 1234567). Troponin rules out infarction early in most patients (PMIDs 2345678, 3456789).")
+    assert len(s) == 2 and s[0][1] == ["1234567"] and s[1][1] == ["2345678", "3456789"]

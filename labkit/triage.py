@@ -17,6 +17,9 @@ CLASSES = ["adipose", "background", "debris", "lymphocytes", "mucus", "smooth mu
            "normal colon mucosa", "cancer-associated stroma", "colorectal adenocarcinoma epithelium"]
 
 
+TUMOUR = 8   # colorectal adenocarcinoma epithelium
+
+
 def make_net():
     from torch import nn
 
@@ -77,15 +80,16 @@ def sweep(data: TriageData, thresholds, route=reference_route) -> list[dict]:
     """For each threshold: share of images sent to humans, and accuracy of the automatically sorted ones."""
     out = []
     for t in thresholds:
-        auto_ok = auto_n = 0
+        auto_ok = auto_n = tumour_missed = 0
         for p, y in zip(data.probs, data.labels):
             c, p1, _, p2 = top2(p)
             if route(p1, p2, threshold=t) == "auto":
                 auto_n += 1
                 auto_ok += int(c == y)
+                tumour_missed += int(y == TUMOUR and c != TUMOUR)
         out.append({"threshold": round(float(t), 2), "to_humans_pct": round(100 * (1 - auto_n / len(data.labels)), 1),
                     "auto_accuracy_pct": round(100 * auto_ok / auto_n, 1) if auto_n else None,
-                    "auto_errors": auto_n - auto_ok})
+                    "auto_errors": auto_n - auto_ok, "tumour_missed": tumour_missed})
     return out
 
 
@@ -190,18 +194,28 @@ def second_opinion(data: TriageData, image_id: str, model: str, client=None) -> 
     prompt = ("This is a small (28×28 pixel, shown enlarged) H&E-stained colorectal tissue tile. Which ONE of these classes is it most "
               f"likely: {', '.join(CLASSES)}? Answer with the class, then one sentence on what you see and how sure "
               "you are. This is a teaching exercise, not a diagnosis.")
-    try:
-        if client is None:
-            from google import genai
-            client = genai.Client()
-        resp = client.models.generate_content(model=model, contents=[
-            types.Part.from_bytes(data=png, mime_type="image/png"), prompt],
-            config=types.GenerateContentConfig(temperature=0))
-        return {"text": resp.text or "", "message": ""}
-    except Exception as exc:
-        kind = _error_kind(exc)
-        msg = {"quota": QUOTA_MESSAGE, "busy": BUSY_MESSAGE}.get(kind, f"Gemini returned an error: {str(exc)[:160]}")
-        return {"text": "", "message": msg}
+    import time
+
+    from labkit.agents import MAX_QUOTA_WAIT, _retry_delay
+
+    for attempt in range(2):
+        try:
+            if client is None:
+                from google import genai
+                client = genai.Client()
+            resp = client.models.generate_content(model=model, contents=[
+                types.Part.from_bytes(data=png, mime_type="image/png"), prompt],
+                config=types.GenerateContentConfig(temperature=0))
+            return {"text": resp.text or "", "message": ""}
+        except Exception as exc:
+            kind = _error_kind(exc)
+            delay = _retry_delay(exc)
+            if kind == "quota" and attempt == 0 and delay is not None and delay <= MAX_QUOTA_WAIT:
+                print(f"Per-minute limit reached — waiting {delay:.0f} s, then trying again…")
+                time.sleep(delay + 1)
+                continue
+            msg = {"quota": QUOTA_MESSAGE, "busy": BUSY_MESSAGE}.get(kind, f"Gemini returned an error: {str(exc)[:160]}")
+            return {"text": "", "message": msg}
 
 
 def gallery_html(data: TriageData, per_class: int = 2) -> str:

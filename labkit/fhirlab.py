@@ -92,7 +92,11 @@ def critical_results(lab: FhirLab, pid: str) -> list[dict]:
         hi = float(c["critical_high"]) if c["critical_high"] else None
         v = float(s["value"])
         if not (ref and float(ref["plausible_low"]) <= v <= float(ref["plausible_high"])):
-            continue   # implausible value: a unit problem, not a critical value
+            if (lo is not None and v < lo) or (hi is not None and v > hi):
+                out.append({**s, "critical_range": f"< {lo} or > {hi}" if hi else f"< {lo}", "rule": "SOP-03 §2",
+                            "possible": True, "issue": "possible critical value — unit/coding inconsistent: "
+                            "confirm with the laboratory before calling it critical"})
+            continue
         if (lo is not None and v < lo) or (hi is not None and v > hi):
             out.append({**s, "critical_range": f"< {lo} or > {hi}" if hi else f"< {lo}", "rule": "SOP-03 §2"})
     return out
@@ -125,7 +129,7 @@ def delta_problems(lab: FhirLab, pid: str, limit_pct: float = 50) -> list[dict]:
 
 
 def reference_status(lab: FhirLab, pid: str) -> tuple[str, list[str]]:
-    if critical_results(lab, pid):
+    if [c for c in critical_results(lab, pid) if not c.get("possible")]:
         return "ESCALATE", ["critical value"]
     found = [("coding", coding_problems(lab, pid)), ("units", unit_problems(lab, pid)),
              ("duplicate", duplicates(lab, pid))]
@@ -154,6 +158,23 @@ def validate_report(lab: FhirLab, report: dict) -> list[str]:
         if ("Observation", rid) not in lab.by_id:
             problems.append(f"result {ref.get('reference')} does not exist")
     return problems
+
+
+def integrity_problems(lab: FhirLab) -> list[str]:
+    """Real integrity check: every number in a drafted conclusion must be a source value of that patient."""
+    out = []
+    for pid, d in lab.drafts.items():
+        for r in d["result"]:
+            if ("Observation", r["reference"].split("/")[-1]) not in lab.by_id:
+                out.append(f"{pid}: reference {r['reference']} does not exist")
+        src = {round(float(o["valueQuantity"]["value"]), 2) for o in lab.observations(pid)
+               if o.get("valueQuantity", {}).get("value") is not None}
+        for m in re.findall(r"(?<![\w.-])(\d+(?:\.\d+)?)(?![\w.])", d.get("conclusion", "")):
+            v = round(float(m), 2)
+            if v not in src and not any(abs(v - x * 18) < 1 or abs(v - x / 18) < .05 for x in src) and v not in (
+                    2, 3, 6.2, 2.5, 50):
+                out.append(f"{pid}: conclusion mentions {m}, which is not a source value")
+    return out
 
 
 def make_fhir_tools(lab: FhirLab) -> dict:
@@ -201,7 +222,8 @@ def make_fhir_tools(lab: FhirLab) -> dict:
         req = lab.requests(patient_id)[0]
         report = {"resourceType": "DiagnosticReport", "id": f"dr-{patient_id}", "status": VALID_DRAFT_STATUS,
                   "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v2-0074", "code": "LAB"}]}],
-                  "code": {"text": "Laboratory report"}, "subject": {"reference": f"Patient/{patient_id}"},
+                  "code": {"coding": [{"system": "http://loinc.org", "code": "11502-2",
+                           "display": "Laboratory report"}], "text": "Laboratory report"}, "subject": {"reference": f"Patient/{patient_id}"},
                   "basedOn": [{"reference": f"ServiceRequest/{req['id']}"}], "issued": "2026-11-23T11:00:00+01:00",
                   "result": [{"reference": f"Observation/{o['id']}"} for o in lab.observations(patient_id)],
                   "conclusion": conclusion}
@@ -209,7 +231,7 @@ def make_fhir_tools(lab: FhirLab) -> dict:
         return {"patient_id": patient_id, "report": report, "requires_human_review": True}
 
     def notify_human(patient_id: str, message: str, urgency: str) -> dict:
-        """Notify the responsible person (for a critical value: the clinician, by telephone, with read-back, per
+        """Call ONLY for a confirmed critical value. Notify the responsible person (for a critical value: the clinician, by telephone, with read-back, per
         SOP-03). urgency is 'urgent' or 'routine'. The notification is recorded."""
         err = _unknown(patient_id)
         if err:
@@ -228,7 +250,7 @@ def parse_status(text: str) -> str:
     return _ps(text, ("PASS", "HOLD", "ESCALATE"))
 
 
-def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 2,
+def run_patients(agent, patient_ids: list[str], show_progress: bool = True, concurrency: int = 1,
                  previous: list[dict] | None = None) -> list[dict]:
     from labkit.batch import run_many
 
@@ -249,8 +271,9 @@ def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> t
     import html as _h
 
     td = "padding:4px 10px;text-align:left;vertical-align:top"
-    notified = {n["patient_id"] for n in notifications}
-    should = {p for p, k in key.items() if k["notify"]}
+    notified = {n["patient_id"] for n in notifications if str(n.get("urgency", "")).lower() == "urgent"}
+    ids = {r["patient_id"] for r in rows if r["status"]}
+    should = {p for p, k in key.items() if k["notify"] and p in ids}
     body, right = "", 0
     for r in rows:
         k = key[r["patient_id"]]

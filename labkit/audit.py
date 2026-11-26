@@ -38,21 +38,45 @@ def _summary(resp) -> str:
     return "; ".join(parts) or str(resp)[:120]
 
 
+_KEYS = ("batch_id", "patient_id", "case_id", "sample_id", "image_id", "profile_id")
+
+
 class AuditLog:
     def __init__(self):
         self.entries: list[dict] = []
+        self._n = 0
+
+    def clear(self) -> None:
+        self.entries.clear()
 
     def callback(self, tool, args, tool_context, tool_response):
         """ADK after_tool_callback: record, return None (the tool result is passed on unchanged)."""
+        args = dict(args or {})
+        try:
+            run = getattr(tool_context, "invocation_id", None)
+        except Exception:
+            run = None
+        self._n += 1
         self.entries.append({
             "time": datetime.datetime.now().isoformat(timespec="seconds"),
             "agent": getattr(tool_context, "agent_name", "agent"),
             "tool": getattr(tool, "name", str(tool)),
-            "batch_id": (args or {}).get("batch_id", ""),
-            "args": dict(args or {}),
+            "batch_id": next((str(args[k]) for k in _KEYS if args.get(k)), ""),
+            "run": run,   # ADK invocation id; None outside a real run (then never collapsed)
+            "args": args,
             "summary": _summary(tool_response),
         })
         return None
+
+    def latest(self) -> list[dict]:
+        """For each item (batch, patient, case …) keep only the entries of its most recent run: a re-run after a
+        quota error does not show the failed attempt twice. Entries without an item id are all kept."""
+        last = {}
+        for e in self.entries:
+            if e["batch_id"] and e.get("run"):
+                last[e["batch_id"]] = e["run"]
+        return [e for e in self.entries if not e["batch_id"] or not e.get("run") or
+                e["tool"].startswith("DECISION") or last.get(e["batch_id"]) == e["run"]]
 
     def decision(self, batch_id: str, status: str, samples: list[str], report: str) -> None:
         """Record the agent's proposed status. The decision itself stays with a human."""
@@ -63,15 +87,15 @@ class AuditLog:
         })
 
     def for_batch(self, batch_id: str) -> list[dict]:
-        return [e for e in self.entries if e["batch_id"] == batch_id]
+        return [e for e in self.latest() if e["batch_id"] == batch_id]
 
     def html(self, batch_id: str | None = None) -> str:
-        rows = self.for_batch(batch_id) if batch_id else self.entries
+        rows = self.for_batch(batch_id) if batch_id else self.latest()
         td = "padding:3px 10px;text-align:left;vertical-align:top"
         body = "".join(
             f"<tr style='border-top:1px solid #C9D2DC'><td style='{td};color:#5F6B7A'>{_html.escape(e['time'][11:])}</td>"
             f"<td style='{td}'>{_html.escape(e['batch_id'])}</td><td style='{td}'><b>{_html.escape(e['tool'])}</b></td>"
             f"<td style='{td}'>{_html.escape(e['summary'])}</td></tr>" for e in rows)
         return ("<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px'>"
-                f"<tr><th style='{td}'>Time</th><th style='{td}'>Batch</th><th style='{td}'>Tool / event</th>"
+                f"<tr><th style='{td}'>Time</th><th style='{td}'>Item</th><th style='{td}'>Tool / event</th>"
                 f"<th style='{td}'>Result recorded</th></tr>{body}</table>")

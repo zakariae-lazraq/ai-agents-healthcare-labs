@@ -10,6 +10,7 @@ from __future__ import annotations
 import html as _html
 import json
 import re
+import threading
 import time
 import urllib.parse
 import urllib.request
@@ -22,23 +23,27 @@ STOP = set("the and for with from that this were was are is of in on to a an by 
 
 
 class PubMedClient:
-    def __init__(self, cache_file=None, live: bool = True, tool_name: str = "ai-agents-course"):
+    def __init__(self, cache_file=None, live: bool = True, tool_name: str = "ai-agents-course", email: str = ""):
         self.cache_file = Path(cache_file) if cache_file else None
         self.cache = {"searches": {}, "records": {}}
         if self.cache_file and self.cache_file.exists():
             self.cache = json.loads(self.cache_file.read_text(encoding="utf-8"))
         self.live = live
         self.tool_name = tool_name
-        self.retrieved: set[str] = set()     # every PMID the agent has seen in this session
+        self.email = email                   # NCBI asks automated tools for a contact address (optional here)
+        self.retrieved: set[str] = set()     # every PMID whose abstract the agent fetched (read) in this session
         self._last = 0.0
+        self._lock = threading.Lock()        # parallel tool calls: keep the <= 3 requests/second rule
 
     # ------------------------------------------------------------ network (polite: ≤ 3 requests per second)
     def _get(self, endpoint: str, params: dict) -> bytes:
-        wait = 0.34 - (time.time() - self._last)
-        if wait > 0:
-            time.sleep(wait)
-        self._last = time.time()
-        url = BASE + endpoint + "?" + urllib.parse.urlencode({**params, "tool": self.tool_name})
+        with self._lock:
+            wait = 0.34 - (time.time() - self._last)
+            if wait > 0:
+                time.sleep(wait)
+            self._last = time.time()
+        extra = {"tool": self.tool_name, **({"email": self.email} if self.email else {})}
+        url = BASE + endpoint + "?" + urllib.parse.urlencode({**params, **extra})
         return urllib.request.urlopen(url, timeout=15).read()
 
     def search(self, query: str, max_results: int = 5) -> tuple[list[str], str]:
@@ -95,7 +100,8 @@ def _terms(text: str) -> set[str]:
 
 
 def support(claim: str, record: dict) -> tuple[str, float]:
-    """How much of the claim's vocabulary (and every number in it) appears in the title + abstract."""
+    """How much of the claim's vocabulary (and every number in it) appears in the title + abstract.
+    A word-overlap score, not a judgement of support: a human still reads the abstract."""
     text = (record.get("title", "") + " " + record.get("abstract", "")).lower()
     clean = re.sub(r"\(?PMID[:\s]*\d+\)?", "", claim, flags=re.I)
     words = _terms(clean)
@@ -105,7 +111,8 @@ def support(claim: str, record: dict) -> tuple[str, float]:
     score = sum(w in text for w in words) / len(words)
     if nums and not all(n in text for n in nums):
         score = min(score, 0.4)
-    return ("supported" if score >= 0.6 else "weak" if score >= 0.35 else "not supported"), round(score, 2)
+    return ("word overlap high" if score >= 0.6 else "word overlap medium" if score >= 0.35
+            else "word overlap low"), round(score, 2)
 
 
 EVIDENCE_ORDER = ["Meta-Analysis", "Systematic Review", "Randomized Controlled Trial", "Practice Guideline",
@@ -126,7 +133,6 @@ def make_research_tools(client: PubMedClient) -> dict:
         """Search PubMed. Returns the PMIDs of the most relevant articles (max_results ≤ 8). Use precise terms, e.g.
         'high-sensitivity troponin rule-out myocardial infarction'."""
         ids, source = client.search(query, min(int(max_results or 5), 8))
-        client.retrieved.update(ids)
         return {"query": query, "pmids": ids, "count": len(ids), "source": source,
                 "note": "no article found" if not ids else ""}
 
@@ -136,10 +142,11 @@ def make_research_tools(client: PubMedClient) -> dict:
         client.retrieved.update(recs)
         return {"source": source, "articles": [
             {"pmid": p, "title": r["title"], "year": r["year"], "journal": r["journal"],
-             "evidence_type": evidence_level(r), "abstract": r["abstract"][:1500]} for p, r in recs.items()]}
+             "publication_type": evidence_level(r), "abstract": r["abstract"][:1500]} for p, r in recs.items()]}
 
     def verify_claim(claim: str, pmid: str) -> dict:
-        """Check whether one sentence is supported by the abstract of the PMID it cites (vocabulary and numbers)."""
+        """Word-overlap check of one sentence against the abstract of the PMID it cites (vocabulary and numbers).
+        It is the same scorer the guardian uses, so passing it is not independent evidence."""
         recs, _ = client.fetch([str(pmid)])
         if str(pmid) not in recs:
             return {"pmid": pmid, "verdict": "PMID not found", "score": 0.0}
@@ -150,14 +157,35 @@ def make_research_tools(client: PubMedClient) -> dict:
 
 
 # ---------------------------------------------------------------- review of a summary (the Lab 6 guardian idea)
+_ABBR = ("vs.", "e.g.", "i.e.", "et al.", "approx.", "Fig.", "ref.", "cf.")
+_PMID_LIST = re.compile(r"PMIDs?\s*:?\s*((?:\d{5,9}(?:\s*(?:,|;|and|&)\s*)?)+)", re.I)
+
+
+def pmids_in(text: str) -> list[str]:
+    """'PMID 1', 'PMID: 1', 'PMIDs 1, 2 and 3', 'PMID 1; PMID 2' -> ['1', '2', '3']."""
+    out = []
+    for m in _PMID_LIST.finditer(text or ""):
+        for p in re.findall(r"\d{5,9}", m.group(1)):
+            if p not in out:
+                out.append(p)
+    return out
+
+
 def cited_sentences(summary: str) -> list[tuple[str, list[str]]]:
-    parts = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9*\-•])", (summary or "").replace("\n", " "))
+    lines = [l for l in (summary or "").splitlines()
+             if not re.match(r"\s*(#+\s|\*\*[^*]+\*\*\s*:?\s*$|[A-Z][\w ]{0,40}:\s*$)", l)]   # headings
+    text = " ".join(lines)
+    for i, a in enumerate(_ABBR):
+        text = text.replace(a, f"\x00{i}\x00")
+    parts = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9*\-•(])", text)
     out = []
     for s in parts:
+        for i, a in enumerate(_ABBR):
+            s = s.replace(f"\x00{i}\x00", a)
         s = s.strip(" -•*")
         if len(s) < 25 or re.match(r"(status|evidence strength|verdict)\s*:", s, re.I):
             continue
-        out.append((s, re.findall(r"PMID[:\s]*(\d{5,9})", s, re.I)))
+        out.append((s, pmids_in(s)))
     return out
 
 
@@ -178,12 +206,13 @@ def review_summary(client: PubMedClient, summary: str) -> dict:
                 rows.append({"sentence": sent, "pmid": p, "check": "PMID does not exist", "ok": False})
                 issues.append(f"PMID {p} does not exist")
             elif p not in client.retrieved:
-                rows.append({"sentence": sent, "pmid": p, "check": "never retrieved by the agent", "ok": False})
+                rows.append({"sentence": sent, "pmid": p, "check": "never fetched (read) by the agent", "ok": False})
                 issues.append(f"PMID {p} was cited but never retrieved (possible fabrication)")
             else:
                 v, s = support(sent, recs[p])
-                rows.append({"sentence": sent, "pmid": p, "check": f"{v} ({s})", "ok": v == "supported"})
-                if v == "not supported":
+                rows.append({"sentence": sent, "pmid": p, "check": f"{v} ({s})", "ok": v == "word overlap high",
+                             "amber": v == "word overlap medium"})
+                if v == "word overlap low":
                     issues.append(f"PMID {p} does not support the sentence")
     severe = [i for i in issues if "does not exist" in i or "never retrieved" in i]
     verdict = "ESCALATE" if severe else ("HOLD" if issues else "RELEASE")
@@ -193,10 +222,11 @@ def review_summary(client: PubMedClient, summary: str) -> dict:
 def review_html(review: dict) -> str:
     td = "padding:4px 10px;text-align:left;vertical-align:top;font-size:12px"
     body = "".join(
-        f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'>{_html.escape(r['sentence'][:220])}</td>"
+        f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'>{_html.escape(r['sentence'])}</td>"
         f"<td style='{td}'>" + (f"<a href='https://pubmed.ncbi.nlm.nih.gov/{r['pmid']}/' target='_blank'>{r['pmid']}</a>"
                                 if r["pmid"] else "") +
-        f"</td><td style='{td};color:{'#1E7A3C' if r['ok'] else '#B3261E'}'>{_html.escape(r['check'])}</td></tr>"
+        f"</td><td style='{td};color:{'#1E7A3C' if r['ok'] else ('#B7791F' if r.get('amber') else '#B3261E')}'>"
+        f"{_html.escape(r['check'])}</td></tr>"
         for r in review["rows"])
     color = {"RELEASE": "#1E7A3C", "HOLD": "#B7791F", "ESCALATE": "#B3261E"}[review["verdict"]]
     return (f"<div style='font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:14px;margin:6px 0'><b>Guardian verdict: "

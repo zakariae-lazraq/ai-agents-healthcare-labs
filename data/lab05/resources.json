@@ -29,7 +29,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -226,7 +228,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -382,7 +386,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -538,7 +544,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -620,7 +628,7 @@
    "value": 2.0,
    "unit": "mIU/L",
    "system": "http://unitsofmeasure.org",
-   "code": "mIU/L"
+   "code": "m[IU]/L"
   }
  },
  {
@@ -694,7 +702,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -932,7 +942,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -1129,7 +1141,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -1326,7 +1340,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -1482,7 +1498,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -1564,7 +1582,7 @@
    "value": 1.9,
    "unit": "mIU/L",
    "system": "http://unitsofmeasure.org",
-   "code": "mIU/L"
+   "code": "m[IU]/L"
   }
  },
  {
@@ -1638,7 +1656,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -1835,7 +1855,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -2073,7 +2095,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -2270,7 +2294,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -2426,7 +2452,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -2508,7 +2536,7 @@
    "value": 2.1,
    "unit": "mIU/L",
    "system": "http://unitsofmeasure.org",
-   "code": "mIU/L"
+   "code": "m[IU]/L"
   }
  },
  {
@@ -2623,7 +2651,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -2820,7 +2850,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -3014,7 +3046,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -3170,7 +3204,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -3367,7 +3403,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {
@@ -3449,7 +3487,7 @@
    "value": 2.0,
    "unit": "mIU/L",
    "system": "http://unitsofmeasure.org",
-   "code": "mIU/L"
+   "code": "m[IU]/L"
   }
  },
  {
@@ -3523,7 +3561,9 @@
   },
   "authoredOn": "2026-11-23T07:50:00+01:00",
   "code": {
-   "text": "Laboratory panel"
+   "concept": {
+    "text": "Laboratory panel"
+   }
   }
  },
  {

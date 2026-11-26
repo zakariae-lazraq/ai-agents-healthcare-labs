@@ -14,6 +14,7 @@ GOOD = {
     "compliance_controls": "ISO 15189 validation, audit trail, CAP checklist, GDPR access control.",
     "success_metrics": "Detection 100 % of planted QC failures on 50 batches; false alarms below 5 %.",
     "pilot_plan": "Shadow mode for 4 weeks, then supervised use on one analyser.",
+    "test_cases": "B01 clean → PASS; B02 calibrator off → ESCALATE; B04 low IS on 5 samples → HOLD.",
 }
 
 
@@ -24,7 +25,7 @@ def test_good_canvas_passes_every_criterion():
 def test_missing_human_checkpoint_and_metric_fail():
     bad = dict(GOOD, human_checkpoints="", success_metrics="faster reviews")
     failed = [what for ok, what, _ in capstone.check_canvas(bad) if not ok]
-    assert any("human checkpoint" in f for f in failed) and any("measurable" in f for f in failed)
+    assert any("human checkpoint" in f.lower() for f in failed) and any("measurable" in f for f in failed)
 
 
 def test_exports():
@@ -52,3 +53,14 @@ def test_scores_sorted_best_first():
     html = capstone.scores_html({"A": {"value": 3, "feasibility": 3, "safety": 3, "oversight": 3},
                                  "B": {"value": 5, "feasibility": 4, "safety": 5, "oversight": 5}})
     assert html.index(">B<") < html.index(">A<") and "19</b> / 20" in html
+
+
+def test_negations_roles_and_whole_words():
+    def failed(**kw):
+        return [what for ok, what, _ in capstone.check_canvas(dict(GOOD, **kw)) if not ok]
+    assert failed(guardian_checks="None at this stage")            # negation does not count as a box
+    assert failed(human_checkpoints="Everything is automatic here.")  # no role, no verb
+    assert failed(compliance_controls="We will capture the results.")  # 'cap' only inside 'capture'
+    assert failed(success_metrics="Version 2 will be faster.")        # number without %, time or count
+    assert failed(test_cases="Some inputs, to be decided later.")
+    assert not failed()

@@ -1,0 +1,126 @@
+{
+ "recorded": "2026-11-26",
+ "model": "gemini-3.5-flash-lite (reference solution)",
+ "results": {
+  "pat-03": {
+   "status": "HOLD",
+   "text": "Review for patient pat-03:\n- check_coding found 1 problem: test name 'Potassium' has LOINC 2951-2 ('Sodium') in observation obs-03-1.\n- check_units found no problems.\n- check_duplicates found no duplicates.\n- check_critical found no critical values.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-05": {
+   "status": "HOLD",
+   "text": "The laboratory results for patient pat-05 have been reviewed. \n\n**Unit Check:**\n- Observation `obs-05-9` (Glucose): value 5.8 mg/dL is implausible for the unit mg/dL and appears to be in mmol/L (~104 mg/dL). This unit inconsistency was identified by `check_units`.\n\nBecause of this unit problem, the report cannot be finalized as PASS or escalated yet.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-07": {
+   "status": "HOLD",
+   "text": "The laboratory results for patient pat-07 were reviewed. \n- check_coding found 1 problem: observation obs-07-9 has test name 'Creatinine' but LOINC code 2345-7 corresponds to 'Glucose'.\n- check_units found no problems.\n- check_duplicates found no problems.\n- check_critical found no critical values.\n\nA preliminary DiagnosticReport draft has been created for human review.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-09": {
+   "status": "ESCALATE",
+   "text": "STATUS: ESCALATE",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "notify_human",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-11": {
+   "status": "HOLD",
+   "text": "The laboratory results for patient pat-11 were reviewed. \n\n**Check Results:**\n- `check_coding`: Problem found: observation `obs-11-9` has test name 'Hemoglobin' but LOINC code `777-3`, which corresponds to 'Platelets'.\n- `check_units`: No issues found.\n- `check_duplicates`: No duplicates found.\n- `check_critical`: No critical values found.\n\nA preliminary Diagnostic Report has been drafted for human review.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-14": {
+   "status": "HOLD",
+   "text": "Review of patient pat-14 laboratory results:\n- check_units found an issue with observation obs-14-9 (Glucose): value 6.1 mg/dL is implausible for mg/dL and appears to be mmol/L (≈ 110 mg/dL).\n- Unit/coding checks identified problems (check_units).\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-16": {
+   "status": "HOLD",
+   "text": "Review of laboratory results for patient pat-16:\n- check_units: unit missing for Observation obs-16-1 (Hemoglobin, value 139), which prevents interpretation.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "lookup_loinc",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-18": {
+   "status": "HOLD",
+   "text": "The laboratory results for patient pat-18 were reviewed. \nChecks performed:\n- `check_coding`: No coding problems found.\n- `check_units`: No unit problems found.\n- `check_critical`: No critical values found.\n- `check_duplicates`: Found duplicate results for the same test and request (Potassium, LOINC code 2823-3, observation IDs obs-18-3 and obs-18-9 under ServiceRequest/sr-18).\n\nPer protocol, any duplicate problem requires a HOLD status. A preliminary diagnostic report has been drafted for human review.\n\nSTATUS: HOLD",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-01": {
+   "status": "PASS",
+   "text": "All laboratory observations for patient pat-01 (Hemoglobin, Platelets, Leukocytes, and Potassium) passed coding, unit, duplicate, and critical value checks without any issues. A preliminary diagnostic report has been drafted for human review.\n\nSTATUS: PASS",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  },
+  "pat-02": {
+   "status": "PASS",
+   "text": "STATUS: PASS",
+   "tools": [
+    "check_coding",
+    "check_units",
+    "check_duplicates",
+    "check_critical",
+    "get_observations",
+    "draft_diagnostic_report"
+   ]
+  }
+ }
+}

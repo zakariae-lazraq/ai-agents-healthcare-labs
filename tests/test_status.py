@@ -39,3 +39,31 @@ def test_status_in_any_model_text_of_the_run():
 
     events = [ev("Report.\nSTATUS: HOLD\nSAMPLES ON HOLD: B04-S11"), ev("The deviation note has been drafted.")]
     assert parse_status(all_model_text(events), QC) == "HOLD"
+
+
+def test_parse_case_ids_and_hunt_escalate():
+    from labkit import guardian
+    ids = [f"C{i:02d}" for i in range(1, 31)]
+    ok, bad = guardian.parse_case_ids("C2 c05;7 / C40, foo", ids)
+    assert ok == ["C02", "C05", "C07"] and bad == ["C40", "foo"]
+    case = [{"id": "C01", "label": "PHI", "expected": "ESCALATE"}, {"id": "C02", "label": "SAFE", "expected": "RELEASE"}]
+    assert guardian.score_hunt(case, ["C01"])["missed_high_severity"] is None
+    assert guardian.score_hunt(case, ["C01"], [])["missed_high_severity"] == ["C01"]
+    assert guardian.score_hunt(case, [], ["C01"])["missed_high_severity"] == []
+
+
+def test_heldout_variants_beat_the_code_guardian():
+    from labkit import DATA_DIR, guardian
+    g = guardian.load(DATA_DIR / "lab06")
+    held = guardian.load_heldout(DATA_DIR / "lab06")
+    assert len(held) == 5
+    released = [c["id"] for c in held if c["expected"] != "RELEASE" and guardian.reference_guardian(g, c)[0] == "RELEASE"]
+    assert len(released) >= 3, released
+
+
+def test_pubmed_unreachable_is_not_not_found(monkeypatch):
+    from labkit import guardian
+    monkeypatch.setattr(guardian, "_fetch_pubmed", lambda p: "unreachable")
+    class D: pubmed = {}
+    out = guardian.reference_problems(D, {"answer": "See X (PMID 12345678)."}, live=True)
+    assert "could not verify" in out[0]["issue"]

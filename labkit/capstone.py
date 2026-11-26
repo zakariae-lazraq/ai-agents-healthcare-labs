@@ -9,29 +9,51 @@ CANVAS_FIELDS = [
     ("problem_and_users", "Problem and users"), ("goal", "Goal"), ("inputs_and_data", "Inputs and data"),
     ("tools", "Tools"), ("agent_steps", "Agent steps"), ("human_checkpoints", "Human checkpoints"),
     ("guardian_checks", "Guardian checks"), ("risks", "Risks"), ("compliance_controls", "Compliance controls"),
-    ("success_metrics", "Success metrics"), ("pilot_plan", "Pilot plan")]
-COMPLIANCE_WORDS = ("hipaa", "gdpr", "clia", "cap", "iso 15189", "ivdr", "fda", "21 cfr", "audit", "validation",
-                    "gxp", "glp", "data protection", "access control")
+    ("success_metrics", "Success metrics"), ("pilot_plan", "Pilot plan"),
+    ("test_cases", "Test cases (input → expected status)")]
+COMPLIANCE_WORDS = ("hipaa", "gdpr", "clia", "cap", "iso 15189", "ivdr", "mdr", "fda", "21 cfr", "audit trail", "audit",
+                    "validation", "validated", "gxp", "glp", "data protection", "access control")
+NEGATIONS = {"none", "no", "n/a", "na", "tbd", "todo", "nothing", "not applicable", "not needed", "-", "?", "unknown"}
+ROLES = r"(supervisor|lead|technologist|technician|scientist|biologist|clinician|pathologist|physician|reviewer|" \
+        r"manager|staff|person|human|operator|pharmacist|director|qa|quality)"
+VERBS = r"(approv\w*|review\w*|confirm\w*|decid\w*|sign\w*|validat\w*|check\w*|releas\w*|accept\w*|authori[sz]\w*|verif\w*)"
+STATUS_WORDS = r"\b(PASS|HOLD|ESCALATE|ACCEPT|REJECT|RELEASE|REFUSE|FLAG|OK|FAIL)\b"
+
+
+def _real(text) -> bool:
+    """Filled with content, not a placeholder or a negation ('none', 'n/a', 'TBD' …)."""
+    t = str(text or "").strip().lower().rstrip(".")
+    return len(t) >= 10 and t not in NEGATIONS and not re.match(
+        r"(none|no|n/a|tbd|nothing|not applicable)\b(\s+(at|for|yet|so far)\b.*)?[ .,;:]*$", t)
 GRID = [("value", "Value for the laboratory"), ("feasibility", "Feasibility"),
         ("safety", "Safety and compliance"), ("oversight", "Clarity of human oversight")]
 
 
 def check_canvas(canvas: dict) -> list[tuple[bool, str, str]]:
     """The outline's success criteria, as CHECK items (ok, what, how to fix)."""
-    filled = [k for k, _ in CANVAS_FIELDS if len(str(canvas.get(k, "")).strip()) >= 10]
+    n = len(CANVAS_FIELDS)
+    filled = [k for k, _ in CANVAS_FIELDS if _real(canvas.get(k, ""))]
+    human = str(canvas.get("human_checkpoints", ""))
     comp = str(canvas.get("compliance_controls", "")).lower()
     metrics = str(canvas.get("success_metrics", ""))
+    tests = str(canvas.get("test_cases", ""))
     return [
-        (len(filled) == len(CANVAS_FIELDS), f"All 11 boxes filled ({len(filled)}/11)",
-         "Write at least one short sentence in every box."),
-        (len(str(canvas.get("human_checkpoints", "")).strip()) >= 10, "At least one human checkpoint",
-         "Say where a person approves, reviews or decides (e.g. 'supervisor approves every HOLD')."),
-        (len(str(canvas.get("guardian_checks", "")).strip()) >= 10, "At least one guardian check",
+        (len(filled) == n, f"All {n} boxes filled with content ({len(filled)}/{n})",
+         "Write at least one real sentence in every box ('none', 'n/a' or 'TBD' do not count)."),
+        (_real(human) and bool(re.search(ROLES, human, re.I)) and bool(re.search(VERBS, human, re.I)),
+         "Human checkpoint: who (role) does what (approves, reviews, decides…)",
+         "Name a role and an action, e.g. 'the QC supervisor approves every HOLD before release'."),
+        (_real(canvas.get("guardian_checks", "")), "At least one guardian check",
          "Name a check on the agent's output (numbers recomputed, references verified, PHI detected…)."),
-        (any(w in comp for w in COMPLIANCE_WORDS), "Compliance controls named",
+        (_real(comp) and any(re.search(r"\b" + re.escape(w) + r"\b", comp) for w in COMPLIANCE_WORDS),
+         "Compliance controls named",
          "Name the frameworks or controls (e.g. ISO 15189, CAP, CLIA, GDPR/HIPAA, IVDR, audit trail, validation)."),
-        (bool(re.search(r"\d", metrics)), "Success metrics are measurable (contain a number)",
-         "Give a target, e.g. 'detection ≥ 95 % on 50 test cases, false alarms ≤ 5 %'."),
+        (bool(re.search(r"\d+(\.\d+)?\s*(%|percent|s\b|sec|second|min|minute|h\b|hour|day|week|month|cases?|"
+                        r"samples?|batches|specimens|errors?|alarms?)", metrics, re.I)),
+         "Success metrics are measurable (number with %, time or count)",
+         "Give a target, e.g. 'detection ≥ 95 % on 50 test cases, false alarms ≤ 5 %, decision under 10 s'."),
+        (len(re.findall(STATUS_WORDS, tests, re.I)) >= 3, "At least 3 test cases with an expected status",
+         "Write 3 inputs and the status you expect, e.g. 'S2 haemolysed potassium → REJECT'."),
     ]
 
 

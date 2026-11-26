@@ -1,0 +1,120 @@
+{
+ "recorded": "2026-11-26",
+ "model": "gemini-3.5-flash-lite (reference solution)",
+ "results": {
+  "B02": {
+   "status": "ESCALATE",
+   "text": "Batch B02 Review Report:\n\n- **check_calibration**: Failed. Calibrator CAL3 failed accuracy (17.3%, limit ±15%). $r^2$ was 0.9964 (limit $\\ge 0.995$).\n- **check_internal_standard**: Passed. No samples flagged.\n- **check_ion_ratio**: Passed. No samples flagged.\n- **apply_westgard**: Passed. No QC violations.\n\nA deviation note has been drafted for the laboratory supervisor.\n\nSTATUS: ESCALATE\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B03": {
+   "status": "ESCALATE",
+   "text": "Batch Review Report — Northbridge 25-OH Vitamin D LC-MS/MS Method\nBatch ID: B03\n\n1. Calibration Check (check_calibration):\n- r² = 1.000 (Limit ≥ 0.995) — PASS\n- All 6 calibrators passed accuracy requirements (±15%, ±20% at lowest level).\n\n2. Internal Standard Check (check_internal_standard):\n- No flagged samples. All internal standard areas are within 50%–150% of the mean IS area of the calibrators and QCs — PASS.\n\n3. Ion Ratio Check (check_ion_ratio):\n- No flagged samples. All qualifier/quantifier ion ratios are within ±20% of the calibrator mean ratio — PASS.\n\n4. Westgard QC Evaluation (apply_westgard):\n- QC-H: Violation of Westgard rule 10-x (10 consecutive results on the same side of the mean, indicating systematic drift) — REJECT (ESCALATE).\n\nA deviation note has been drafted for supervisor review and approval.\n\nSTATUS: ESCALATE\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B04": {
+   "status": "HOLD",
+   "samples": [
+    "B04-S11",
+    "B04-S12",
+    "B04-S13",
+    "B04-S14",
+    "B04-S15"
+   ],
+   "text": "Review of batch B04:\n- check_calibration: Passed (r² = 0.9999, all calibrators within accuracy limits).\n- check_internal_standard: Flagged patient samples B04-S11 (35.7%), B04-S12 (34.8%), B04-S13 (40.5%), B04-S14 (35.9%), and B04-S15 (47.6%) for internal standard areas below 50% of the mean IS area of calibrators and QCs.\n- check_ion_ratio: Passed (no flagged samples).\n- apply_westgard: Passed (no violations or warnings across QC levels).\n\nA deviation note has been drafted for the supervisor.\n\nSTATUS: HOLD\nSAMPLES ON HOLD: B04-S11, B04-S12, B04-S13, B04-S14, B04-S15",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B05": {
+   "status": "HOLD",
+   "samples": [
+    "B05-S07",
+    "B05-S29"
+   ],
+   "text": "Batch B05 QC Review Report:\n\n- **check_calibration**: Passed. All 6 calibrators met accuracy criteria (±15% limit, ±20% for CAL1) and $r^2 = 1.000$ (limit $\\ge 0.995$).\n- **check_internal_standard**: Passed. All sample IS areas are within 50%–150% of the mean of calibrators and QCs.\n- **check_ion_ratio**: Flagged patient samples **B05-S07** (ion ratio 0.558, deviation 31.6%) and **B05-S29** (ion ratio 0.286, deviation -32.4%) due to qualifier/quantifier ion ratios exceeding the ±20% limit relative to the calibrator mean (0.424).\n- **apply_westgard**: Passed. No Westgard violations across the QC levels.\n\nA draft deviation note has been prepared for supervisor review.\n\nSTATUS: HOLD\nSAMPLES ON HOLD: B05-S07, B05-S29",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B06": {
+   "status": "ESCALATE",
+   "text": "Batch B06 QC Review Summary:\n\n- Calibration (`check_calibration`): Passed (r² = 0.9999, all 6 calibrators within accuracy limits).\n- Internal Standard (`check_internal_standard`): Passed (no flagged samples).\n- Ion Ratio (`check_ion_ratio`): Passed (no flagged samples).\n- Westgard QC (`apply_westgard`): Failed (R-4s violation on QC-M with replicates at +2.5 SD and -2.1 SD).\n\nSTATUS: ESCALATE\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B07": {
+   "status": "HOLD",
+   "samples": [
+    "B07-S18",
+    "B07-S33"
+   ],
+   "text": "QC Review Report for Batch B07:\n\n- **Calibration (`check_calibration`)**: Passed ($r^2 = 0.9999$, all 6 calibrators passed within accuracy limits).\n- **Internal Standard (`check_internal_standard`)**: Flagged patient sample `B07-S18` with an internal standard area of 161.3% (outside the 50–150% acceptance range).\n- **Ion Ratio (`check_ion_ratio`)**: Flagged patient sample `B07-S33` with an ion ratio deviation of 38.2% (exceeding the ±20% acceptance limit).\n- **Westgard QC (`apply_westgard`)**: Accepted (no violations across QC levels QC-L, QC-M, and QC-H).\n\nA deviation note has been drafted for the laboratory supervisor to review and approve.\n\nSTATUS: HOLD\nSAMPLES ON HOLD: B07-S18, B07-S33",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B08": {
+   "status": "ESCALATE",
+   "text": "Batch B08 Review:\n\n- Calibration: Passed ($r^2 = 0.9997$, all 6 calibrators within accuracy limits).\n- Internal Standards: Passed (no flags; all IS areas within 50–150% of the batch mean).\n- Ion Ratios: Passed (no flags; all qualifier/quantifier ion ratios within ±20% of the calibrator mean).\n- Westgard QC Rules: Failed (1-3s violation on QC-L with a z-score of +3.4).\n\nA deviation note has been drafted for supervisor review.\n\nSTATUS: ESCALATE\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B09": {
+   "status": "ESCALATE",
+   "text": "Batch B09 QC Review Report:\n\n- **check_calibration**: PASS (r² = 1.000, all 6 calibrators met accuracy criteria).\n- **check_internal_standard**: PASS (all sample IS areas within 50–150% of the mean).\n- **check_ion_ratio**: PASS (all sample ion ratios within ±20% of the calibrator mean).\n- **apply_westgard**: REJECT (Westgard 2-2s violation: QC-L and QC-M are both beyond +2 SD on the same run).\n\nA deviation note has been drafted for the laboratory supervisor.\n\nSTATUS: ESCALATE\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  },
+  "B10": {
+   "status": "PASS",
+   "text": "Review of batch B10 results:\n- **Calibration (`check_calibration`)**: Passed. r² = 0.9999 (limit ≥ 0.995). All 6 calibrators met accuracy requirements (CAL1 at 0.4%, CAL2 at -0.6%, CAL3 at -0.8%, CAL4 at 1.6%, CAL5 at -0.8%, CAL6 at 0.2%).\n- **Internal Standard (`check_internal_standard`)**: Passed. No flagged samples; all IS areas are within 50% – 150% of the mean IS area of batch calibrators and QCs.\n- **Ion Ratio (`check_ion_ratio`)**: Passed. No flagged samples; all qualifier/quantifier ion ratios are within ±20% of the calibrator mean ratio (0.418).\n- **Westgard Rules (`apply_westgard`)**: Accepted. No violations or warnings observed across QC-L, QC-M, and QC-H.\n\nA deviation note (status: PASS) has been drafted for supervisor review.\n\nSTATUS: PASS\nSAMPLES ON HOLD: none",
+   "tools": [
+    "check_calibration",
+    "check_internal_standard",
+    "check_ion_ratio",
+    "apply_westgard",
+    "draft_deviation"
+   ]
+  }
+ }
+}
