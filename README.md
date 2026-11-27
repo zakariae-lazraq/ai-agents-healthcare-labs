@@ -1,42 +1,67 @@
 # AI Agents for Healthcare and Diagnostics — Hands-on Labs
 
-Hands-on labs for a 2-day live-online course on **building safe AI agents for laboratory diagnostics, mass
-spectrometry and laboratory research**, with **Google ADK** and **Gemini**. Each lab is one Google Colab notebook:
-open it, follow the guide inside every task, build a real agent.
+Nine hands-on labs for a 2-day course. In each lab you build a small **AI agent**: a program that uses Gemini
+(Google's AI) and can act — look something up, run a calculation, prepare a report — for a laboratory.
+Everything runs in **Google Colab**, in your browser. Nothing to install.
+
+**The one idea behind every lab:** AI can be wrong. So the **tools calculate**, the **agent proposes**, and a
+**human decides**.
 
 > All labs take place in the **Northbridge Clinical & Research Laboratory**, which is **fictional**. Every dataset is
 > **synthetic or public**. No real patient data. Training material only — not for clinical use.
 
-## Start here
-1. Open **Lab 0** (button below), then **File → Save a copy in Drive**.
-2. Follow the notebook: create your free Gemini API key, store it in Colab Secrets, run Setup, build your first agent.
-3. Post your **Lab 0 status card** in the course chat.
+## What you need
+- A Google account and the Chrome browser.
+- A free Gemini API key: [aistudio.google.com/apikey](https://aistudio.google.com/apikey) → **Create API key** → copy it.
+
+## Start here (10 minutes, once)
+1. Click **Open in Colab** for **Lab 0** in the table below.
+2. In Colab: **File → Save a copy in Drive**, so your work is kept.
+3. Add your key: click the **key icon** in the left bar → **Add new secret** → name it `GOOGLE_API_KEY` →
+   paste your key → switch **Notebook access** on. Never paste the key into a cell.
+4. Run the cells from top to bottom with the **▶** button. The **Setup** cell must end with every line **OK**.
+5. At the end of the lab, a **status card** appears. Post it in the course chat.
+
+For every next lab: open it from the table, save a copy, and switch **Notebook access** on for your key
+(the key is already saved).
 
 ## Labs
-| Lab | Topic | Time | Open |
+| Lab | What you build | Time | Open |
 |---|---|---|---|
-| 0 | Get ready: API key, first agent, Gemini tools | 15 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab00_Setup_Check.ipynb) |
-| 1 | Spot the hallucination: the SOP assistant | 55 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab01_SOP_Assistant.ipynb) |
-| 2 | QC agent for LC-MS/MS batches | 50 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab02_QC_Agent.ipynb) |
-| 3 | Risk prediction agent with a guardrail in code | 35 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab03_Risk_Agent.ipynb) |
-| 4 | Image triage with a human review queue | 60 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab04_Image_Triage.ipynb) |
-| 5 | Interoperability agent: FHIR results and critical values | 1 h 30 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab05_FHIR_Agent.ipynb) |
-| 6 | Hallucination hunt and the guardian agent | 1 h 50 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab06_Guardian_Agent.ipynb) |
-| 7 | Research agent with verified citations | 1 h 15 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab07_Research_Agent.ipynb) |
-| 8 | Capstone: design and pitch your laboratory agent | 2 h 15 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab08_Capstone.ipynb) |
+| 0 | Get ready: your key, your first agent, the Gemini tools | 15 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab00_Setup_Check.ipynb) |
+| 1 | An assistant for lab procedures (SOPs) — and why it must use the documents | 55 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab01_SOP_Assistant.ipynb) |
+| 2 | A quality-control agent for LC-MS/MS batches | 50 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab02_QC_Agent.ipynb) |
+| 3 | A risk agent with a safety rule written in code | 35 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab03_Risk_Agent.ipynb) |
+| 4 | Image triage: unsure cases go to a human | 60 min | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab04_Image_Triage.ipynb) |
+| 5 | Reading hospital results (HL7, FHIR): critical values go to a human | 1 h 30 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab05_FHIR_Agent.ipynb) |
+| 6 | Find the AI's mistakes, then build a guardian agent that checks answers | 1 h 50 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab06_Guardian_Agent.ipynb) |
+| 7 | A research agent: every claim cites a real PubMed article | 1 h 15 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab07_Research_Agent.ipynb) |
+| 8 | Capstone: design, build and pitch your own lab agent, in a team | 2 h 15 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zakariae-lazraq/ai-agents-healthcare-labs/blob/main/notebooks/Lab08_Capstone.ipynb) |
 
 ## How every lab works
-**Your task** (why it matters) · **Steps** (a short guide) · **Your cell** (replace every `___`, or fill the form) ·
-**CHECK** (tells you what is right and exactly what to fix) · **Hint**, then **Solution** (folded).
-Task labels: *In the notebook* · *In the Gemini app* (no code) · *Optional challenge*. Every lab ends with a status
-card to post in the course chat.
+Each task has the same five parts:
+1. **Your task** — what to do and why it matters.
+2. **Steps** — a short guide.
+3. **Your cell** — replace every `___` or fill in the form, then run it.
+4. **CHECK** — run it: it tells you what is right and exactly what to fix.
+5. **Hint**, then **Solution** — folded; open them only if you are stuck.
+
+Tasks marked *In the Gemini app* are done at [gemini.google.com](https://gemini.google.com), with no code.
+Tasks marked *Optional challenge* are for those who finish early.
+
+## If something goes wrong
+| You see | Do this |
+|---|---|
+| A Setup line says **FIX — API key** | Key icon: check the name is `GOOGLE_API_KEY` and **Notebook access** is on. Run Setup again. |
+| A message about **quota** or **busy** | The free limit was reached. Wait one minute and run the cell again. |
+| A message ending with **"… first"** | A cell above was not run. Run it, then this one. |
+| `NameError: … is not defined` | Colab restarted. Click the cell, then **Runtime → Run before**. |
+| Still stuck | Copy the message and send it to the trainer. |
 
 ## What is inside
-- `notebooks/` — one notebook per lab (generated; do not edit by hand)
-- `labkit/` — the tested helpers the labs use (setup checks, running agents, traces, tools of each lab, audit log)
-- `data/` — course data: fictional SOPs and questions (Labs 1, 6), synthetic LC-MS/MS batches (Lab 2), a synthetic
-  cardiovascular cohort and model (Lab 3), 200 PathMNIST tiles and a small CNN (Lab 4), synthetic FHIR patients
-  (Lab 5), cached PubMed records (Labs 6–7)
+- `notebooks/` — one notebook per lab
+- `labkit/` — the tested helper code the labs use
+- `data/` — the course data: fictional procedures, synthetic lab batches, patients and images, cached PubMed records
 - `figures/` — the diagrams used in the notebooks
 
 ## Data credits
