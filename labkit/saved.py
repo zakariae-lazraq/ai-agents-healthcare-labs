@@ -2,7 +2,7 @@
 
 Shown only when the participant's own run could not reach the model (free-quota limit or a busy service), so the
 lab can continue. Saved answers are clearly labelled and never counted in the participant's score.
-Files: data/labNN/saved_runs.json — {"recorded": "YYYY-MM-DD", "model": …, "results": {item_id: {...}}}.
+Files: data/labNN/saved_runs.json, {"recorded": "YYYY-MM-DD", "model": …, "results": {item_id: {...}}}.
 """
 
 from __future__ import annotations
@@ -38,9 +38,9 @@ def html(lab: str, ids: list[str]) -> str:
                  f"<td style='{td}'>{_html.escape(str(r.get('status') or r.get('verdict') or '-'))}</td>"
                  f"<td style='{td};white-space:pre-wrap'>{_html.escape(str(r.get('text', ''))[:900])}</td></tr>")
     if not rows:
-        return "<div style='font-family:Inter,Segoe UI,Roboto,sans-serif'>Every item ran — no saved answer needed.</div>"
+        return "<div style='font-family:Inter,Segoe UI,Roboto,sans-serif'>Every item ran, no saved answer needed.</div>"
     return ("<div style='font-family:Inter,Segoe UI,Roboto,sans-serif;font-size:13px;color:#B7791F;margin:4px 0'>"
             f"Saved answers of the reference agent (recorded {saved.get('recorded', '?')}, {saved.get('model', '?')}). "
-            "For reading only — not your agent, not in your score. Re-run your cell later to get your own.</div>"
+            "For reading only, not your agent, not in your score. Re-run your cell later to get your own.</div>"
             "<table style='border-collapse:collapse;font-family:Inter,Segoe UI,Roboto,sans-serif'>"
             f"<tr><th style='{td}'>Item</th><th style='{td}'>Status</th><th style='{td}'>Answer</th></tr>{rows}</table>")

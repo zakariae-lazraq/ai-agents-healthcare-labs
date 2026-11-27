@@ -194,7 +194,7 @@ def make_qc_tools(data: QCData) -> dict:
         err = _unknown(data, batch_id)
         if err:
             return err
-        note = (f"DEVIATION NOTE (DRAFT) — batch {batch_id}\nProposed status: {status}\nFindings: {findings}\n"
+        note = (f"DEVIATION NOTE (DRAFT): batch {batch_id}\nProposed status: {status}\nFindings: {findings}\n"
                 f"Samples on hold: {samples_on_hold}\nAction required: supervisor review and approval. "
                 "No result has been released or rejected by the agent.")
         return {"batch_id": batch_id, "draft": note, "requires_human_approval": True}
@@ -287,7 +287,7 @@ def _ran(rows: list[dict]) -> int:
 
 def _notrun_note(rows: list[dict]) -> str:
     n = len(rows) - _ran(rows)
-    return (f" · <span style='color:#5F6B7A'>{n} not run (quota or busy) — run the cell again: only these are asked "
+    return (f" · <span style='color:#5F6B7A'>{n} not run (quota or busy). Run the cell again: only these are asked "
             "again</span>") if n else ""
 
 
@@ -307,7 +307,7 @@ def scoreboard_html(rows: list[dict], key: dict, hide_issue: list[str] | None = 
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['batch_id']}</b></td>"
                  f"<td style='{td}'>{_h.escape(k['status'])}<br><span style='color:#5F6B7A;font-size:12px'>"
                  f"{_h.escape('see Task 4' if r['batch_id'] in (hide_issue or []) else k['issue'])}</span></td>"
-                 f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
+                 f"<td style='{td}'>{_h.escape(r['status'] or '-')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td};font-size:12px'>agent: {_h.escape(', '.join(r['samples']) or 'none')}<br>"
                  f"key: {_h.escape(', '.join(k['samples_on_hold']) or 'none')}</td>"

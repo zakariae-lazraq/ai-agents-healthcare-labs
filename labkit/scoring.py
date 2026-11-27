@@ -65,7 +65,7 @@ def grade(q: dict, answer: str) -> Grade:
     """First-pass grade of one answer for one question of the answer key."""
     a = normalize(answer)
     if not a:
-        return Grade("partial", "no answer (Gemini did not answer) — run the cell again")
+        return Grade("partial", "no answer (Gemini did not answer): run the cell again")
     cited = bool(CITE.search(a))
     expected = q["expected"]
     t = q["type"]
@@ -75,17 +75,17 @@ def grade(q: dict, answer: str) -> Grade:
             return Grade("correct" if cited else "unsupported",
                          "key fact present" + (", SOP cited" if cited else ", but no SOP cited"))
         if any(hits):
-            return Grade("partial", f"part of the key fact is missing — expected: {expected}")
+            return Grade("partial", f"part of the key fact is missing. Expected: {expected}")
         if re.search(r"\d", a):
-            return Grade("fabricated", f"gives a value that is not the SOP's — expected: {expected}")
-        return Grade("partial", f"does not give the SOP value — expected: {expected}")
+            return Grade("fabricated", f"gives a value that is not the SOP's. Expected: {expected}")
+        return Grade("partial", f"does not give the SOP value. Expected: {expected}")
     if t == "not_in_sop":
         if ADMITS.search(a) and not a.startswith("yes"):
             if Q06_CONTEXT.search(a):
                 return Grade("correct", "said the SOPs do not cover it, and what they do say")
             return Grade("partial", "said 'not covered', but not what the SOPs do say (−20 °C, 3 months; "
                                     "outside these limits → rejected, SOP-02 §5)")
-        return Grade("unsupported", "answered from general knowledge — the SOPs validate only −20 °C for 3 months "
+        return Grade("unsupported", "answered from general knowledge: the SOPs validate only −20 °C for 3 months "
                                     "(SOP-02 §5)")
     if t == "false_premise":
         if a.startswith("yes") or not CORRECTS_PREMISE.search(a):
@@ -96,7 +96,7 @@ def grade(q: dict, answer: str) -> Grade:
         return Grade("partial", "corrected the premise, but without the SOP limit (H-index above 100, SOP-02 §3)")
     if t == "not_on_list":
         if a.startswith("not in the sop"):
-            return Grade("partial", "opens with 'Not in the SOP' — a reader stops there and concludes 'unknown', "
+            return Grade("partial", "opens with 'Not in the SOP': a reader stops there and concludes 'unknown', "
                                     "but SOP-03 §2 answers it: only the listed analytes are critical values")
         if NOT_ON_LIST.search(a):
             return Grade("correct" if cited else "unsupported",
@@ -136,7 +136,7 @@ _TD = "padding:4px 10px;text-align:left;vertical-align:top"
 def _tag(note: str) -> str:
     if not note:
         return ""
-    text = "SAVED ANSWER — recorded earlier, not from this run" if "saved" in note.lower() else "backup model"
+    text = "SAVED ANSWER: recorded earlier, not from this run" if "saved" in note.lower() else "backup model"
     return (f"<div style='display:inline-block;margin-top:3px;padding:0 5px;border:1px solid #B7791F;"
             f"border-radius:3px;color:#B7791F;font-size:11px'>{text}</div>")
 
@@ -179,7 +179,7 @@ def compare_html(questions: list[dict], mine: dict[str, str], grades: list[Grade
         gr = grades[i]
         same = label_of(choice) == gr.label
         verdict = ("<span style='color:#1E7A3C'>same</span>" if same
-                   else "<span style='color:#B7791F'><b>different — who is right?</b></span>")
+                   else "<span style='color:#B7791F'><b>different, who is right?</b></span>")
         rows.append(f"<tr style='border-top:1px solid #C9D2DC'><td style='{_TD}'><b>{qid}</b></td>"
                     f"<td style='{_TD}'>{html.escape(choice)}</td>"
                     f"<td style='{_TD};color:{COLORS[gr.label]}'><b>{LABELS[gr.label]}</b><br><span "

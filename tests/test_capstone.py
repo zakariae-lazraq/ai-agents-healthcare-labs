@@ -30,7 +30,7 @@ def test_missing_human_checkpoint_and_metric_fail():
 
 def test_exports():
     md = capstone.canvas_markdown("Team QC", GOOD)
-    assert md.startswith("# Agent design canvas — Team QC") and "## Human checkpoints" in md
+    assert md.startswith("# Agent design canvas: Team QC") and "## Human checkpoints" in md
     assert "Supervisor approves" in capstone.canvas_html("Team QC", GOOD)
 
 

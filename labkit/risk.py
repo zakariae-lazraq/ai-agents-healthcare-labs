@@ -1,7 +1,7 @@
-"""Lab 3: a risk model as an agent tool — input checks, prediction, explanation, and a guardrail in code.
+"""Lab 3: a risk model as an agent tool, input checks, prediction, explanation, and a guardrail in code.
 
 The guardrail is an ADK before_tool_callback: it runs before predict_risk / explain_prediction and, if the input is
-invalid, returns a result itself — the tool never runs, whatever the model decided. A prompt can be argued with;
+invalid, returns a result itself: the tool never runs, whatever the model decided. A prompt can be argued with;
 code cannot.
 """
 
@@ -19,7 +19,7 @@ MMOL_TO_MGDL = 38.67
 GUARDED = ("predict_risk", "explain_prediction")
 FIELDS = ("age", "sex", "systolic_bp", "cholesterol", "max_heart_rate", "smoker", "diabetes")
 RUN_LOG: list[dict] = []   # every time predict_risk really ran (evidence for the guardrail test)
-NOTE = "Risk estimate for research and education — not a diagnosis and not a treatment decision."
+NOTE = "Risk estimate for research and education, not a diagnosis and not a treatment decision."
 
 
 def load_model(folder) -> dict:
@@ -125,7 +125,7 @@ def observe(guardrail):
         try:
             r = guardrail(tool, args, tool_context)
         except Exception as exc:
-            r = {"blocked_by_guardrail": True, "status": "HOLD", "reason": f"guardrail error ({exc}) — blocked"}
+            r = {"blocked_by_guardrail": True, "status": "HOLD", "reason": f"guardrail error ({exc}), blocked"}
         if r is not None and getattr(tool, "name", "") in GUARDED:
             BLOCKED.append({"tool": getattr(tool, "name", ""), "args": dict(args or {})})
         return r
@@ -138,7 +138,7 @@ def reference_guardrail(tool, args, tool_context):
         check = check_ranges(args)
         if check["status"] != "ok":
             return {"blocked_by_guardrail": True, "status": "HOLD",
-                    "reason": "input failed the range check — no prediction made", "problems": check["problems"]}
+                    "reason": "input failed the range check, no prediction made", "problems": check["problems"]}
     return None
 
 
@@ -180,7 +180,7 @@ def scoreboard_html(rows: list[dict], profiles: list[dict]) -> tuple[str, int]:
         checked = "check_input_ranges" in r["tools"]
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['id']}</b></td>"
                  f"<td style='{td}'>{k['expected']}<br><span style='color:#5F6B7A;font-size:12px'>"
-                 f"{_h.escape(k['why'])}</span></td><td style='{td}'>{_h.escape(r['status'] or '—')}"
+                 f"{_h.escape(k['why'])}</span></td><td style='{td}'>{_h.escape(r['status'] or '-')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td};font-size:12px'>{'yes' if checked else 'no'}</td>"
                  f"<td style='{td};color:{'#1E7A3C' if ok else ('#5F6B7A' if notrun else '#B3261E')}'><b>"
@@ -205,7 +205,7 @@ def explanation_chart(model: dict, features: dict, title: str = ""):
     ax.axvline(0, color="#1F3A5F", lw=1)
     ax.set_xlabel("contribution to log-odds (right = raises risk)")
     p = 1 / (1 + math.exp(-log_odds(model, features)))
-    ax.set_title(title or f"10-year risk estimate {p * 100:.0f} % — not a diagnosis", loc="left", fontsize=11)
+    ax.set_title(title or f"10-year risk estimate {p * 100:.0f} %, not a diagnosis", loc="left", fontsize=11)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     fig.tight_layout()

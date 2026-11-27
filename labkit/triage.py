@@ -1,4 +1,4 @@
-"""Lab 4: image triage — a tissue classifier as an agent tool, routing by confidence, a human review queue.
+"""Lab 4: image triage, a tissue classifier as an agent tool, routing by confidence, a human review queue.
 
 The routing rule (automatic vs human review) is plain code written by the participant; the agent runs the triage,
 queues uncertain images with a reason, and summarises. Every image id is IMG001…IMG200.
@@ -115,7 +115,7 @@ def sweep_chart(rows: list[dict], mark: float | None = None):
 
 def quality_problem(image: np.ndarray) -> str:
     """Reference image-quality check (challenge): '' if usable, else the reason.
-    Blank: almost no contrast. Blurred: little pixel-to-pixel change relative to the contrast — real 'background'
+    Blank: almost no contrast. Blurred: little pixel-to-pixel change relative to the contrast, real 'background'
     tiles are smooth but low-contrast, so sharpness is judged relative to contrast, not in absolute terms."""
     g = np.asarray(image, dtype=np.float32).mean(axis=2)
     if g.std() < 1.0:
@@ -211,7 +211,7 @@ def second_opinion(data: TriageData, image_id: str, model: str, client=None) -> 
             kind = _error_kind(exc)
             delay = _retry_delay(exc)
             if kind == "quota" and attempt == 0 and delay is not None and delay <= MAX_QUOTA_WAIT:
-                print(f"Per-minute limit reached — waiting {delay:.0f} s, then trying again…")
+                print(f"Per-minute limit reached. Waiting {delay:.0f} s, then trying again…")
                 time.sleep(delay + 1)
                 continue
             msg = {"quota": QUOTA_MESSAGE, "busy": BUSY_MESSAGE}.get(kind, f"Gemini returned an error: {str(exc)[:160]}")

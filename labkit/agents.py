@@ -24,11 +24,11 @@ RETRY = types.HttpRetryOptions(attempts=3, initial_delay=1, exp_base=3,
 # Tried in order when the agent's model is busy (503 high demand) or out of free quota (429).
 # Flash-Lite first: the free tier allows only ~20 requests per day for Flash models (seen 2026-11-25).
 BACKUP_MODELS = ["gemini-flash-lite-latest"]   # not Flash: its free tier allows only ~20 requests per day
-QUOTA_MESSAGE = "Free quota reached — wait one minute and run this cell again."
+QUOTA_MESSAGE = "Free quota reached: wait one minute and run this cell again."
 # Course rule (outline 3.1): temperature 0 for reproducible answers. Pass as generate_content_config=DETERMINISTIC.
 DETERMINISTIC = types.GenerateContentConfig(temperature=0)
 BUSY_MESSAGE = "Gemini is very busy right now (a Google-side spike, not your fault). Wait 30 seconds and run this cell again."
-NOT_BUILT = "Your agent is not built yet — fix the red lines in the CHECK cell above, run it, then this cell."
+NOT_BUILT = "Your agent is not built yet: fix the red lines in the CHECK cell above, run it, then this cell."
 
 
 @contextlib.contextmanager

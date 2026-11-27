@@ -22,7 +22,7 @@ FIX_KEY_REJECTED = (
     "replace it in Secrets, run again."
 )
 FIX_QUOTA = "Your key works but its free quota is used up for now. Wait one minute and run again."
-FIX_PUBMED = "PubMed is not reachable from here. Labs will use saved results — tell the trainer."
+FIX_PUBMED = "PubMed is not reachable from here. Labs will use saved results: tell the trainer."
 FIX_PYTHON = "This notebook needs Python 3.11 or newer. Use a standard Google Colab runtime."
 FIX_ADK = "Run the Setup cell again from the top; if it still fails, Runtime → Restart session, then run it again."
 
@@ -124,7 +124,7 @@ def check_environment(model: str = DEFAULT_MODEL, *, ping_model: bool = True,
         except Exception as exc:
             fix = _classify_model_error(exc)
             if fix == FIX_QUOTA:   # a 429 proves the key is valid: rate-limited, not broken
-                results.append(CheckResult("API key works", True, "key valid; the free quota is busy right now — "
+                results.append(CheckResult("API key works", True, "key valid; the free quota is busy right now: "
                                            "the labs wait and retry automatically (or wait a minute)"))
             else:
                 results.append(CheckResult("API key works", False, _scrub(exc, key), fix))
@@ -151,10 +151,10 @@ def checks_html(results: list[CheckResult]) -> str:
         rows.append(
             f"<tr><td style='padding:5px 4px;vertical-align:top;text-align:left'>{tag}</td>"
             f"<td style='padding:5px 8px;text-align:left'><b>{html.escape(r.name)}</b>"
-            f"<span style='color:#5F6B7A'> — {html.escape(r.detail)}</span>{fix}</td></tr>"
+            f"<span style='color:#5F6B7A'>, {html.escape(r.detail)}</span>{fix}</td></tr>"
         )
     all_ok = all(r.ok for r in results)
-    footer, color = (("Everything is ready — continue to the next step.", "#1E7A3C") if all_ok else
+    footer, color = (("Everything is ready: continue to the next step.", "#1E7A3C") if all_ok else
                      ("Fix the red lines (follow each 'How to fix'), then run this cell again.", "#B3261E"))
     font = "font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px"
     return (f"<table style='border-collapse:collapse;{font}'>{''.join(rows)}</table>"

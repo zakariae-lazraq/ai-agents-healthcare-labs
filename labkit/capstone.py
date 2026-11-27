@@ -65,12 +65,12 @@ def canvas_html(team: str, canvas: dict) -> str:
         f"{_html.escape(str(canvas.get(k, '')).strip()) or '<i style=color:#B3261E>empty</i>'}</div></div>"
         for k, label in CANVAS_FIELDS)
     return (f"<div style='font-family:Inter,Segoe UI,Roboto,sans-serif;max-width:980px'><div style='font-size:19px;"
-            f"font-weight:700;color:#1F3A5F;margin-bottom:8px'>Agent design canvas — {_html.escape(team)}</div>"
+            f"font-weight:700;color:#1F3A5F;margin-bottom:8px'>Agent design canvas, {_html.escape(team)}</div>"
             f"<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:8px'>{cells}</div></div>")
 
 
 def canvas_markdown(team: str, canvas: dict) -> str:
-    lines = [f"# Agent design canvas — {team}", ""]
+    lines = [f"# Agent design canvas: {team}", ""]
     for k, label in CANVAS_FIELDS:
         lines += [f"## {label}", str(canvas.get(k, "")).strip() or "_(empty)_", ""]
     return "\n".join(lines)
@@ -87,7 +87,7 @@ def run_test_cases(agent, cases: list[dict], show_progress: bool = True) -> list
 
         allowed = tuple(sorted({x["expected"].upper() for x in cases}))
         got = parse_status(all_model_text(r.events) or r.text, allowed)
-        out.append({"input": c["input"], "expected": c["expected"].upper(), "agent": got or "—",
+        out.append({"input": c["input"], "expected": c["expected"].upper(), "agent": got or "-",
                     "ok": got == c["expected"].upper(), "note": r.message or r.note})
     return out
 

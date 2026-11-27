@@ -1,6 +1,6 @@
 """Small display helpers for participant tasks: checks, copy boxes, completion cards, guards.
 
-Visual style: sober text labels (OK / FIX / MISSING) and the course palette — no emoji.
+Visual style: sober text labels (OK / FIX / MISSING) and the course palette, no emoji.
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ def check_html(items, optional: bool = False) -> str:
         rows.append(f"<div style='margin:5px 0'>{line}</div>")
     all_ok = all(ok for ok, _, _ in items)
     if all_ok:
-        footer, color = "All good — continue.", GREEN
+        footer, color = "All good: continue.", GREEN
     elif optional:
-        footer, color = "Missing items are optional — tell the trainer and continue: every lab still works.", AMBER
+        footer, color = "Missing items are optional. Tell the trainer and continue: every lab still works.", AMBER
     else:
         footer, color = "Fix the red lines, then run this cell again.", RED
     return (f"<div style='{FONT};font-size:14px;line-height:1.5'>{''.join(rows)}"
@@ -70,7 +70,7 @@ def ready(name: str, instruction: str, tools: list, example: str = "get_test_inf
     if problem is None and (not isinstance(tools, list) or not tools
                             or not all(callable(t) for t in tools)):
         problem = (f"TOOLS must contain the tool function itself, e.g. TOOLS = [{example}] "
-                   "— no quotation marks, no ().")
+                   ", no quotation marks, no ().")
     if problem:
         display(error_line(problem + " Then run this cell again."))
         return False
@@ -78,7 +78,7 @@ def ready(name: str, instruction: str, tools: list, example: str = "get_test_inf
 
 
 SETUP_NOT_PASSED = ("Setup has not passed yet: scroll up to the Setup cell, fix the red lines, "
-                    "run it again — then run this cell.")
+                    "run it again, then run this cell.")
 
 
 def require_setup() -> None:
@@ -118,7 +118,7 @@ def done_card(lab: str, items: list[str], complete: bool | None = None, complete
         title = lab
         top = TEAL if complete else RED
         verdict = (f"<div style='font-weight:700;color:{GREEN if complete else RED};margin-top:4px'>"
-                   f"{complete_text if complete else 'Not complete yet — fix the lines marked FIX'}</div>")
+                   f"{complete_text if complete else 'Not complete yet: fix the lines marked FIX'}</div>")
     return HTML(
         f"<div style='{FONT};border:1px solid #C9D2DC;border-top:6px solid {top};border-radius:6px;"
         "padding:14px 20px;max-width:620px;background:#FFFFFF;color:#1B2430'>"

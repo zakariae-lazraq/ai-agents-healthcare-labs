@@ -1,4 +1,4 @@
-"""Lab 7: a research agent with verified citations — PubMed search and abstracts (NCBI E-utilities), claim checks.
+"""Lab 7: a research agent with verified citations, PubMed search and abstracts (NCBI E-utilities), claim checks.
 
 Live E-utilities first (no API key: NCBI allows about 3 requests per second per IP), then the shipped cache if the
 network or NCBI fails, so the lab always works. Citation review reuses the Lab 6 guardian idea: every PMID must exist,

@@ -1,4 +1,4 @@
-"""Lab 5: an interoperability agent — FHIR Observations, LOINC coding, units, critical values, a draft report.
+"""Lab 5: an interoperability agent, FHIR Observations, LOINC coding, units, critical values, a draft report.
 
 Checks are per patient (the agent can call them in parallel). Values are never changed: the drafted
 DiagnosticReport only references the source Observations, and validate_report() proves it.
@@ -66,7 +66,7 @@ def unit_problems(lab: FhirLab, pid: str) -> list[dict]:
         s = _summary(o)
         ref = lab.loinc.get(s["loinc_code"])
         if not s["unit"]:
-            out.append({**s, "issue": "unit missing — the value cannot be interpreted"})
+            out.append({**s, "issue": "unit missing, the value cannot be interpreted"})
             continue
         if ref is None or ref["short_name"].lower() != s["test_name"].lower():
             continue   # a coding problem: reported by check_coding, not judged here
@@ -75,7 +75,7 @@ def unit_problems(lab: FhirLab, pid: str) -> list[dict]:
         elif not float(ref["plausible_low"]) <= float(s["value"]) <= float(ref["plausible_high"]):
             hint = ""
             if s["loinc_code"] == "2345-7" and float(s["value"]) < 50:
-                hint = f" — looks like mmol/L (≈ {round(float(s['value']) * 18)} mg/dL)"
+                hint = f": looks like mmol/L (≈ {round(float(s['value']) * 18)} mg/dL)"
             out.append({**s, "issue": f"value {s['value']} {s['unit']} implausible for {ref['short_name']}{hint}"})
     return out
 
@@ -94,7 +94,7 @@ def critical_results(lab: FhirLab, pid: str) -> list[dict]:
         if not (ref and float(ref["plausible_low"]) <= v <= float(ref["plausible_high"])):
             if (lo is not None and v < lo) or (hi is not None and v > hi):
                 out.append({**s, "critical_range": f"< {lo} or > {hi}" if hi else f"< {lo}", "rule": "SOP-03 §2",
-                            "possible": True, "issue": "possible critical value — unit/coding inconsistent: "
+                            "possible": True, "issue": "possible critical value, unit/coding inconsistent: "
                             "confirm with the laboratory before calling it critical"})
             continue
         if (lo is not None and v < lo) or (hi is not None and v > hi):
@@ -152,7 +152,7 @@ def validate_report(lab: FhirLab, report: dict) -> list[str]:
     except Exception as exc:
         problems.append("not valid FHIR: " + str(exc).splitlines()[0][:200])
     if report.get("status") != VALID_DRAFT_STATUS:
-        problems.append(f"status must be '{VALID_DRAFT_STATUS}' — a draft is never final before human review")
+        problems.append(f"status must be '{VALID_DRAFT_STATUS}': a draft is never final before human review")
     for ref in report.get("result", []):
         rid = ref.get("reference", "").split("/")[-1]
         if ("Observation", rid) not in lab.by_id:
@@ -283,7 +283,7 @@ def scoreboard_html(rows: list[dict], key: dict, notifications: list[dict]) -> t
         body += (f"<tr style='border-top:1px solid #C9D2DC'><td style='{td}'><b>{r['patient_id']}</b></td>"
                  f"<td style='{td}'>{k['status']}<br><span style='color:#5F6B7A;font-size:12px'>"
                  f"{_h.escape('; '.join(k['issues']) or 'clean')}</span></td>"
-                 f"<td style='{td}'>{_h.escape(r['status'] or '—')}"
+                 f"<td style='{td}'>{_h.escape(r['status'] or '-')}"
                  + (f"<br><span style='color:#B7791F;font-size:12px'>{_h.escape(r['note'])}</span>" if r["note"] else "")
                  + f"</td><td style='{td}'>{'notified' if r['patient_id'] in notified else ''}</td>"
                  f"<td style='{td};color:{'#1E7A3C' if ok else ('#5F6B7A' if notrun else '#B3261E')}'><b>"

@@ -1,4 +1,4 @@
-"""Lab 6: the guardian — checks every LabAssist answer before it reaches a user.
+"""Lab 6: the guardian, checks every LabAssist answer before it reaches a user.
 
 Tools take a case id and compute evidence (they never ask a model): grounding of number+unit claims in the sources,
 counts recomputed from the Lab 2 batch data, references verified against PubMed (cached), PHI patterns, injected
@@ -114,7 +114,7 @@ def reference_problems(data: GuardianData, case: dict, live: bool = False) -> li
         if rec is None and pmid not in data.pubmed.get("_not_found", []) and live:
             rec = _fetch_pubmed(pmid)
         if rec == "unreachable":
-            out.append({"pmid": pmid, "issue": "could not verify: PubMed unreachable (network) — check by hand"})
+            out.append({"pmid": pmid, "issue": "could not verify: PubMed unreachable (network), check by hand"})
             continue
         if rec is None:
             out.append({"pmid": pmid, "issue": "PMID not found in PubMed"})
@@ -122,7 +122,7 @@ def reference_problems(data: GuardianData, case: dict, live: bool = False) -> li
         seg = ans[max(0, ans.find(pmid) - 260): ans.find(pmid)]
         if _title_overlap(rec["title"], seg) < 0.5:
             out.append({"pmid": pmid, "issue": f"PMID {pmid} is '{rec['title']}' ({rec['first_author']}, {rec['year']}) "
-                                               "— not the work described"})
+                                               ", not the work described"})
     return out
 
 
@@ -204,7 +204,7 @@ def make_guardian_tools(data: GuardianData) -> dict:
 
 
 def reference_guardian(data: GuardianData, case: dict) -> tuple[str, list[str]]:
-    """A guardian made of code only — no judgement. It cannot recognise unsafe advice as such."""
+    """A guardian made of code only, no judgement. It cannot recognise unsafe advice as such."""
     issues = []
     high = injection_problems(case) or phi_problems(case) or number_problems(data, case)
     if injection_problems(case):

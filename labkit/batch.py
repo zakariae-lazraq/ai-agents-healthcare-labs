@@ -8,7 +8,7 @@ from labkit import agents
 from labkit.scoring import _tag
 from labkit.trace import _markdown_lite
 
-SAVED_NOTE = "saved answer (Gemini was not available) — recorded earlier with the reference instruction, not yours"
+SAVED_NOTE = "saved answer (Gemini was not available): recorded earlier with the reference instruction, not yours"
 
 FONT = "font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:13px"
 
@@ -53,7 +53,7 @@ def run_many(agent, questions: list[str], show_progress: bool = True, saved: dic
             results[i] = agents.RunResult(saved[q], [], [], "", note=SAVED_NOTE)
             used_saved += 1
     if handle:
-        extra = f" — {used_saved} from saved answers" if used_saved else ""
+        extra = f": {used_saved} from saved answers" if used_saved else ""
         handle.update(HTML(f"<i style='{FONT};color:#5F6B7A'>{len(questions)} questions answered{extra}.</i>"))
     return results
 

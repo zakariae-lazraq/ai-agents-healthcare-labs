@@ -16,7 +16,7 @@ from pathlib import Path
 from labkit.agents import BACKUP_MODELS, BUSY_MESSAGE, QUOTA_MESSAGE, _error_kind
 
 QUOTA_FS = ("File Search reached a free-tier quota (it embeds your documents and your question). Wait one minute "
-            "and run the cell again. This challenge is optional — you can skip it.")
+            "and run the cell again. This challenge is optional: you can skip it.")
 UPLOAD_ATTEMPTS = 2
 QUOTA_WAIT = 15          # seconds between upload attempts
 INDEX_TIMEOUT = 60       # seconds per document

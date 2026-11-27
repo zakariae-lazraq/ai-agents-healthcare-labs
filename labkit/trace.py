@@ -7,7 +7,7 @@ import json
 
 _STYLE = ("padding:7px 12px;margin:6px 0;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;"
           "font-size:14px;line-height:1.45;border-left:4px solid {b};background:{bg};color:#1B2430")
-_KINDS = {  # label, border colour, background — same palette as the course figures
+_KINDS = {  # label, border colour, background: same palette as the course figures
     "call": ("TOOL CALL", "#1F3A5F", "#F2F5F9"),
     "result": ("TOOL RESULT", "#2A7F7F", "#F0F7F7"),
     "think": ("MODEL", "#8A96A3", "#F7F8FA"),
@@ -53,11 +53,11 @@ def _card(kind: str, body: str) -> str:
 
 
 def _item_html(item) -> str:
-    """One list item; SOP search results get a 'SOP-01 §7 — Reporting' header above their text."""
+    """One list item; SOP search results get a 'SOP-01 §7: Reporting' header above their text."""
     if not isinstance(item, dict):
         return html.escape(str(item))
     if "sop" in item and "section" in item:
-        head = f"{item['sop']} §{item['section']}" + (f" — {item['title']}" if item.get("title") else "")
+        head = f"{item['sop']} §{item['section']}" + (f": {item['title']}" if item.get("title") else "")
         rest = {k: v for k, v in item.items() if k not in ("sop", "section", "title")}
         body = "<br>".join(html.escape(str(v)) if k == "text" else f"{html.escape(str(k))}: {html.escape(str(v))}"
                            for k, v in rest.items())
@@ -76,7 +76,7 @@ def _value_html(value) -> str:
 
 
 def _result_table(response) -> str:
-    """Tool results in full, as a key/value table — participants verify numbers against it."""
+    """Tool results in full, as a key/value table: participants verify numbers against it."""
     if not isinstance(response, dict):
         return html.escape(json.dumps(response, ensure_ascii=False, default=str))
     rows = "".join(
